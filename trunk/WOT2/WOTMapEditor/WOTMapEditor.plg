@@ -1,0 +1,91 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: WOTMapEditor - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x42a /fo"Debug/WOTMapEditor.res" /d "_DEBUG" /d "_AFXDLL" "D:\Dropbox\myWOTClient\WOTMapEditor\WOTMapEditor.rc"" 
+Creating temporary file "C:\Users\HONEY\AppData\Local\Temp\RSPC322.tmp" with contents
+[
+/nologo /MDd /w /W0 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/WOTMapEditor.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Dropbox\myWOTClient\WOTMapEditor\ChooseWayDlg.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\colorBtn.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\dlgbars.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\NewMapDlg.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\ScrollDialog.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\WOTMapEditor.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\WOTMapEditorDlg.cpp"
+"D:\Dropbox\myWOTClient\WOTMapEditor\WOTMapfile.cpp"
+]
+Creating command line "cl.exe @C:\Users\HONEY\AppData\Local\Temp\RSPC322.tmp" 
+Creating temporary file "C:\Users\HONEY\AppData\Local\Temp\RSPC332.tmp" with contents
+[
+/nologo /MDd /w /W0 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Dropbox\myWOTClient\WOTMapEditor\LibAI.cpp"
+]
+Creating command line "cl.exe @C:\Users\HONEY\AppData\Local\Temp\RSPC332.tmp" 
+Creating temporary file "C:\Users\HONEY\AppData\Local\Temp\RSPC333.tmp" with contents
+[
+/nologo /MDd /w /W0 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/WOTMapEditor.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\Dropbox\myWOTClient\WOTMapEditor\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\HONEY\AppData\Local\Temp\RSPC333.tmp" 
+Creating temporary file "C:\Users\HONEY\AppData\Local\Temp\RSPC334.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/WOTMapEditor.pdb" /debug /machine:I386 /out:"Debug/WOTMapEditor.exe" /pdbtype:sept 
+.\Debug\ChooseWayDlg.obj
+.\Debug\colorBtn.obj
+.\Debug\dlgbars.obj
+.\Debug\LibAI.obj
+.\Debug\NewMapDlg.obj
+.\Debug\ScrollDialog.obj
+.\Debug\StdAfx.obj
+.\Debug\WOTMapEditor.obj
+.\Debug\WOTMapEditorDlg.obj
+.\Debug\WOTMapfile.obj
+.\Debug\WOTMapEditor.res
+]
+Creating command line "link.exe @C:\Users\HONEY\AppData\Local\Temp\RSPC334.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+ChooseWayDlg.cpp
+colorBtn.cpp
+dlgbars.cpp
+NewMapDlg.cpp
+ScrollDialog.cpp
+WOTMapEditor.cpp
+WOTMapEditorDlg.cpp
+WOTMapfile.cpp
+Generating Code...
+Compiling...
+LibAI.cpp
+Linking...
+Creating temporary file "C:\Users\HONEY\AppData\Local\Temp\RSP170F.tmp" with contents
+[
+/nologo /o"Debug/WOTMapEditor.bsc" 
+.\Debug\StdAfx.sbr
+.\Debug\ChooseWayDlg.sbr
+.\Debug\colorBtn.sbr
+.\Debug\dlgbars.sbr
+.\Debug\LibAI.sbr
+.\Debug\NewMapDlg.sbr
+.\Debug\ScrollDialog.sbr
+.\Debug\WOTMapEditor.sbr
+.\Debug\WOTMapEditorDlg.sbr
+.\Debug\WOTMapfile.sbr]
+Creating command line "bscmake.exe @C:\Users\HONEY\AppData\Local\Temp\RSP170F.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+WOTMapEditor.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

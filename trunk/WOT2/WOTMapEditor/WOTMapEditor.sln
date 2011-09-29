@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WOTMapEditor", "WOTMapEditor.vcxproj", "{F615B0A8-7379-E070-8AD8-2CD184F19C37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F615B0A8-7379-E070-8AD8-2CD184F19C37}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F615B0A8-7379-E070-8AD8-2CD184F19C37}.Debug|Win32.Build.0 = Debug|Win32
+		{F615B0A8-7379-E070-8AD8-2CD184F19C37}.Release|Win32.ActiveCfg = Release|Win32
+		{F615B0A8-7379-E070-8AD8-2CD184F19C37}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

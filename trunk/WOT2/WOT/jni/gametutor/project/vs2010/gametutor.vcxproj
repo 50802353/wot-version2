@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\CAndroidView.cpp" />
+    <ClCompile Include="..\..\source\CButton.cpp" />
+    <ClCompile Include="..\..\source\CCamera.cpp" />
+    <ClCompile Include="..\..\source\CDropdownButton.cpp" />
+    <ClCompile Include="..\..\source\CImage.cpp" />
+    <ClCompile Include="..\..\source\CMD2Model.cpp" />
+    <ClCompile Include="..\..\source\CModelManager.cpp" />
+    <ClCompile Include="..\..\source\CObject3D.cpp" />
+    <ClCompile Include="..\..\source\CSkyBox.cpp" />
+    <ClCompile Include="..\..\source\CToken.cpp" />
+    <ClCompile Include="..\..\source\Matrix.cpp" />
+    <ClCompile Include="..\..\source\MyParticle.cpp" />
+    <ClCompile Include="..\..\source\MyParticleSystem.cpp" />
+    <ClCompile Include="..\..\source\SoundDriver.cpp" />
+    <ClCompile Include="..\..\source\vec3f.cpp" />
+    <ClInclude Include="..\..\header\CAndroidView.h" />
+    <ClInclude Include="..\..\header\CButton.h" />
+    <ClInclude Include="..\..\header\CCamera.h" />
+    <ClInclude Include="..\..\header\CControllerEventManager.h" />
+    <ClInclude Include="..\..\header\CControllerEventManager_inc.h" />
+    <ClInclude Include="..\..\header\CControllerKeyManager_inc.h" />
+    <ClInclude Include="..\..\header\CControllerPointerManager_inc.h" />
+    <ClInclude Include="..\..\header\CDropdownButton.h" />
+    <ClInclude Include="..\..\header\CGLES2Driver.h" />
+    <ClInclude Include="..\..\header\CImageManager.h" />
+    <ClInclude Include="..\..\header\CList.h" />
+    <ClInclude Include="..\..\header\CLookupTableI.h" />
+    <ClInclude Include="..\..\header\CLookupTableStr.h" />
+    <ClInclude Include="..\..\header\CMD2Model.h" />
+    <ClInclude Include="..\..\header\CModelManager.h" />
+    <ClInclude Include="..\..\header\CObject3D.h" />
+    <ClInclude Include="..\..\header\CParticleManager.h" />
+    <ClInclude Include="..\..\header\CRandom.h" />
+    <ClInclude Include="..\..\header\CResourceLookupTable.h" />
+    <ClInclude Include="..\..\header\CResourceLookupTableI.h" />
+    <ClInclude Include="..\..\header\CSkyBox.h" />
+    <ClInclude Include="..\..\header\CSoundManagement.h" />
+    <ClInclude Include="..\..\header\CStringBufferStream.h" />
+    <ClInclude Include="..\..\header\CSprite.h" />
+    <ClInclude Include="..\..\header\CDevice.h" />
+    <ClInclude Include="..\..\header\CFpsController.h" />
+    <ClInclude Include="..\..\header\CGame.h" />
+    <ClInclude Include="..\..\header\CGLPipelineDriver.h" />
+    <ClInclude Include="..\..\header\CGraphics2D.h" />
+    <ClInclude Include="..\..\header\CImage.h" />
+    <ClInclude Include="..\..\header\Config.h" />
+    <ClInclude Include="..\..\header\CState.h" />
+    <ClInclude Include="..\..\header\CStateManagement.h" />
+    <ClInclude Include="..\..\header\CToken.h" />
+    <ClInclude Include="..\..\header\CViewController.h" />
+    <ClInclude Include="..\..\header\CVSView.h" />
+    <ClInclude Include="..\..\header\gametutor.h" />
+    <ClInclude Include="..\..\header\Header.h" />
+    <ClInclude Include="..\..\header\IVideoDriver.h" />
+    <ClInclude Include="..\..\header\Matrix.h" />
+    <ClInclude Include="..\..\header\MyParticle.h" />
+    <ClInclude Include="..\..\header\MyParticleSystem.h" />
+    <ClInclude Include="..\..\header\SoundDriver.h" />
+    <ClInclude Include="..\..\header\Stream.h" />
+    <ClInclude Include="..\..\header\Macros.h" />
+    <ClInclude Include="..\..\header\SGameConfig.h" />
+    <ClInclude Include="..\..\header\CSingleton.h" />
+    <ClInclude Include="..\..\header\SGraphics.h" />
+    <ClInclude Include="..\..\header\Stream_Buffer.h" />
+    <ClInclude Include="..\..\header\Stream_FileWin32.h" />
+    <ClInclude Include="..\..\header\Utils.h" />
+    <ClCompile Include="..\..\source\CControllerEventManager.cpp" />
+    <ClCompile Include="..\..\source\CRandom.cpp" />
+    <ClCompile Include="..\..\source\CStringBufferStream.cpp" />
+    <ClCompile Include="..\..\source\CGraphics2D.cpp" />
+    <ClInclude Include="..\..\header\vec3f.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\CDevice.cpp" />
+    <ClCompile Include="..\..\source\CFpsController.cpp" />
+    <ClCompile Include="..\..\source\CGame.cpp" />
+    <ClCompile Include="..\..\source\CSprite.cpp" />
+    <ClCompile Include="..\..\source\CStateManagement.cpp" />
+    <ClCompile Include="..\..\source\CVSView.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Diagram.cd" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{58EF1C73-0A82-4C4A-93AC-074311C85D51}</ProjectGuid>
+    <RootNamespace>gametutor</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <SourcePath>E:\Working\WOT\jni\gametutor\source;E:\Working\WOT\jni\gametutor\MD2Model;$(SourcePath)</SourcePath>
+    <IncludePath>E:\Working\WOT\jni\gametutor\MD2Model;E:\Working\WOT\jni\gametutor\header;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../../header/;../../Common/Include;../../libs/openal</AdditionalIncludeDirectories>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);CONFIG_PLATFORM=PLATFORM_WIN32_VS</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../../header/;../../Common/Include;../../libs/openal</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

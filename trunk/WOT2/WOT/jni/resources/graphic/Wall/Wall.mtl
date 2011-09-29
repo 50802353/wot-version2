@@ -1,0 +1,114 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 26.08.2011 09:51:44
+
+newmtl 15___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+
+newmtl Material__3
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\SHING1.JPG
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\SHING1.JPG
+
+newmtl 13___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\old-door-2.bmp
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\old-door-2.bmp
+
+newmtl 14___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\old-door-1.bmp
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\old-door-1.bmp
+
+newmtl 02___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+
+newmtl 07___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\SHING1.JPG
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\SHING1.JPG
+
+newmtl 01___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+
+newmtl 09___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5882 0.5882 0.5882
+	Kd 0.5882 0.5882 0.5882
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
+	map_Kd C:\Users\hlv_trinh\Desktop\Model\Medieval_max\Medieval_max\stonewall_01_bump.jpg
