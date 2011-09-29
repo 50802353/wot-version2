@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\State">
+      <UniqueIdentifier>{16fb9b05-e38b-4293-bd58-9604a8280d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object">
+      <UniqueIdentifier>{2baf331f-48ed-4f24-9081-46c646a59562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\State">
+      <UniqueIdentifier>{6c5d1cef-4563-429e-9559-34806f019040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Object">
+      <UniqueIdentifier>{b56c3071-4ab5-4625-934f-1795b93c3cd3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\PathEle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateAskSound.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStatePoster.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateChooseLevel.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateIngame.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateLoading.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateLogo.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateMenu.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\BulletObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjectManagement.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\EnemyObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\GameObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\MapObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\TowerObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\TreeObject.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\LibAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WOTMapfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectGame\CInfoPanel.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateOption.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateAbout.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateHelp.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CExample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\CPathManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\PathEle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateAskSound.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateChooseLevel.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateIngame.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateLoading.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateLogo.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateMenu.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStatePoster.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\BulletObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjectManagement.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\EnemyObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\GameObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\MapObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\TowerObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\TreeObject.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\LibAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WOTMapfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameProperties.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectGame\CInfoPanel.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateOption.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateAbout.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateHelp.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

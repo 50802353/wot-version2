@@ -1,0 +1,20 @@
+﻿Shader_color:
+		- Mô tả: dùng để vẽ các đối tượng có màu tự chọn, thường là các đồi tượng hình học cơ bản (line, rectangle, triangle, cube, ...)
+		- Các location cần lấy ra khi use program:
+		aVerticesLoc = glGetAttribLocation ( programObject , "a_vertices");
+		aColorsLoc = glGetAttribLocation ( programObject , "a_colors");
+		uMVPMatrixLoc = glGetUniformLocation(programObject, "u_mvpMatrix");
+Shader_texture2D:
+		- Mô tả: dùng để vẽ các đối tượng có texture2D (GL_TEXTURE2D), thường dùng khi load các model
+		- Các location cần lấy ra khi use program:
+		aVerticesLoc = glGetAttribLocation ( programObject , "a_vertices");
+		aTexCoordsLoc = glGetAttribLocation ( programObject , "a_texcoords");
+		uMVPMatrixLoc = glGetUniformLocation(programObject, "u_mvpMatrix");
+		uActiveTexLoc = glGetUniformLocation(programObject, "u_activeTex");
+Shader_texture2D:
+		- Mô tả: dùng để vẽ các đối tượng có texture3D (GL_TEXTURE_CUBE_MAP), thường dùng khi vẽ skybox
+		- Các location cần lấy ra khi use program:
+		aVerticesLoc = glGetAttribLocation ( programObject , "a_vertices");
+		aTexCoordsLoc = glGetAttribLocation ( programObject , "a_texcoords");
+		uMVPMatrixLoc = glGetUniformLocation(programObject, "u_mvpMatrix");
+		uActiveTexLoc = glGetUniformLocation(programObject, "u_activeTex");

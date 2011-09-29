@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8F208FA8-49EF-4FD1-B4B1-C11CB1B89D9C}</ProjectGuid>
+    <RootNamespace>demo</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\ObjectGame;../gametutor/header/;../gametutor/Common/Include;../gametutor/libs/openal</AdditionalIncludeDirectories>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../gametutor/libs/ogl/;../gametutor/project/vs2010/$(Configuration);../gametutor/libs/vld;../gametutor/libs/openal</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>esUtil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>./ObjectGame;../gametutor/header/;../gametutor/Common/Include;../gametutor/libs/openal</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>esUtil.lib;gametutor.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../gametutor/libs/ogl/;../gametutor/project/vs2010/$(Configuration);../gametutor/libs/vld;../gametutor/libs/openal</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CExample.cpp" />
+    <ClCompile Include="CObjectManagement.cpp" />
+    <ClCompile Include="CStateAbout.cpp" />
+    <ClCompile Include="CStateAskSound.cpp" />
+    <ClCompile Include="CStateChooseLevel.cpp" />
+    <ClCompile Include="CStateHelp.cpp" />
+    <ClCompile Include="CStateIngame.cpp" />
+    <ClCompile Include="CStateLoading.cpp" />
+    <ClCompile Include="CStateLogo.cpp" />
+    <ClCompile Include="CStateMenu.cpp" />
+    <ClCompile Include="CStateOption.cpp" />
+    <ClCompile Include="CStatePoster.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ObjectGame\BulletObject.cpp" />
+    <ClCompile Include="ObjectGame\CInfoPanel.cpp" />
+    <ClCompile Include="ObjectGame\EnemyObject.cpp" />
+    <ClCompile Include="ObjectGame\GameObject.cpp" />
+    <ClCompile Include="ObjectGame\LibAI.cpp" />
+    <ClCompile Include="ObjectGame\MapObject.cpp" />
+    <ClCompile Include="ObjectGame\PathEle.cpp" />
+    <ClCompile Include="ObjectGame\TowerObject.cpp" />
+    <ClCompile Include="ObjectGame\TreeObject.cpp" />
+    <ClCompile Include="WOTMapfile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CExample.h" />
+    <ClInclude Include="CObjectManagement.h" />
+    <ClInclude Include="CStateAbout.h" />
+    <ClInclude Include="CStateAskSound.h" />
+    <ClInclude Include="CStateChooseLevel.h" />
+    <ClInclude Include="CStateHelp.h" />
+    <ClInclude Include="CStateIngame.h" />
+    <ClInclude Include="CStateLoading.h" />
+    <ClInclude Include="CStateLogo.h" />
+    <ClInclude Include="CStateMenu.h" />
+    <ClInclude Include="CStateOption.h" />
+    <ClInclude Include="CStatePoster.h" />
+    <ClInclude Include="GameProperties.h" />
+    <ClInclude Include="ObjectGame\BulletObject.h" />
+    <ClInclude Include="ObjectGame\CInfoPanel.h" />
+    <ClInclude Include="ObjectGame\CPathManagement.h" />
+    <ClInclude Include="ObjectGame\EnemyObject.h" />
+    <ClInclude Include="ObjectGame\GameObject.h" />
+    <ClInclude Include="ObjectGame\LibAI.h" />
+    <ClInclude Include="ObjectGame\MapObject.h" />
+    <ClInclude Include="ObjectGame\PathEle.h" />
+    <ClInclude Include="ObjectGame\TowerObject.h" />
+    <ClInclude Include="ObjectGame\TreeObject.h" />
+    <ClInclude Include="WOTMapfile.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
