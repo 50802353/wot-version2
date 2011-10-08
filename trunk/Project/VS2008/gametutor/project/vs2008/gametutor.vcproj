@@ -58,7 +58,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalLibraryDirectories="E:\WOT2\Project\gametutor\libs\oal;E:\WOT2\Project\gametutor\libs\ogl;E:\WOT2\Project\gametutor\libs\vld;E:\WOT2\Project\gametutor\libs\vorbis"
+				AdditionalLibraryDirectories="&quot;$(ProjectDir)\..\..\libs\oal&quot;;&quot;$(ProjectDir)\..\..\libs\ogl&quot;;&quot;$(ProjectDir)\..\..\libs\vld&quot;;&quot;$(ProjectDir)\..\..\libs\vorbis&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"

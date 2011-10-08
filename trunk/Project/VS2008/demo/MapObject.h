@@ -1,5 +1,5 @@
 #pragma once
-#include "gameobject.h"
+#include "GameObject.h"
 #include "TowerObject.h"
 #include "EnemyObject.h"
 #include "ObstacleObject.h"
@@ -33,4 +33,12 @@ public:
 	int ObstacleKeyCounter;
 	CLutI<CBulletObject*> BulletList;
 	int BulletKeyCounter;
+
+	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+	//TODO------------------------------------------------------------------------------
+
 };
