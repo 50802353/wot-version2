@@ -1,10 +1,11 @@
 #include "BulletObject.h"
 
-CBulletObject::CBulletObject(SBulletData* data, Position position)
+CBulletObject::CBulletObject(SBulletData* data, Position position, int damage)
 {
 	this->ObjectType = EGameObject::E_OBJ_BULLET;
 	this->data = data;
 	this->position = position;
+	this->damage = damage;
 }
 
 CBulletObject::~CBulletObject(void)

@@ -5,6 +5,7 @@ CEnemyObject::CEnemyObject(SEnemyData* data, LogicPosition position)
 	this->ObjectType = EGameObject::E_OBJ_ENEMY;
 	this->data = data;
 	this->position = Position(position.x+0.5,position.y+0.5,0);
+	isSpawn = false;
 }
 
 CEnemyObject::~CEnemyObject(void)
