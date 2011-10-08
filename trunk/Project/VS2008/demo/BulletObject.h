@@ -6,7 +6,7 @@ class CBulletObject :
 	public CGameObject
 {
 public:
-	CBulletObject(SBulletData* data);
+	CBulletObject(SBulletData* data, Position position);
 	~CBulletObject(void);
 
 	void Init();

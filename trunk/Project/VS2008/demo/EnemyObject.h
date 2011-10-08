@@ -5,7 +5,7 @@ class CEnemyObject :
 	public CGameObject
 {
 public:
-	CEnemyObject(void);
+	CEnemyObject(SEnemyData* data, LogicPosition position);
 	~CEnemyObject(void);
 
 	void Init();

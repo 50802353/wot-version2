@@ -2,6 +2,8 @@
 #define __CSTATEINGAME_H__
 
 #include "gametutor.h"
+#include "MapObject.h"
+
 using namespace GameTutor;
 
 class CStateIngame: public CState
@@ -14,5 +16,7 @@ public:
 	void Update();
 	void Render();
 	void Exit();
+
+	CMapObject* Map;
 };
 #endif
