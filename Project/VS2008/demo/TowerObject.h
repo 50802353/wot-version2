@@ -5,7 +5,7 @@ class CTowerObject :
 	public CGameObject
 {
 public:
-	CTowerObject(void);
+	CTowerObject(STowerData *data, LogicPosition position);
 	~CTowerObject(void);
 
 	void Init();

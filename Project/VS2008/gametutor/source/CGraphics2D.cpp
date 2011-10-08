@@ -194,6 +194,30 @@ namespace GameTutor
 		}
 	}
 
+	void CGraphics2D::DrawImageRegion(SRect<float> rect, CImage *img, SRect<float> region)
+	{
+		if (img)
+		{
+			img->BindGPU();
+			m_Type[m_iNumberOfElement] = EG2DP_ELETYPE_IMG;
+
+			float imgW = float(img->GetWidth());
+			float imgH = float(img->GetHeight());
+
+			SGraphics2DGLPipelineVertexData vertex[4]  = {	
+				{SPosition2D<float>(rect.X, rect.Y + rect.H), m_Color, SPosition2D<float>(region.X/imgW, (region.Y + region.H)/imgH)},
+				{SPosition2D<float>(rect.X, rect.Y), m_Color, SPosition2D<float>(region.X/imgW, region.Y/imgH)},
+				{SPosition2D<float>(rect.X + rect.W, rect.Y + rect.H), m_Color, SPosition2D<float>((region.X + region.W)/imgW, (region.Y + region.H)/imgH)},
+				{SPosition2D<float>(rect.X + rect.W, rect.Y), m_Color, SPosition2D<float>((region.X + region.W)/imgW, region.Y/imgH)}
+			};
+			m_pTextureID[m_iNumberOfElement] = img->GetTextureID();
+			m_pIsUseAlpha[m_iNumberOfElement] = (img->GetPixelFormat() == EIMAGE_FORMAT_R8G8B8A8);
+			memcpy(m_pStream + m_iStreamOffset, vertex, sizeof(SGraphics2DGLPipelineVertexData)*4);
+			m_iNumberOfElement++;
+			m_iStreamOffset += 4;
+		}
+	}
+
 	void CGraphics2D::DrawImageRegion(SPosition2D<__INT32> pos, CImage *img, SRect<__INT32> region)
 	{
 		SPosition2D<float> pos2(float(pos.X), float(pos.Y));

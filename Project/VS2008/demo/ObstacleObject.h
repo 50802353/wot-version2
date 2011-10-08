@@ -5,7 +5,7 @@ class CObstacleObject :
 	public CGameObject
 {
 public:
-	CObstacleObject(void);
+	CObstacleObject(SObstacleData *data, LogicPosition position);
 	~CObstacleObject(void);
 
 	void Init();

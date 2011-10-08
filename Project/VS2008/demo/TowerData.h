@@ -1,13 +1,19 @@
 #pragma once
 #include <string.h>
 
+enum ETowerType 
+{
+	E_TOWER_ATTACK, 
+	E_TOWER_BUFF,
+};
+
 struct STowerData
 {
 	//logic attributes
 	char TowerName[50];
 	int Damage;
 	int Range;
-	enum ETowerType {E_TOWER_ATTACK, E_TOWER_BUFF} TowerType;
+	ETowerType TowerType;
 
 	//graphic attributes
 	int ModelID;

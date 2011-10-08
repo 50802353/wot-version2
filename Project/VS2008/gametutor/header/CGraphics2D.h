@@ -51,6 +51,7 @@ namespace GameTutor
 		void DrawImage(SPosition2D<float> pos, CImage *img);
 		void DrawImage(SPosition2D<__INT32> pos, CImage *img);
 		void CGraphics2D::DrawImageRegion(SPosition2D<float> pos, CImage *img, SRect<float> region);
+		void CGraphics2D::DrawImageRegion(SRect<float> rect, CImage *img, SRect<float> region);
 		void CGraphics2D::DrawImageRegion(SPosition2D<__INT32> pos, CImage *img, SRect<__INT32> region);
 		void Flush();
 

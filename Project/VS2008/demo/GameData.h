@@ -26,4 +26,25 @@ struct Position
 	{
 		x=y=z=0;
 	}
+
+	Position(float x, float y, float z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+
+	Position operator = (const Position pos)
+	{
+		x = pos.x;
+		y = pos.y;
+		z = pos.z;
+		return pos;
+	}
+
+	Position operator + (const Position pos)
+	{
+		return Position(x + pos.x, y + pos.y, z + pos.z);
+	}
 };
+
