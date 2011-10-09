@@ -2,7 +2,7 @@
 #define __CSTATEINGAME_H__
 
 #include "gametutor.h"
-#include "MapObject.h"
+#include "ObjectManager.h"
 
 using namespace GameTutor;
 
@@ -17,6 +17,6 @@ public:
 	void Render();
 	void Exit();
 
-	CMapObject* Map;
+	CObjectManager ObjectManager;
 };
 #endif

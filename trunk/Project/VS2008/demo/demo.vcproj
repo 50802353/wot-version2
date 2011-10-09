@@ -44,7 +44,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				WarningLevel="3"
+				WarningLevel="0"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -199,6 +199,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\ObjectManager.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\ObstacleObject.cpp"
 					>
 				</File>
@@ -242,6 +246,10 @@
 				</File>
 				<File
 					RelativePath=".\MapObject.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ObjectManager.h"
 					>
 				</File>
 				<File
