@@ -18,11 +18,12 @@ void CStateIngame::Init()
 	//TempObject:	2 tower at (5,0) and (8,5), 
 	//				1 enemy at (2,2)
 	//				1 obstacle at (3,3)
-	Map = new CMapObject(&MapData1);
-	Map->AddObject(new CTowerObject(&TowerData1, LogicPosition(5,0)));
-	Map->AddObject(new CTowerObject(&TowerData1, LogicPosition(8,5)));
-	Map->AddObject(new CEnemyObject(&EnemyData1, LogicPosition(2,2)));
-	Map->AddObject(new CObstacleObject(&ObstacleData1, LogicPosition(3,3)));
+
+	ObjectManager.SetMapObject(new CMapObject(&MapData1));
+	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(5,0)));
+	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(8,5)));
+	ObjectManager.AddObject(new CEnemyObject(&EnemyData1, LogicPosition(2,2)));
+	ObjectManager.AddObject(new CObstacleObject(&ObstacleData1, LogicPosition(3,3)));
 
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glScalef(1.0/20,1.0/20,1.0/20);
@@ -33,14 +34,14 @@ void CStateIngame::Init()
 
 void CStateIngame::Update()
 {
-	Map->Update();
+	ObjectManager.Update();
 }
 
 void CStateIngame::Render()
 {
 	//Log("State Ingame: Fps = %d FrameDT = %d", CFpsController::GetInstance()->GetRuntimeFps(), CFpsController::GetInstance()->GetFrameDt());
 	CGraphics2D::GetInstance()->Clear(SColor<float>(0,0,0,1));
-	Map->Render();
+	ObjectManager.Render();
 	CGraphics2D::GetInstance()->Flush();
 }
 

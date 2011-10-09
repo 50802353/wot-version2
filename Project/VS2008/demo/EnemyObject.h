@@ -1,5 +1,6 @@
 #pragma once
 #include "gameobject.h"
+#include "MapObject.h"
 
 
 class CEnemyObject :
@@ -22,9 +23,9 @@ public:
 
 	void Spawn(); // bat. co` isSpawn thanh` true, neu' true thi` moi' tuong tac' voi' tru.
 
-	void Move();//Tinh lai position hien tai cua quai vat dua vao cac thong so' sau
+	void Move(CMapObject* MapObject);//Tinh lai position hien tai cua quai vat dua vao cac thong so' sau
 	// - movespeed cua enemy, cong thuc' tam. thoi` : 
-	// - next position, lay tu MapObject
+	// - next position, lay tu MapObject->DirectionMap
 	// - time_difference (delta time), lay tu ham` CFpsController::GetFrameDt()
 	// - Cong thuc tam thoi: distance = movespeed*delta_time/10000
 	// - new position = old position + distance neu' duong` di thang?, con` neu' be? cua thi` tinh' lai cho hop li'
