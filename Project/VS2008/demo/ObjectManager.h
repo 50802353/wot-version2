@@ -20,6 +20,12 @@ public:
 	void AddObject(CEnemyObject*);
 	void AddObject(CObstacleObject*);
 	void AddObject(CBulletObject*);
+
+	void RemoveObject(CTowerObject*);
+	void RemoveObject(CEnemyObject*);
+	void RemoveObject(CObstacleObject*);
+	void RemoveObject(CBulletObject*);
+
 	void SetMapObject(CMapObject*);
 
 	CMapObject* Map;

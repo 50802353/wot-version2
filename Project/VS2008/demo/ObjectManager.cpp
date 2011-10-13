@@ -15,22 +15,46 @@ CObjectManager::~CObjectManager(void)
 
 void CObjectManager::AddObject(CTowerObject* Tower)
 {
-	TowerList.AddItem(TowerKeyCounter++, Tower);
+	Tower->ObjectID = ++TowerKeyCounter;
+	TowerList.AddItem(TowerKeyCounter, Tower);	
 }
 
 void CObjectManager::AddObject(CEnemyObject* Enemy)
 {
-	EnemyList.AddItem(EnemyKeyCounter++, Enemy);
+	Enemy->ObjectID = ++EnemyKeyCounter;
+	EnemyList.AddItem(EnemyKeyCounter, Enemy);	
 }
 
 void CObjectManager::AddObject(CBulletObject* Bullet)
 {
-	BulletList.AddItem(BulletKeyCounter++, Bullet);
+	Bullet->ObjectID = ++BulletKeyCounter;
+	BulletList.AddItem(BulletKeyCounter, Bullet);	
 }
 
 void CObjectManager::AddObject(CObstacleObject* Obstacle)
 {
-	ObstacleList.AddItem(ObstacleKeyCounter++, Obstacle);
+	Obstacle->ObjectID = ++ObstacleKeyCounter;
+	ObstacleList.AddItem(ObstacleKeyCounter, Obstacle);	
+}
+
+void CObjectManager::RemoveObject(CTowerObject* Tower)
+{
+	TowerList.RemoveItem(Tower->ObjectID);
+}
+
+void CObjectManager::RemoveObject(CEnemyObject* Enemy)
+{
+	EnemyList.RemoveItem(Enemy->ObjectID);
+}
+
+void CObjectManager::RemoveObject(CObstacleObject* Obstacle)
+{
+	ObstacleList.RemoveItem(Obstacle->ObjectID);
+}
+
+void CObjectManager::RemoveObject(CBulletObject* Bullet)
+{
+	BulletList.RemoveItem(Bullet->ObjectID);
 }
 
 void CObjectManager::SetMapObject(CMapObject* MapObject)
