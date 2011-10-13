@@ -29,10 +29,13 @@ public:
 	// - time_difference (delta time), lay tu ham` CFpsController::GetFrameDt()
 	// - Cong thuc tam thoi: distance = movespeed*delta_time/10000
 	// - new position = old position + distance neu' duong` di thang?, con` neu' be? cua thi` tinh' lai cho hop li'
+	//		+ neu' newposition la destination thi goi ham ReachDestination
+	//		+ nguoc lai , update ObjectMap
 
 	void Damaged(int HP); // giam? mau' hien. tai. xuong' theo bien' HP, neu' <0 thi` die
 
-	void Die(); //huy quai' vat, remove khoi map
+	void Die(int* Money); //huy quai' vat, remove khoi map, tang money
+	void ReachDestination(int* RemainingLife);  //den' dich', huy quai vat, remove khoi map, giam LIFE
 
 	//TODO------------------------------------------------------------------------------
 
