@@ -38,6 +38,8 @@ struct SMapData
 	int Height;
 	LogicPosition SourcePosition;
 	LogicPosition DestinationPosition;
+	int GivenLife;
+	int GivenMoney;
 
 	//graphic attributes
 	int ModelID;
@@ -45,11 +47,13 @@ struct SMapData
 	//sound attributes
 	int SoundID;
 
-	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int ModelID, int SoundID)
+	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, int ModelID, int SoundID)
 	{
 		strcpy(this->MapName, MapName);
 		this->Width = Width;
 		this->Height = Height;
+		this->GivenLife = GivenLife;
+		this->GivenMoney = GivenMoney;
 		this->ModelID = ModelID;
 		this->SoundID = SoundID;
 	}

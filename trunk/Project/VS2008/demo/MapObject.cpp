@@ -6,6 +6,8 @@ CMapObject::CMapObject(SMapData *data)
 	this->data = data;
 	ObjectMap = new int[this->data->Height * this->data->Width];
 	memset(ObjectMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	RemainingLife = data->GivenLife;
+	Money = data->GivenMoney;
 
 
 	CImageManager::GetInstance()->AddImage<CFileWin32Driver>("..\\resource\\grid_cell.tga",true);

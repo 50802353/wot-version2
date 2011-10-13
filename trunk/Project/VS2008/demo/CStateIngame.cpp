@@ -9,7 +9,7 @@ void CStateIngame::Init()
 	Log("State Ingame: Init");
 
 	//Temp Data
-	SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(10,10), 0, 0);
+	SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(10,10), 100, 20, 0, 0);
 	STowerData TowerData1("TOWER_NAME_1",10,3,ETowerType::E_TOWER_ATTACK, 1, 1);
 	SEnemyData EnemyData1("ENEMY_NAME_1",30,10,2,2);
 	SObstacleData ObstacleData1("OBSTACLE_NAME_1",3,3);
