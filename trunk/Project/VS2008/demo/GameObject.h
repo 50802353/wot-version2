@@ -8,6 +8,7 @@ public:
 	virtual ~CGameObject(void);
 
 	EGameObject ObjectType;
+	int ObjectID;
 
 	virtual void Init();
 	virtual void Update();
