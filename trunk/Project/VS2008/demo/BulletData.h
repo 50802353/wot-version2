@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __BULLETDATA_H__
+#define __BULLETDATA_H__
+
 #include <string.h>
 
 struct SBulletData
@@ -23,3 +25,5 @@ struct SBulletData
 		this->SoundID = SoundID;
 	}
 };
+
+#endif

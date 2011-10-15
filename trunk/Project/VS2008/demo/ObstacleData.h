@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __OBSTACLEDATA_H__
+#define __OBSTACLEDATA_H__
 
 struct SObstacleData
 {
@@ -18,3 +19,5 @@ struct SObstacleData
 		this->SoundID = SoundID;
 	}
 };
+
+#endif

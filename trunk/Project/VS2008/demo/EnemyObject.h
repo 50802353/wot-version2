@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __ENEMYOBJECT_H__
+#define __ENEMYOBJECT_H__
+
 #include "gameobject.h"
 #include "MapObject.h"
 
@@ -41,3 +43,5 @@ public:
 
 
 };
+
+#endif

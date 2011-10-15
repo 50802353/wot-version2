@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __BULLETOBJECT_H__
+#define __BULLETOBJECT_H__
+
 #include "gameobject.h"
 #include "EnemyObject.h"
 
@@ -28,3 +30,5 @@ public:
 	//TODO------------------------------------------------------------------------------
 
 };
+
+#endif

@@ -1,5 +1,5 @@
-#pragma once
-#include <string.h>
+#ifndef __ENEMYDATA_H__
+#define __ENEMYDATA_H__
 
 struct SEnemyData
 {
@@ -23,3 +23,5 @@ struct SEnemyData
 		this->SoundID = SoundID;
 	}
 };
+
+#endif

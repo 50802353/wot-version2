@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __GAMEOBJECT_H__
+#define __GAMEOBJECT_H__
+
 #include "GameData.h"
 
 class CGameObject
@@ -16,3 +18,5 @@ public:
 	virtual void Destroy();
 
 };
+
+#endif

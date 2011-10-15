@@ -1,12 +1,17 @@
 #include "ObjectManager.h"
 
+CObjectManager* CObjectManager::CurrentObjectManager; 
+
 CObjectManager::CObjectManager(void)
 {
 	TowerKeyCounter = 0;
 	EnemyKeyCounter = 0;
 	ObstacleKeyCounter = 0;
 	BulletKeyCounter = 0;
+
 	Map = NULL;
+
+	CurrentObjectManager = this;
 }
 
 CObjectManager::~CObjectManager(void)

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __MAPOBJECT_H__
+#define __MAPOBJECT_H__
+
 #include "GameObject.h"
 
 enum EDirection
@@ -64,3 +66,5 @@ public:
 	//TODO------------------------------------------------------------------------------
 
 };
+
+#endif
