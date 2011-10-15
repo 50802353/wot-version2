@@ -6,6 +6,8 @@
 
 using namespace GameTutor;
 
+
+
 class CStateIngame: public CState
 {
 public:

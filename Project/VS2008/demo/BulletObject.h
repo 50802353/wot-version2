@@ -1,17 +1,20 @@
 #pragma once
 #include "gameobject.h"
+#include "EnemyObject.h"
 
 class CBulletObject :
 	public CGameObject
 {
 public:
-	CBulletObject(SBulletData* data, Position position, int damgage);
+	CBulletObject(SBulletData* data, Position position, CEnemyObject* target, int damgage);
 	~CBulletObject(void);
 
 	void Init();
 	void Update();
 	void Render();
 	void Destroy();
+
+	CEnemyObject* target;
 
 	Position position;
 	SBulletData *data;

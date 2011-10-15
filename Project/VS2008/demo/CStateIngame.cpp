@@ -1,6 +1,17 @@
 
 #include "CStateIngame.h"
 
+
+//Temp data
+
+	SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(10,10), 100, 20, 0, 0);
+	STowerData TowerData1("TOWER_NAME_1",10,3,ETowerType::E_TOWER_ATTACK, 1, 1);
+	SEnemyData EnemyData1("ENEMY_NAME_1",30,10,2,2);
+	SObstacleData ObstacleData1("OBSTACLE_NAME_1",3,3);
+	SBulletData BulletData1("BULLET_NAME_1",20,10,4,4);
+//--------------------------
+
+
 CStateIngame::CStateIngame():CState()
 {}
 
@@ -8,12 +19,7 @@ void CStateIngame::Init()
 {
 	Log("State Ingame: Init");
 
-	//Temp Data
-	SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(10,10), 100, 20, 0, 0);
-	STowerData TowerData1("TOWER_NAME_1",10,3,ETowerType::E_TOWER_ATTACK, 1, 1);
-	SEnemyData EnemyData1("ENEMY_NAME_1",30,10,2,2);
-	SObstacleData ObstacleData1("OBSTACLE_NAME_1",3,3);
-	SBulletData BulletData1("BULLET_NAME_1",20,10,NULL,4,4);
+	
 
 	//TempObject:	2 tower at (5,0) and (8,5), 
 	//				1 enemy at (2,2)
