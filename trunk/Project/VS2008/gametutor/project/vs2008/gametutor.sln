@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gametutor", "gametutor.vcproj", "{A97C385C-9C00-40F2-BC56-098AC607D535}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gametutor", "gametutor.vcxproj", "{A97C385C-9C00-40F2-BC56-098AC607D535}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "..\..\..\demo\demo.vcproj", "{C61E6E33-4CA9-44F7-A172-EB294589FB26}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A97C385C-9C00-40F2-BC56-098AC607D535} = {A97C385C-9C00-40F2-BC56-098AC607D535}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "demo", "..\..\..\demo\demo.vcxproj", "{C61E6E33-4CA9-44F7-A172-EB294589FB26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
