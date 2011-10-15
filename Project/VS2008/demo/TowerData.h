@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __TOWERDATA_H__
+#define __TOWERDATA_H__
+
 #include <string.h>
 
 enum ETowerType 
@@ -31,3 +33,5 @@ struct STowerData
 		this->SoundID = SoundID;
 	}
 };
+
+#endif

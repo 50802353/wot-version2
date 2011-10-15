@@ -2,13 +2,8 @@
 #include "CStateIngame.h"
 
 
-//Temp data
 
-	SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(10,10), 100, 20, 0, 0);
-	STowerData TowerData1("TOWER_NAME_1",10,3,ETowerType::E_TOWER_ATTACK, 1, 1);
-	SEnemyData EnemyData1("ENEMY_NAME_1",30,10,2,2);
-	SObstacleData ObstacleData1("OBSTACLE_NAME_1",3,3);
-	SBulletData BulletData1("BULLET_NAME_1",20,10,4,4);
+	
 //--------------------------
 
 
@@ -30,6 +25,8 @@ void CStateIngame::Init()
 	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(8,5)));
 	ObjectManager.AddObject(new CEnemyObject(&EnemyData1, LogicPosition(2,2)));
 	ObjectManager.AddObject(new CObstacleObject(&ObstacleData1, LogicPosition(3,3)));
+
+
 
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glScalef(1.0/20,1.0/20,1.0/20);

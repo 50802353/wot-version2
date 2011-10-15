@@ -1,5 +1,5 @@
-#pragma once
-#include <string.h>
+#ifndef __MAPDATA_H__
+#define __MAPDATA_H__
 
 struct LogicPosition
 {
@@ -59,3 +59,5 @@ struct SMapData
 	}
 
 };
+
+#endif

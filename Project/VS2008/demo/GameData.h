@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __GAMEDATA_H__
+#define __GAMEDATA_H__
+
 #include "gametutor.h"
 #include "TowerData.h"
 #include "EnemyData.h"
@@ -48,3 +50,13 @@ struct Position
 	}
 };
 
+//Temp data
+//Temp data
+static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(10,10), 100, 20, 0, 0);
+static STowerData TowerData1("TOWER_NAME_1",10,3,ETowerType::E_TOWER_ATTACK, 1, 1);
+static SEnemyData EnemyData1("ENEMY_NAME_1",30,10,2,2);
+static SObstacleData ObstacleData1("OBSTACLE_NAME_1",3,3);
+static SBulletData BulletData1("BULLET_NAME_1",20,10,4,4);
+
+
+#endif

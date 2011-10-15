@@ -21,4 +21,7 @@ public:
 
 	CObjectManager ObjectManager;
 };
+
+
+
 #endif

@@ -1,10 +1,14 @@
 #include "TowerObject.h"
+#include "ObjectManager.h"
+
 
 CTowerObject::CTowerObject(STowerData *data, LogicPosition position)
 {
 	this->ObjectType = EGameObject::E_OBJ_TOWER;
 	this->data = data;
 	this->position = Position(position.x+1, position.y+1, 0);
+	this->damage = data->Damage;
+	this->range = data->Range;
 }
 
 CTowerObject::~CTowerObject(void)
@@ -27,4 +31,10 @@ void CTowerObject::Render()
 
 void CTowerObject::Destroy()
 {
+}
+
+void CTowerObject::Shoot(CEnemyObject* Enemy)
+{
+	CBulletObject* Bullet = new CBulletObject(&BulletData1,this->position,Enemy,this->damage);
+	CObjectManager::CurrentObjectManager->AddObject(Bullet);
 }

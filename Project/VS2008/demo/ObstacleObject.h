@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __OBSTACLEOBJECT_H__
+#define __OBSTACLEOBJECT_H__
+
 #include "gameobject.h"
 
 class CObstacleObject :
@@ -20,3 +22,5 @@ public:
 	//chua nghi ra
 	//TODO------------------------------------------------------------------------------
 };
+
+#endif

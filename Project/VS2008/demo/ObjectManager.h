@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __OBJECTMANAGER_H__
+#define __OBJECTMANAGER_H__
+
 #include "TowerObject.h"
 #include "EnemyObject.h"
 #include "ObstacleObject.h"
@@ -8,6 +10,7 @@
 class CObjectManager
 {
 public:
+
 	CObjectManager(void);
 	~CObjectManager(void);
 
@@ -15,6 +18,8 @@ public:
 	void Update();
 	void Render();
 	void Destroy();
+
+	static CObjectManager* CurrentObjectManager;
 
 	void AddObject(CTowerObject*);
 	void AddObject(CEnemyObject*);
@@ -37,4 +42,8 @@ public:
 	int ObstacleKeyCounter;
 	CLutI<CBulletObject*> BulletList;
 	int BulletKeyCounter;
+
+
 };
+
+#endif
