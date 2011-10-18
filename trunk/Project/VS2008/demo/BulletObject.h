@@ -12,7 +12,7 @@ public:
 	~CBulletObject(void);
 
 	void Init();
-	void Update();
+	void Update(int delta_time);
 	void Render();
 	void Destroy();
 
@@ -23,7 +23,7 @@ public:
 	int damage;
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	void Move(); //xac dinh new position cua bullet, tuong tu voi' enemy, chi khac' la bullet co' the di thang? den' muc tieu ko can thong qua MapObject de tinh' o ke' tiep'
+	void Move(int delta_time); //xac dinh new position cua bullet, tuong tu voi' enemy, chi khac' la bullet co' the di thang? den' muc tieu ko can thong qua MapObject de tinh' o ke' tiep'
 
 	void Hit(); //Khi cham muc tieu, goi ham nay, gay damage len enemy, goi method Damaged cua doi tuong enemy, dong thoi huy doi' tuong bullet
 

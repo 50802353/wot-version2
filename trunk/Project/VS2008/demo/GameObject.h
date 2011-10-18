@@ -12,10 +12,10 @@ public:
 	EGameObject ObjectType;
 	int ObjectID;
 
-	virtual void Init();
-	virtual void Update();
-	virtual void Render();
-	virtual void Destroy();
+	virtual void Init()=0;
+	virtual void Update(int delta_time)=0;
+	virtual void Render()=0;
+	virtual void Destroy()=0;
 
 };
 

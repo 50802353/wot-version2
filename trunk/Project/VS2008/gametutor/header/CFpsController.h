@@ -17,7 +17,10 @@ namespace GameTutor
 		void BeginCounter();
 		void EndCounter();
 
-		__INT32 GetFrameDt() {return m_iFrameDt;}
+		__INT32 GetFrameDt() 
+		{
+			return m_iFrameDt;
+		}
 		__INT32 GetRuntimeFps() {return (m_iFrameDt)?__INT32(1000/m_iFrameDt):0;}
 
 	protected:

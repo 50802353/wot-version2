@@ -1,4 +1,5 @@
 #include "MapObject.h"
+#include "ObjectManager.h"
 
 CMapObject::CMapObject(SMapData *data)
 {
@@ -23,7 +24,7 @@ void CMapObject::Init()
 {
 }
 
-void CMapObject::Update()
+void CMapObject::Update(int delta_time)
 {
 }
 
@@ -34,6 +35,8 @@ void CMapObject::Render()
 
 void CMapObject::Destroy()
 {
+	CObjectManager::CurrentObjectManager->SetMapObject(NULL);
+	delete this;
 }
 
 

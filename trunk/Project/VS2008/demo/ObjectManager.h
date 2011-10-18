@@ -10,12 +10,12 @@
 class CObjectManager
 {
 public:
-
+	friend void CTowerObject::FindTarget();
 	CObjectManager(void);
 	~CObjectManager(void);
 
 	void Init();
-	void Update();
+	void Update(int delta_time);
 	void Render();
 	void Destroy();
 

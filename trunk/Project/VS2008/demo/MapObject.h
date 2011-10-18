@@ -19,7 +19,7 @@ public:
 	~CMapObject(void);
 
 	void Init();
-	void Update();
+	void Update(int delta_time);
 	void Render();
 	void Destroy();
 	

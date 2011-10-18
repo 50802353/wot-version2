@@ -9,6 +9,8 @@ CTowerObject::CTowerObject(STowerData *data, LogicPosition position)
 	this->position = Position(position.x+1, position.y+1, 0);
 	this->damage = data->Damage;
 	this->range = data->Range;
+	this->time_to_shoot = 0;
+	this->target = NULL;
 }
 
 CTowerObject::~CTowerObject(void)
@@ -19,8 +21,21 @@ void CTowerObject::Init()
 {
 }
 
-void CTowerObject::Update()
+void CTowerObject::Update(int delta_time)
 {
+	if ((!target) || ((target->position | this->position) > this->range))
+		FindTarget();
+
+	if (target)
+		if (time_to_shoot<=0)
+		{
+				time_to_shoot += this->data->AttackSpeed;
+				Shoot(target);
+		}
+		else
+		{
+			time_to_shoot -= delta_time;	
+		}
 }
 
 void CTowerObject::Render()
@@ -31,10 +46,40 @@ void CTowerObject::Render()
 
 void CTowerObject::Destroy()
 {
+	CObjectManager::CurrentObjectManager->RemoveObject(this);
+	delete this;
+}
+
+void CTowerObject::FindTarget()
+{
+	CObjectManager* ObjectManager = CObjectManager::CurrentObjectManager;
+	CEnemyObject* ChosenTarget = NULL;
+	ObjectManager->EnemyList.BeginTravel();
+	while (!ObjectManager->EnemyList.IsEndOfTravel())
+	{
+		CEnemyObject* cur = (CEnemyObject*)ObjectManager->EnemyList.Travel();
+		float distance = (cur->position | this->position);
+		if ((distance < range) && (!ChosenTarget || ((ChosenTarget->position | this->position)>distance)))
+			ChosenTarget = cur;
+	}
+	if (ChosenTarget) this->target = ChosenTarget;
 }
 
 void CTowerObject::Shoot(CEnemyObject* Enemy)
 {
-	CBulletObject* Bullet = new CBulletObject(&BulletData1,this->position,Enemy,this->damage);
-	CObjectManager::CurrentObjectManager->AddObject(Bullet);
+		CBulletObject* Bullet = new CBulletObject(&BulletData1,this->position,Enemy,this->damage);
+		CObjectManager::CurrentObjectManager->AddObject(Bullet);
+}
+
+void CTowerObject::Upgrade(STowerData *data)
+{
+	this->data = data;
+	this->time_to_shoot = 0;
+	CObjectManager::CurrentObjectManager->Map->Money -= this->data->Cost;
+}
+
+void CTowerObject::Sell()
+{
+	CObjectManager::CurrentObjectManager->Map->Money += int(this->data->Cost * SELL_PERCENT);
+	Destroy();	
 }
