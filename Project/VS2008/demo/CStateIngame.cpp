@@ -20,14 +20,22 @@ void CStateIngame::Init()
 	//				1 enemy at (2,2)
 	//				1 obstacle at (3,3)
 
-	ObjectManager.SetMapObject(new CMapObject(&MapData1));
+	/*ObjectManager.SetMapObject(new CMapObject(&MapData1));
 	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(5,0)));
 	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(8,5)));
 	ObjectManager.AddObject(new CEnemyObject(&EnemyData1, LogicPosition(2,2)));
+	ObjectManager.AddObject(new CObstacleObject(&ObstacleData1, LogicPosition(3,3)));*/
+
+	ObjectManager.SetMapObject(new CMapObject(&MapData1));
 	ObjectManager.AddObject(new CObstacleObject(&ObstacleData1, LogicPosition(3,3)));
 
+	//CEnemyObject *e = ;
+	//CTowerObject *t = ;	
+	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(5,0)));
+	ObjectManager.AddObject(new CEnemyObject(&EnemyData1, LogicPosition(4,2)));
 
 
+	//Set camera
 	glMatrixMode(GL_MODELVIEW_MATRIX);
 	glScalef(1.0/20,1.0/20,1.0/20);
 	glTranslatef(-5,-5,0);
@@ -37,7 +45,7 @@ void CStateIngame::Init()
 
 void CStateIngame::Update()
 {
-	ObjectManager.Update();
+	ObjectManager.Update(CFpsController::GetInstance()->GetFrameDt());
 }
 
 void CStateIngame::Render()

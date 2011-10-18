@@ -16,7 +16,7 @@ void CEnemyObject::Init()
 {
 }
 
-void CEnemyObject::Update()
+void CEnemyObject::Update(int delta_time)
 {
 }
 

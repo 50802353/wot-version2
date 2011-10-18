@@ -15,6 +15,8 @@ struct STowerData
 	char TowerName[50];
 	int Damage;
 	int Range;
+	int AttackSpeed;
+	int Cost;
 	ETowerType TowerType;
 
 	//graphic attributes
@@ -23,14 +25,16 @@ struct STowerData
 	//sound attributes
 	int SoundID;
 
-	STowerData(char* TowerName, int Damage, int Range, ETowerType TowerType, int ModelID, int SoundID)
+	STowerData(char* TowerName, int Damage, int Range, int AttackSpeed, int Cost, ETowerType TowerType, int ModelID, int SoundID)
 	{
 		strcpy(this->TowerName, TowerName);
 		this->Damage = Damage;
 		this->Range = Range;
+		this->AttackSpeed = AttackSpeed;
+		this->Cost = Cost;
 		this->TowerType = TowerType;
 		this->ModelID = ModelID;
-		this->SoundID = SoundID;
+		this->SoundID = SoundID;		
 	}
 };
 

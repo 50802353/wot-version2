@@ -15,7 +15,7 @@ void CObstacleObject::Init()
 {
 }
 
-void CObstacleObject::Update()
+void CObstacleObject::Update(int delta_time)
 {
 }
 

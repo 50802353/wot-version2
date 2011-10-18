@@ -71,36 +71,36 @@ void CObjectManager::Init()
 {
 }
 
-void CObjectManager::Update()
+void CObjectManager::Update(int delta_time)
 {
-	if (Map) Map->Update();
+	if (Map) Map->Update(delta_time);
 
 	TowerList.BeginTravel();
 	while (!TowerList.IsEndOfTravel())
 	{
 		CTowerObject* cur = (CTowerObject*)TowerList.Travel();
-		cur->Update();
+		cur->Update(delta_time);
 	}
 
 	EnemyList.BeginTravel();
 	while (!EnemyList.IsEndOfTravel())
 	{
 		CEnemyObject* cur = (CEnemyObject*)EnemyList.Travel();
-		cur->Update();
+		cur->Update(delta_time);
 	}
 
 	BulletList.BeginTravel();
 	while (!BulletList.IsEndOfTravel())
 	{
 		CBulletObject* cur = (CBulletObject*)BulletList.Travel();
-		cur->Update();
+		cur->Update(delta_time);
 	}
 
 	ObstacleList.BeginTravel();
 	while (!ObstacleList.IsEndOfTravel())
 	{
 		CObstacleObject* cur = (CObstacleObject*)ObstacleList.Travel();
-		cur->Update();
+		cur->Update(delta_time);
 	}
 }
 
@@ -139,4 +139,13 @@ void CObjectManager::Render()
 
 void CObjectManager::Destroy()
 {
+	TowerList.DeallocateElementPointer();
+	TowerList.Clear();
+	EnemyList.DeallocateElementPointer();
+	EnemyList.Clear();
+	BulletList.DeallocateElementPointer();
+	BulletList.Clear();
+	ObstacleList.DeallocateElementPointer();
+	ObstacleList.Clear();
+	delete this;
 }
