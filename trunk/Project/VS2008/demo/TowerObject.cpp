@@ -7,6 +7,7 @@ CTowerObject::CTowerObject(STowerData *data, LogicPosition position)
 	this->ObjectType = EGameObject::E_OBJ_TOWER;
 	this->data = data;
 	this->position = Position(position.x+1, position.y+1, 0);
+	this->logicposition = position;
 	this->damage = data->Damage;
 	this->range = data->Range;
 	this->time_to_shoot = 0;
@@ -23,7 +24,7 @@ void CTowerObject::Init()
 
 void CTowerObject::Update(int delta_time)
 {
-	if ((!target) || ((target->position | this->position) > this->range))
+	if ((!target) || (!target->isInMap) || ((target->position | this->position) > this->range))
 		FindTarget();
 
 	if (target)
@@ -55,14 +56,18 @@ void CTowerObject::FindTarget()
 	CObjectManager* ObjectManager = CObjectManager::CurrentObjectManager;
 	CEnemyObject* ChosenTarget = NULL;
 	ObjectManager->EnemyList.BeginTravel();
+	float mindistance=-1;
 	while (!ObjectManager->EnemyList.IsEndOfTravel())
 	{
 		CEnemyObject* cur = (CEnemyObject*)ObjectManager->EnemyList.Travel();
 		float distance = (cur->position | this->position);
-		if ((distance < range) && (!ChosenTarget || ((ChosenTarget->position | this->position)>distance)))
+		if ((cur->isInMap) && (distance < range) && (!ChosenTarget || ((mindistance==-1)||(mindistance>distance))))
+		{
 			ChosenTarget = cur;
+			mindistance = distance;
+		}
 	}
-	if (ChosenTarget) this->target = ChosenTarget;
+	this->target = ChosenTarget;
 }
 
 void CTowerObject::Shoot(CEnemyObject* Enemy)

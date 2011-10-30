@@ -29,10 +29,8 @@ void CStateIngame::Init()
 	ObjectManager.SetMapObject(new CMapObject(&MapData1));
 	ObjectManager.AddObject(new CObstacleObject(&ObstacleData1, LogicPosition(3,3)));
 
-	//CEnemyObject *e = ;
 	//CTowerObject *t = ;	
 	ObjectManager.AddObject(new CTowerObject(&TowerData1, LogicPosition(5,0)));
-	ObjectManager.AddObject(new CEnemyObject(&EnemyData1, LogicPosition(4,2)));
 
 
 	//Set camera

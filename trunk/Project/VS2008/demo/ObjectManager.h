@@ -31,6 +31,11 @@ public:
 	void RemoveObject(CObstacleObject*);
 	void RemoveObject(CBulletObject*);
 
+	void ClearEnemy();
+	void ClearTower();
+	void ClearObstacle();
+	void ClearBullet();
+
 	void SetMapObject(CMapObject*);
 
 	CMapObject* Map;

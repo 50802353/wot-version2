@@ -20,6 +20,7 @@ public:
 	void Destroy();
 
 	Position position;
+	LogicPosition logicposition;
 	STowerData *data;
 
 	int damage;

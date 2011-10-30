@@ -16,6 +16,7 @@ public:
 	void Destroy();
 
 	Position position;
+	LogicPosition logicposition;
 	SObstacleData *data;
 
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

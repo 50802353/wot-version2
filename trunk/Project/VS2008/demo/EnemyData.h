@@ -7,18 +7,19 @@ struct SEnemyData
 	char EnemyName[50];
 	int MaxHP;
 	int MoveSpeed;
-
+	int Bounty;
 	//graphic attributes
 	int ModelID;
 	
 	//sound attributes
 	int SoundID;
 
-	SEnemyData(char* EnemyName, int MaxHP, int MoveSpeed, int ModelID, int SoundID)
+	SEnemyData(char* EnemyName, int MaxHP, int MoveSpeed, int Bounty, int ModelID, int SoundID)
 	{
 		strcpy(this->EnemyName,EnemyName);
 		this->MaxHP = MaxHP;
 		this->MoveSpeed = MoveSpeed;
+		this->Bounty = Bounty;
 		this->ModelID = ModelID;
 		this->SoundID = SoundID;
 	}

@@ -20,8 +20,23 @@ CObjectManager::~CObjectManager(void)
 
 void CObjectManager::AddObject(CTowerObject* Tower)
 {
-	Tower->ObjectID = ++TowerKeyCounter;
-	TowerList.AddItem(TowerKeyCounter, Tower);	
+	int* NewObjectMap = new int[Map->data->Width* Map->data->Height];
+	memcpy(NewObjectMap, Map->ObjectMap, sizeof(int)*Map->data->Width* Map->data->Height);
+	NewObjectMap[Tower->logicposition.y *Map->data->Width + Tower->logicposition.x] = E_OBJ_TOWER;
+	NewObjectMap[(Tower->logicposition.y+1) *Map->data->Width + Tower->logicposition.x] = E_OBJ_TOWER;
+	NewObjectMap[Tower->logicposition.y *Map->data->Width + (Tower->logicposition.x+1)] = E_OBJ_TOWER;
+	NewObjectMap[(Tower->logicposition.y+1) *Map->data->Width + (Tower->logicposition.x+1)] = E_OBJ_TOWER;
+	int* NewDirectionMap = new int[Map->data->Width* Map->data->Height];
+	memset(NewDirectionMap, 0, sizeof(int)*Map->data->Width* Map->data->Height);
+	if (Map->CalculateEnemyPath(NewObjectMap, NewDirectionMap))
+	{
+		Tower->ObjectID = ++TowerKeyCounter;
+		TowerList.AddItem(TowerKeyCounter, Tower);	
+		SAFE_DEL(Map->ObjectMap);
+		Map->ObjectMap = NewObjectMap;
+		SAFE_DEL(Map->DirectionMap);
+		Map->DirectionMap = NewDirectionMap;
+	}	
 }
 
 void CObjectManager::AddObject(CEnemyObject* Enemy)
@@ -40,6 +55,7 @@ void CObjectManager::AddObject(CObstacleObject* Obstacle)
 {
 	Obstacle->ObjectID = ++ObstacleKeyCounter;
 	ObstacleList.AddItem(ObstacleKeyCounter, Obstacle);	
+	Map->ObjectMap[Obstacle->logicposition.y *Map->data->Width + Obstacle->logicposition.x] = E_OBJ_OBSTACLE;
 }
 
 void CObjectManager::RemoveObject(CTowerObject* Tower)
@@ -148,4 +164,28 @@ void CObjectManager::Destroy()
 	ObstacleList.DeallocateElementPointer();
 	ObstacleList.Clear();
 	delete this;
+}
+
+void CObjectManager::ClearEnemy()
+{
+	EnemyList.DeallocateElementPointer();
+	EnemyList.Clear();
+}
+
+void CObjectManager::ClearTower()
+{
+	TowerList.DeallocateElementPointer();
+	TowerList.Clear();
+}
+
+void CObjectManager::ClearBullet()
+{
+	BulletList.DeallocateElementPointer();
+	BulletList.Clear();
+}
+
+void CObjectManager::ClearObstacle()
+{
+	ObstacleList.DeallocateElementPointer();
+	ObstacleList.Clear();
 }
