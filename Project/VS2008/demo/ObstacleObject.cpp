@@ -5,6 +5,7 @@ CObstacleObject::CObstacleObject(SObstacleData *data, LogicPosition position)
 	this->ObjectType = EGameObject::E_OBJ_OBSTACLE;
 	this->data = data;
 	this->position = Position(position.x+0.5,position.y+0.5,0);
+	this->logicposition = position;
 }
 
 CObstacleObject::~CObstacleObject(void)

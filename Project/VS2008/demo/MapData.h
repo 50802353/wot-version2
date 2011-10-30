@@ -1,6 +1,8 @@
 #ifndef __MAPDATA_H__
 #define __MAPDATA_H__
 
+#include "EnemyData.h"
+
 struct LogicPosition
 {
 	int x;
@@ -28,8 +30,31 @@ struct LogicPosition
 	{
 		return LogicPosition(x + pos.x, y + pos.y);
 	}
+
+	bool operator == (const LogicPosition pos)
+	{
+		return (pos.x == x) && (pos.y == y);
+	}
 };
 
+#define MAX_ENEMYS_PER_WAVE 20
+struct SWaveData
+{
+	int Quantity;
+	int SpawnTime[MAX_ENEMYS_PER_WAVE];
+	SEnemyData* Enemy[MAX_ENEMYS_PER_WAVE];
+
+	SWaveData(int Quantity,int* SpawnTime,SEnemyData** Enemy)
+	{
+		this->Quantity = Quantity;
+		memset(this->SpawnTime, 0, sizeof(SpawnTime));
+		memcpy(this->SpawnTime, SpawnTime, sizeof(int)*Quantity);
+		memset(this->Enemy, 0, sizeof(this->Enemy));
+		memcpy(this->Enemy, Enemy, sizeof(SEnemyData*)*Quantity);
+	}
+};
+
+#define MAX_WAVES_PER_MAP 20
 struct SMapData
 {
 	//logic attributes
@@ -40,6 +65,9 @@ struct SMapData
 	LogicPosition DestinationPosition;
 	int GivenLife;
 	int GivenMoney;
+	int NumberOfWaves;
+	SWaveData* Wave[MAX_WAVES_PER_MAP];
+
 
 	//graphic attributes
 	int ModelID;
@@ -47,15 +75,20 @@ struct SMapData
 	//sound attributes
 	int SoundID;
 
-	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, int ModelID, int SoundID)
+	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, int NumberOfWaves, SWaveData** Wave, int ModelID, int SoundID)
 	{
 		strcpy(this->MapName, MapName);
 		this->Width = Width;
 		this->Height = Height;
+		this->SourcePosition = SourcePosition;
+		this->DestinationPosition = DestinationPosition;
 		this->GivenLife = GivenLife;
 		this->GivenMoney = GivenMoney;
+		this->NumberOfWaves = NumberOfWaves;
+		memset(this->Wave, 0, sizeof(this->Wave));
+		memcpy(this->Wave, Wave, sizeof(SWaveData*)*NumberOfWaves);
 		this->ModelID = ModelID;
-		this->SoundID = SoundID;
+		this->SoundID = SoundID;		
 	}
 
 };
