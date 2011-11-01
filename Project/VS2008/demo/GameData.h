@@ -11,6 +11,7 @@
 
 enum EGameObject
 {
+	E_OBJ_NONE,
 	E_OBJ_TOWER=1,
 	E_OBJ_ENEMY,
 	E_OBJ_BULLET,
@@ -79,7 +80,7 @@ struct Position
 static STowerData TowerData1("TOWER_NAME_1", 10, 4, 500, 100, ETowerType::E_TOWER_ATTACK, 1, 1);
 static SEnemyData EnemyData1("ENEMY_NAME_1", 30, 10, 20, 2, 2);
 static SObstacleData ObstacleData1("OBSTACLE_NAME_1", 3, 3);
-static SBulletData BulletData1("BULLET_NAME_1", 20, 10, 4, 4);
+static SBulletData BulletData1("BULLET_NAME_1", 50, 10, 4, 4);
 
 static int			SpawnTime[5]	=	{5000,			1000,			1000,			1000,			1000};
 static SEnemyData*	Enemy[5]		=	{&EnemyData1,	&EnemyData1,	&EnemyData1,	&EnemyData1,	&EnemyData1};

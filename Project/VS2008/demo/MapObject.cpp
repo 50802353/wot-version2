@@ -36,13 +36,15 @@ void CMapObject::Update(int delta_time)
 	static int EnemyIndexInWave;
 	if ((!isSpawnTime) && (NumberOfEnemyInMap==0))
 	{
-		if (CurrentWave < this->data->NumberOfWaves)
+		if (CObjectManager::CurrentObjectManager->BulletList.GetCount()==0)
 		{
-			CObjectManager::CurrentObjectManager->ClearEnemy();
-			isSpawnTime = true;
-			EnemyIndexInWave = 0;
-			NextSpawnTime = this->data->Wave[CurrentWave]->SpawnTime[EnemyIndexInWave];
-
+			if (CurrentWave < this->data->NumberOfWaves)
+			{
+				CObjectManager::CurrentObjectManager->ClearEnemy();
+				isSpawnTime = true;
+				EnemyIndexInWave = 0;
+				NextSpawnTime = this->data->Wave[CurrentWave]->SpawnTime[EnemyIndexInWave];
+			}
 		}
 	}
 
@@ -76,6 +78,7 @@ void CMapObject::Update(int delta_time)
 void CMapObject::Render()
 {
 	CGraphics2D::GetInstance()->DrawImageRegion(SRect<float>(0,0,10,10),MapGridTexture,SRect<float>(0,0,MapGridTexture->GetWidth()*10,MapGridTexture->GetHeight()*10));
+	CGraphics2D::GetInstance()->Flush();
 }
 
 void CMapObject::Destroy()
@@ -139,3 +142,25 @@ bool CMapObject::CalculateEnemyPath(int* ObjectMap, int* DirectionMap)
 }
 
 
+void CMapObject::BuildTower(STowerData* data, LogicPosition position)
+{
+	CTowerObject* tower = new CTowerObject(data);
+	int* NewObjectMap = new int[this->data->Width* this->data->Height];
+	memcpy(NewObjectMap, this->ObjectMap, sizeof(int)*this->data->Width* this->data->Height);
+	NewObjectMap[position.y *this->data->Width + position.x] = E_OBJ_TOWER;
+	NewObjectMap[(position.y+1) *this->data->Width + position.x] = E_OBJ_TOWER;
+	NewObjectMap[position.y *this->data->Width + (position.x+1)] = E_OBJ_TOWER;
+	NewObjectMap[(position.y+1) *this->data->Width + (position.x+1)] = E_OBJ_TOWER;
+	int* NewDirectionMap = new int[this->data->Width* this->data->Height];
+	memset(NewDirectionMap, 0, sizeof(int)*this->data->Width* this->data->Height);
+	if (CalculateEnemyPath(NewObjectMap, NewDirectionMap))
+	{
+		tower->logicposition = position;
+		tower->position = Position(position.x+1, position.y+1, 0);
+		CObjectManager::CurrentObjectManager->AddObject(tower);
+		SAFE_DEL(ObjectMap);
+		this->ObjectMap = NewObjectMap;
+		SAFE_DEL(DirectionMap);
+		this->DirectionMap = NewDirectionMap;
+	}	
+}

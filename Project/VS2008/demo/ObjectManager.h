@@ -17,6 +17,7 @@ public:
 	void Init();
 	void Update(int delta_time);
 	void Render();
+	void RenderInSelectMode();
 	void Destroy();
 
 	static CObjectManager* CurrentObjectManager;

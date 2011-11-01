@@ -2,16 +2,20 @@
 #include "ObjectManager.h"
 
 
-CTowerObject::CTowerObject(STowerData *data, LogicPosition position)
+
+CTowerObject::CTowerObject(STowerData *data)
 {
 	this->ObjectType = EGameObject::E_OBJ_TOWER;
 	this->data = data;
-	this->position = Position(position.x+1, position.y+1, 0);
-	this->logicposition = position;
+	this->position = Position(1, 1, 0);
+	this->logicposition = LogicPosition(0, 0);
 	this->damage = data->Damage;
 	this->range = data->Range;
 	this->time_to_shoot = 0;
 	this->target = NULL;
+	this->isSelected = false;
+	this->Map = CObjectManager::CurrentObjectManager->Map;
+
 }
 
 CTowerObject::~CTowerObject(void)
@@ -41,8 +45,13 @@ void CTowerObject::Update(int delta_time)
 
 void CTowerObject::Render()
 {
-	CGraphics2D::GetInstance()->SetColor(SColor<float>(0,1,0,1));
-	CGraphics2D::GetInstance()->FillRect(SRect<float>(position.x-1, position.y-1, 2, 2));
+	if (isSelected)
+		CGraphics2D::GetInstance()->SetColor(SColor<float>(0,1,0,1));
+	else
+		CGraphics2D::GetInstance()->SetColor(SColor<float>(0,0.8,0,1));
+
+	CGraphics2D::GetInstance()->FillRect(SRect<float>(position.x-0.9, position.y-0.9, 1.8, 1.8));
+	CGraphics2D::GetInstance()->Flush();
 }
 
 void CTowerObject::Destroy()
@@ -88,3 +97,5 @@ void CTowerObject::Sell()
 	CObjectManager::CurrentObjectManager->Map->Money += int(this->data->Cost * SELL_PERCENT);
 	Destroy();	
 }
+
+

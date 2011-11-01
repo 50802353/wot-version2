@@ -15,6 +15,8 @@
 #	include "../libs/ogl/gl.h"
 #	include "../libs/ogl/glext.h"
 #	pragma comment(lib, "opengl32.lib")
+#	include "../libs/ogl/glu.h"
+#	pragma comment(lib, "glu32.lib")
 
 #	include "../libs/oal/al.h"
 #	include "../libs/oal/alc.h"

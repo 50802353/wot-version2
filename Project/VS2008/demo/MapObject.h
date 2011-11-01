@@ -41,6 +41,8 @@ public:
 	// gia tri cua moi phan tu la enum EDirection
 	bool isSpawnTime;
 
+	void BuildTower(STowerData* data, LogicPosition position);
+
 
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
