@@ -20,23 +20,8 @@ CObjectManager::~CObjectManager(void)
 
 void CObjectManager::AddObject(CTowerObject* Tower)
 {
-	int* NewObjectMap = new int[Map->data->Width* Map->data->Height];
-	memcpy(NewObjectMap, Map->ObjectMap, sizeof(int)*Map->data->Width* Map->data->Height);
-	NewObjectMap[Tower->logicposition.y *Map->data->Width + Tower->logicposition.x] = E_OBJ_TOWER;
-	NewObjectMap[(Tower->logicposition.y+1) *Map->data->Width + Tower->logicposition.x] = E_OBJ_TOWER;
-	NewObjectMap[Tower->logicposition.y *Map->data->Width + (Tower->logicposition.x+1)] = E_OBJ_TOWER;
-	NewObjectMap[(Tower->logicposition.y+1) *Map->data->Width + (Tower->logicposition.x+1)] = E_OBJ_TOWER;
-	int* NewDirectionMap = new int[Map->data->Width* Map->data->Height];
-	memset(NewDirectionMap, 0, sizeof(int)*Map->data->Width* Map->data->Height);
-	if (Map->CalculateEnemyPath(NewObjectMap, NewDirectionMap))
-	{
-		Tower->ObjectID = ++TowerKeyCounter;
-		TowerList.AddItem(TowerKeyCounter, Tower);	
-		SAFE_DEL(Map->ObjectMap);
-		Map->ObjectMap = NewObjectMap;
-		SAFE_DEL(Map->DirectionMap);
-		Map->DirectionMap = NewDirectionMap;
-	}	
+	Tower->ObjectID = ++TowerKeyCounter;
+	TowerList.AddItem(TowerKeyCounter, Tower);	
 }
 
 void CObjectManager::AddObject(CEnemyObject* Enemy)
@@ -61,6 +46,10 @@ void CObjectManager::AddObject(CObstacleObject* Obstacle)
 void CObjectManager::RemoveObject(CTowerObject* Tower)
 {
 	TowerList.RemoveItem(Tower->ObjectID);
+	Map->ObjectMap[Tower->logicposition.y *Map->data->Width + Tower->logicposition.x] = E_OBJ_NONE;
+	Map->ObjectMap[(Tower->logicposition.y+1) *Map->data->Width + Tower->logicposition.x] = E_OBJ_NONE;
+	Map->ObjectMap[Tower->logicposition.y *Map->data->Width + (Tower->logicposition.x+1)] = E_OBJ_NONE;
+	Map->ObjectMap[(Tower->logicposition.y+1) *Map->data->Width + (Tower->logicposition.x+1)] = E_OBJ_NONE;
 }
 
 void CObjectManager::RemoveObject(CEnemyObject* Enemy)
@@ -151,6 +140,27 @@ void CObjectManager::Render()
 		CObstacleObject* cur = (CObstacleObject*)ObstacleList.Travel();
 		cur->Render();
 	}
+}
+
+void CObjectManager::RenderInSelectMode()
+{
+	glInitNames();
+	glPushName(1);
+	if (Map) Map->Render();
+	glPopName();
+
+	glPushName(2);
+	TowerList.BeginTravel();
+	int count = 0;
+	while (!TowerList.IsEndOfTravel())
+	{
+		CTowerObject* cur = (CTowerObject*)TowerList.Travel();
+		glPushName((unsigned int)cur);
+		cur->Render();
+		cur->isSelected=false;
+		glPopName();
+	}
+	glPopName();
 }
 
 void CObjectManager::Destroy()

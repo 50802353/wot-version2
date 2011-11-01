@@ -30,7 +30,8 @@ void CEnemyObject::Render()
 {
 	if (!isInMap) return;
 	CGraphics2D::GetInstance()->SetColor(SColor<float>(1,0,0,1));
-	CGraphics2D::GetInstance()->FillRect(SRect<float>(position.x-0.5, position.y-0.5, 1, 1));
+	CGraphics2D::GetInstance()->FillRect(SRect<float>(position.x-0.4, position.y-0.4, 0.8, 0.8));
+	CGraphics2D::GetInstance()->Flush();
 }
 
 void CEnemyObject::Destroy()

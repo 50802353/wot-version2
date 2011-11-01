@@ -11,7 +11,7 @@ class CTowerObject :
 	public CGameObject
 {
 public:
-	CTowerObject(STowerData *data, LogicPosition position);
+	CTowerObject(STowerData *data);
 	~CTowerObject(void);
 
 	void Init();
@@ -26,7 +26,10 @@ public:
 	int damage;
 	int range;
 	int time_to_shoot;
+	bool isSelected;
 	CEnemyObject* target;
+
+	CMapObject* Map;
 
 
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

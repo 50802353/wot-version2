@@ -27,6 +27,7 @@ void CBulletObject::Render()
 {
 	CGraphics2D::GetInstance()->SetColor(SColor<float>(1,1,1,1));
 	CGraphics2D::GetInstance()->FillRect(SRect<float>(position.x-0.1, position.y-0.1, 0.2, 0.2));
+	CGraphics2D::GetInstance()->Flush();
 }
 
 void CBulletObject::Destroy()

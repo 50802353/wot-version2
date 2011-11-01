@@ -24,6 +24,7 @@ void CObstacleObject::Render()
 {
 	CGraphics2D::GetInstance()->SetColor(SColor<float>(1,1,0,1));
 	CGraphics2D::GetInstance()->FillRect(SRect<float>(position.x-0.5, position.y-0.5, 1, 1));
+	CGraphics2D::GetInstance()->Flush();
 }
 
 void CObstacleObject::Destroy()
