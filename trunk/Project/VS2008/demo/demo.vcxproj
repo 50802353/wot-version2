@@ -35,7 +35,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
@@ -81,6 +81,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CDemo.cpp" />
+    <ClCompile Include="CStateLogo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CStateIngame.cpp" />
     <ClCompile Include="BulletObject.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="CDemo.h" />
     <ClInclude Include="CStateIngame.h" />
     <ClInclude Include="BulletObject.h" />
+    <ClInclude Include="CStateLogo.h" />
     <ClInclude Include="EnemyObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MapObject.h" />
