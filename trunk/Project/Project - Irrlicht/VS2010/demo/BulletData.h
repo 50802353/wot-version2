@@ -12,7 +12,7 @@ struct SBulletData
 
 	//graphic attributes
 	int ModelID;
-	
+
 	//sound attributes
 	int SoundID;
 
