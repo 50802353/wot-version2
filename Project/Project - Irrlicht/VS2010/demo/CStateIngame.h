@@ -39,6 +39,8 @@ public:
 	int select_y;
 
 	scene::IBillboardSceneNode* cursor ;
+	void updateSelectPane(STowerData** list);
+	gui::IGUIImage* selectPane[11];
 };
 
 

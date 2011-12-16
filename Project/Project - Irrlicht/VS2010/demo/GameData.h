@@ -76,15 +76,18 @@ struct Position
 //Temp data
 //Temp data
 
-static SModelData ModelData1("./resource/model/Avenger/Avenger.md2", "./resource/model/Avenger/Avenger.bmp", "./resource/model/Avenger/avatar.bmp", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData2("./resource/model/boba-fett/model.md2", "./resource/model/boba-fett/material.jpg", "./resource/model/boba-fett/avatar.bmp", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData3("./resource/model/DrFreak/DrFreak.md2", "./resource/model/DrFreak/DrFreak.bmp", "./resource/model/DrFreak/avatar.bmp", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData1("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon.tga", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData2("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr.tga", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData3("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData4("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar.png", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
 
+static STowerData* UpgradeTowerList4[5]={0,0,0,0,0};
+static STowerData TowerData4("TOWER_NAME_4", 10, 4, 1000, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList4, ModelData4, 1);
 static STowerData* UpgradeTowerList3[5]={0,0,0,0,0};
-static STowerData TowerData3("TOWER_NAME_1", 10, 4, 1000, 100, ETowerType::E_TOWER_ATTACK, UpgradeTowerList3, ModelData2, 1);
+static STowerData TowerData3("TOWER_NAME_3", 10, 4, 1000, 100, ETowerType::E_TOWER_ATTACK, UpgradeTowerList3, ModelData2, 1);
 static STowerData* UpgradeTowerList2[5]={&TowerData3,0,0,0,0};
-static STowerData TowerData2("TOWER_NAME_1", 10, 4, 900, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList2, ModelData1, 1);
-static STowerData* UpgradeTowerList1[5]={&TowerData2,0,0,0,0};
+static STowerData TowerData2("TOWER_NAME_2", 10, 4, 900, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList2, ModelData1, 1);
+static STowerData* UpgradeTowerList1[5]={&TowerData2,&TowerData4,0,0,0};
 static STowerData TowerData1("TOWER_NAME_1", 10, 4, 800, 70, ETowerType::E_TOWER_ATTACK, UpgradeTowerList1, ModelData3, 1);
 static SEnemyData EnemyData1("ENEMY_NAME_1", 50, 30, 20, ModelData3, 2);
 static SObstacleData ObstacleData1("OBSTACLE_NAME_1", 3, 3);
