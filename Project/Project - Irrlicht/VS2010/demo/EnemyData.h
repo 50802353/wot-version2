@@ -1,5 +1,6 @@
 #ifndef __ENEMYDATA_H__
 #define __ENEMYDATA_H__
+#include "ModelData.h"
 
 struct SEnemyData
 {
@@ -9,18 +10,18 @@ struct SEnemyData
 	int MoveSpeed;
 	int Bounty;
 	//graphic attributes
-	int ModelID;
+	SModelData ModelData;
 	
 	//sound attributes
 	int SoundID;
 
-	SEnemyData(char* EnemyName, int MaxHP, int MoveSpeed, int Bounty, int ModelID, int SoundID)
+	SEnemyData(char* EnemyName, int MaxHP, int MoveSpeed, int Bounty, SModelData ModelData, int SoundID)
 	{
 		strcpy(this->EnemyName,EnemyName);
 		this->MaxHP = MaxHP;
 		this->MoveSpeed = MoveSpeed;
 		this->Bounty = Bounty;
-		this->ModelID = ModelID;
+		this->ModelData = ModelData;
 		this->SoundID = SoundID;
 	}
 };

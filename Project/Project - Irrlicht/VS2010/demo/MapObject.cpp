@@ -43,7 +43,7 @@ void CMapObject::Init()
                 4											 // smoothFactor
                 );
 
-        //sceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+        //sceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 
         sceneNode->setMaterialTexture(0,
                         driver->getTexture("./resource/terrain-texture.jpg"));
@@ -178,8 +178,7 @@ bool CMapObject::CalculateEnemyPath(int* ObjectMap, int* DirectionMap)
 	return isValid;
 }
 
-
-void CMapObject::BuildTower(STowerData* data, LogicPosition position)
+bool CMapObject::BuildTower(STowerData* data, LogicPosition position)
 {
 	CTowerObject* tower = new CTowerObject(data);
 	int* NewObjectMap = new int[this->data->Width* this->data->Height];
@@ -194,7 +193,8 @@ void CMapObject::BuildTower(STowerData* data, LogicPosition position)
 			else
 			{
 				delete NewObjectMap;
-				return;
+				tower->Destroy();
+				return false;
 			}
 
 	/*NewObjectMap[position.y *this->data->Width + position.x] = E_OBJ_TOWER;
@@ -208,12 +208,71 @@ void CMapObject::BuildTower(STowerData* data, LogicPosition position)
 		tower->logicposition = position;
 		tower->position = Position(position.x+1, position.y+1, 0.8);
 		tower->sceneNode->setPosition(irr::core::vector3df(tower->position.x, tower->position.z, tower->position.y));
+
+
+		tower->particleSystem =
+		smgr->addParticleSystemSceneNode(false);
+
+		core::vector3df normal(0,0.5,0);
+		scene::IParticleEmitter* em  = tower->particleSystem->createRingEmitter(
+			core::vector3df(0,0,0),
+			0.5,
+			0.1,
+			core::vector3df(0,0.001,0),
+			8U,
+			10U,
+			video::SColor(0,255,255,255),
+			video::SColor(0,255,255,255),
+			1000U,
+			2000U,
+			0,
+			core::dimension2df(0.5,0.5),
+			core::dimension2df(0.1,0.1));
+
+		tower->particleSystem->setEmitter(em);
+		em->drop();
+		tower->particleSystem->setScale(core::vector3df(1,1,1));
+		tower->particleSystem->setMaterialFlag(video::EMF_LIGHTING, false);
+		tower->particleSystem->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+		tower->particleSystem->setMaterialTexture(0, driver->getTexture("./resource/particle.bmp"));
+		tower->particleSystem->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
+
+		tower->particleSystem->setPosition(irr::core::vector3df(tower->position.x, tower->position.z-0.7, tower->position.y));
+		scene::IParticleAffector* paf =   tower->particleSystem->createRotationAffector(core::vector3df(0,500,0),irr::core::vector3df(tower->position.x, tower->position.z-0.7, tower->position.y));
+		tower->particleSystem->addAffector(paf);
+		paf->drop();
+		paf = tower->particleSystem->createAttractionAffector(irr::core::vector3df(tower->position.x, tower->position.z+5, tower->position.y),0.5);
+		tower->particleSystem->addAffector(paf);
+		paf->drop();
+		paf = tower->particleSystem->createFadeOutParticleAffector();
+		tower->particleSystem->addAffector(paf);
+		paf->drop();
+
 		CObjectManager::CurrentObjectManager->AddObject(tower);
 		SAFE_DEL(ObjectMap);
 		this->ObjectMap = NewObjectMap;
 		SAFE_DEL(DirectionMap);
 		this->DirectionMap = NewDirectionMap;
+		return true;
 	}	
+	else
+	{
+		delete NewObjectMap;
+		tower->Destroy();
+		return false;
+	}
+}
+
+boolean CMapObject::iSBuildable(int x, int y)
+{
+	if (x<0) return false;
+	if (x>=data->Width-1) return false;
+	if (y<0) return false;
+	if (y>=data->Height-1) return false;
+	int* OMap = CObjectManager::CurrentObjectManager->GetMapObjectIncludingEnemy();
+	if (OMap[y*data->Width+x]==E_OBJ_NONE && OMap[(y+1)*data->Width+x]==E_OBJ_NONE &&
+		OMap[y*data->Width+x+1]==E_OBJ_NONE && OMap[(y+1)*data->Width+x+1]==E_OBJ_NONE) return true;
+	else return false;
 }
 
 void CMapObject::AddObstacle(SObstacleData* data, LogicPosition position, int size)

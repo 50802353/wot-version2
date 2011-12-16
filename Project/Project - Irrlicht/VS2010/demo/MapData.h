@@ -67,6 +67,7 @@ struct SMapData
 	int GivenMoney;
 	int NumberOfWaves;
 	SWaveData* Wave[MAX_WAVES_PER_MAP];
+	STowerData* BasicTowerList[5];
 
 
 	//graphic attributes
@@ -75,7 +76,7 @@ struct SMapData
 	//sound attributes
 	int SoundID;
 
-	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, int NumberOfWaves, SWaveData** Wave, int ModelID, int SoundID)
+	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, int NumberOfWaves, SWaveData** Wave, STowerData** BasicTowerList, int ModelID, int SoundID)
 	{
 		strcpy(this->MapName, MapName);
 		this->Width = Width;
@@ -87,6 +88,7 @@ struct SMapData
 		this->NumberOfWaves = NumberOfWaves;
 		memset(this->Wave, 0, sizeof(this->Wave));
 		memcpy(this->Wave, Wave, sizeof(SWaveData*)*NumberOfWaves);
+		memcpy(this->BasicTowerList,BasicTowerList, sizeof(STowerData*)*5);
 		this->ModelID = ModelID;
 		this->SoundID = SoundID;		
 	}

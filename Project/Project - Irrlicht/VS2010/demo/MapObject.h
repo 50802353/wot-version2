@@ -43,11 +43,11 @@ public:
 	// gia tri cua moi phan tu la enum EDirection
 	bool isSpawnTime;
 
-	void BuildTower(STowerData* data, LogicPosition position);
+	bool BuildTower(STowerData* data, LogicPosition position);
 	void AddObstacle(SObstacleData* data, LogicPosition position, int size);
 
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+	boolean iSBuildable(int x, int y);
 	bool CalculateEnemyPath(int* ObjectMap, int* DirectionMap);//viet ham tinh lai DirectionMap, thuat toan loan dau`, loan tu data->DestinationPosition, loan cho den khi het DirectionMap, moi lan qua o khac +1
 	void Win();
 	void Lose();

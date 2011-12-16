@@ -13,86 +13,88 @@ namespace GameTutor
 {
 	extern SGameConfig Configuation;
 	extern class CGame;
+
 	class MyEventReceiver : public irr::IEventReceiver
 	{
 	public:
 		// This is the one method that we have to implement
 		virtual bool OnEvent(const irr::SEvent& event)
 		{
-				// Remember whether each key is down or up
-				SControllerEvent Event;
-				if (event.EventType == irr::EET_KEY_INPUT_EVENT)
-				{
-					if (event.KeyInput.PressedDown)
-					{					
-						Event.Type = ECE_KEY;
-						Event.KeyData.Event = EKE_PRESSED;
-						Event.KeyData.KeyCode = event.KeyInput.Key;
-						CGame::GetInstance()->SetEvent(Event);
-					}
-					else
-					{
-						Event.Type = ECE_KEY;
-						Event.KeyData.Event = EKE_RELEASED;
-						Event.KeyData.KeyCode = event.KeyInput.Key;
-						CGame::GetInstance()->SetEvent(Event);
-					}
+			// Remember whether each key is down or up
+			SControllerEvent Event;
+			if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+			{
+				if (event.KeyInput.PressedDown)
+				{					
+					Event.Type = ECE_KEY;
+					Event.KeyData.Event = EKE_PRESSED;
+					Event.KeyData.KeyCode = event.KeyInput.Key;
+					CGame::GetInstance()->SetEvent(Event);
 				}
-				else if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
+				else
 				{
-					/*if (event.MouseInput.Event == EMOUSE_INPUT_EVENT::
-					case WM_LBUTTONDOWN:
-						if (!CIrrlichtView::GetInstance()) return 0;
-						CIrrlichtView::GetInstance()->m_isLeftMouseDown = true;
+					Event.Type = ECE_KEY;
+					Event.KeyData.Event = EKE_RELEASED;
+					Event.KeyData.KeyCode = event.KeyInput.Key;
+					CGame::GetInstance()->SetEvent(Event);
+				}
+			}
+			else if (event.EventType == irr::EET_MOUSE_INPUT_EVENT)
+			{
+				if (event.MouseInput.Event == irr::EMOUSE_INPUT_EVENT::EMIE_LMOUSE_PRESSED_DOWN)
+				{
+					/*if (!CIrrlichtView::GetInstance()) return 0;
+					CIrrlichtView::GetInstance()->m_isLeftMouseDown = true;*/
+					Event.Type = ECE_POINTER;
+					Event.PointerData.Event = EPE_PRESSED;
+					Event.PointerData.ID = 0;
+					Event.PointerData.X = event.MouseInput.X;
+					Event.PointerData.Y = event.MouseInput.Y;
+					CGame::GetInstance()->SetEvent(Event);
+					return 0;
+				}
+				else if (event.MouseInput.Event == irr::EMOUSE_INPUT_EVENT::EMIE_LMOUSE_LEFT_UP)
+				{
+					/*if (!CIrrlichtView::GetInstance()) return 0;
+					if (CIrrlichtView::GetInstance()->m_isLeftMouseDown)*/
+					{
+						/*CIrrlichtView::GetInstance()->m_isLeftMouseDown = false;*/
 						Event.Type = ECE_POINTER;
-						Event.PointerData.Event = EPE_PRESSED;
+						Event.PointerData.Event = EPE_RELEASED;
 						Event.PointerData.ID = 0;
-						Event.PointerData.X = LOWORD(lparam);
-						Event.PointerData.Y = HIWORD(lparam);
+						Event.PointerData.X = event.MouseInput.X;
+						Event.PointerData.Y = event.MouseInput.Y;
 						CGame::GetInstance()->SetEvent(Event);
-						return 0;
-
-					case WM_LBUTTONUP:
-						if (!CIrrlichtView::GetInstance()) return 0;
+					}		
+					return 0;
+				}
+				else if (event.MouseInput.Event == irr::EMOUSE_INPUT_EVENT::EMIE_MOUSE_MOVED)
+				{
+					/*if (!CIrrlichtView::GetInstance()) return 0;*/
+					Event.Type = ECE_POINTER;
+					Event.PointerData.ID = 0;
+					if(event.MouseInput.isLeftPressed())
+					{				
+						Event.PointerData.Event = EPE_DRAGGED;
+						Event.PointerData.X = event.MouseInput.X;
+						Event.PointerData.Y = event.MouseInput.Y;
+						CGame::GetInstance()->SetEvent(Event);
+					}
+					/*else
+					{
 						if (CIrrlichtView::GetInstance()->m_isLeftMouseDown)
 						{
-							CIrrlichtView::GetInstance()->m_isLeftMouseDown = false;
-							Event.Type = ECE_POINTER;
-							Event.PointerData.Event = EPE_RELEASED;
-							Event.PointerData.ID = 0;
-							Event.PointerData.X = LOWORD(lparam);
-							Event.PointerData.Y = HIWORD(lparam);
-							CGame::GetInstance()->SetEvent(Event);
-						}		
-						return 0;
-
-					case WM_MOUSEMOVE:
-						if (!CIrrlichtView::GetInstance()) return 0;
-						Event.Type = ECE_POINTER;
-						Event.PointerData.ID = 0;
-						if(wparam == MK_LBUTTON)
-						{				
-							Event.PointerData.Event = EPE_DRAGGED;
-							Event.PointerData.X = LOWORD(lparam);
-							Event.PointerData.Y = HIWORD(lparam);
+							Event.PointerData.Event = EPE_RELEASED;					
+							Event.PointerData.X = event.MouseInput.X;
+							Event.PointerData.Y = event.MouseInput.Y;
+							/*CIrrlichtView::GetInstance()->m_isLeftMouseDown = false;
 							CGame::GetInstance()->SetEvent(Event);
 						}
-						else
-						{
-							if (CIrrlichtView::GetInstance()->m_isLeftMouseDown)
-							{
-								Event.PointerData.Event = EPE_RELEASED;					
-								Event.PointerData.X = LOWORD(lparam);
-								Event.PointerData.Y = HIWORD(lparam);
-								CIrrlichtView::GetInstance()->m_isLeftMouseDown = false;
-								CGame::GetInstance()->SetEvent(Event);
-							}
-						}
-						break;*/
-
+					}*/
 				}
-
-				return false;
+			}
+				
+			return false;
 		}
 
 		MyEventReceiver(){}
@@ -124,11 +126,10 @@ namespace GameTutor
 		HDC m_hGameWndDC;
 		static LRESULT CALLBACK WndProc( HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam );
 
-	//Open GL porting
-	private: 
+	public: 
 		irr::IrrlichtDevice *device;
 
-	private:
+	public:
 		bool m_isLeftMouseDown;
 		bool m_isKeyDown;
 	};

@@ -21,8 +21,10 @@ public:
 	SEnemyData *data;
 	bool isInMap;
 
+	scene::IBillboardSceneNode* healthBar;
+
 	CMapObject* Map;
-	irr::scene::ISceneNode* sceneNode;
+	irr::scene::IAnimatedMeshSceneNode* sceneNode;
 
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

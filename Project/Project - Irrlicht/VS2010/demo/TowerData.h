@@ -2,6 +2,7 @@
 #define __TOWERDATA_H__
 
 #include <string.h>
+#include "ModelData.h"
 
 enum ETowerType 
 {
@@ -18,14 +19,15 @@ struct STowerData
 	int AttackSpeed;
 	int Cost;
 	ETowerType TowerType;
+	STowerData* UpgradeTowerList[5];
 
 	//graphic attributes
-	int ModelID;
+	SModelData ModelData;
 	
 	//sound attributes
 	int SoundID;
 
-	STowerData(char* TowerName, int Damage, int Range, int AttackSpeed, int Cost, ETowerType TowerType, int ModelID, int SoundID)
+	STowerData(char* TowerName, int Damage, int Range, int AttackSpeed, int Cost, ETowerType TowerType, STowerData** upgradeList, SModelData ModelData, int SoundID)
 	{
 		strcpy(this->TowerName, TowerName);
 		this->Damage = Damage;
@@ -33,7 +35,9 @@ struct STowerData
 		this->AttackSpeed = AttackSpeed;
 		this->Cost = Cost;
 		this->TowerType = TowerType;
-		this->ModelID = ModelID;
+		for (int i=0;i<5;i++)
+			this->UpgradeTowerList[i] = upgradeList[i];
+		this->ModelData = ModelData;
 		this->SoundID = SoundID;		
 	}
 };

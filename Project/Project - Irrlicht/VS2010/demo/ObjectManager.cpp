@@ -205,3 +205,32 @@ void CObjectManager::ClearObstacle()
 	ObstacleList.DeallocateElementPointer();
 	ObstacleList.Clear();
 }
+
+CTowerObject* CObjectManager::GetTowerAtPosition(int x, int y)
+{
+	if (x==8)
+		printf("");
+	TowerList.BeginTravel();
+	while (!TowerList.IsEndOfTravel())
+	{
+		CTowerObject* cur = (CTowerObject*)TowerList.Travel();
+		if (cur->logicposition.x+1>=x && cur->logicposition.x<=x && cur->logicposition.y+1>=y && cur->logicposition.y<=y)
+			return cur;
+		
+	}
+	return NULL;
+}
+
+int* CObjectManager::GetMapObjectIncludingEnemy()
+{
+	int* cloneOMap = new int[Map->data->Width*Map->data->Height];
+	memcpy(cloneOMap,Map->ObjectMap,sizeof(int)*Map->data->Width*Map->data->Height);
+	EnemyList.BeginTravel();
+	while (!EnemyList.IsEndOfTravel())
+	{		
+		CEnemyObject* cur = (CEnemyObject*)EnemyList.Travel();
+		LogicPosition CurLogicPos((int)cur->position.x,(int)cur->position.y);
+		cloneOMap[CurLogicPos.y*Map->data->Width+CurLogicPos.x] = E_OBJ_ENEMY;		
+	}
+	return cloneOMap;
+}

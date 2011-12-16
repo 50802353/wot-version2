@@ -49,6 +49,9 @@ public:
 	CLutI<CBulletObject*> BulletList;
 	int BulletKeyCounter;
 
+	CTowerObject* GetTowerAtPosition(int x, int y);
+	int* GetMapObjectIncludingEnemy();
+
 
 };
 
