@@ -80,15 +80,80 @@ void CStateIngame::Init()
 	cursor->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	//guienv->addImage(
 	
+	core::rect<s32> vp = driver->getViewPort();
+	s32 width = vp.getWidth();
+	s32 height = vp.getHeight();
+
+	selectPane[0] = guienv->addImage(core::rect<s32>(width-74*5-20,height-94,width-10,height-10),0,-1,L"");
+	selectPane[0]->setImage(driver->getTexture("./resource/selectPane.bmp"));
+	/*selectPane[1] = guienv->addImage(core::rect<s32>(width-74*5-10,height-84,width-74*5-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[2] = guienv->addImage(core::rect<s32>(width-74*4-10,height-84,width-74*4-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[3] = guienv->addImage(core::rect<s32>(width-74*3-10,height-84,width-74*3-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[4] = guienv->addImage(core::rect<s32>(width-74*2-10,height-84,width-74*2-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[5] = guienv->addImage(core::rect<s32>(width-74-10,height-84,width-74-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");*/
+
+	selectPane[6] = guienv->addImage(core::rect<s32>(10,10,74,74),selectPane[0],-1,L"");	
+	selectPane[6]->setImage(driver->getTexture("./resource/selectPane_layer1.png"));
+	selectPane[7] = guienv->addImage(core::rect<s32>(84,10,146,74),selectPane[0],-1,L"");
+	selectPane[7]->setImage(driver->getTexture("./resource/selectPane_layer2.png"));
+	selectPane[8] = guienv->addImage(core::rect<s32>(156,10,220,74),selectPane[0],-1,L"");
+	selectPane[8]->setImage(driver->getTexture("./resource/selectPane_layer3.png"));
+	selectPane[9] = guienv->addImage(core::rect<s32>(230,10,294,74),selectPane[0],-1,L"");
+	selectPane[9]->setImage(driver->getTexture("./resource/selectPane_layer4.png"));
+	selectPane[10] = guienv->addImage(core::rect<s32>(304,10,370,74),selectPane[0],-1,L"");
+	selectPane[10]->setImage(driver->getTexture("./resource/selectPane_layer5.png"));
+
+	selectPane[1] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[6],-1,L"");
+	selectPane[2] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[7],-1,L"");
+	selectPane[3] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[8],-1,L"");
+	selectPane[4] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[9],-1,L"");
+	selectPane[5] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[10],-1,L"");
+
+	for (int i=0;i<11;i++)
+		selectPane[i]->setUseAlphaChannel(true);
+
+
+	
+
+	/*selectPane[1] = guienv->addImage(core::rect<s32>(10,10,74,74),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[2] = guienv->addImage(core::rect<s32>(84,10,146,74),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[3] = guienv->addImage(core::rect<s32>(156,10,220,74),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[4] = guienv->addImage(core::rect<s32>(230,10,294,74),selectPane[0],-1,L"./resource/selectPane.bmp");
+	selectPane[5] = guienv->addImage(core::rect<s32>(304,10,370,74),selectPane[0],-1,L"./resource/selectPane.bmp");*/
+
+
+
+
+	/*selectPane[6] = guienv->addImage(core::rect<s32>(width-74*5-10,height-84,width-74*5-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer1.png");
+	selectPane[7] = guienv->addImage(core::rect<s32>(width-74*4-10,height-84,width-74*4-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer2.png");
+	selectPane[8] = guienv->addImage(core::rect<s32>(width-74*3-10,height-84,width-74*3-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer3.png");
+	selectPane[9] = guienv->addImage(core::rect<s32>(width-74*2-10,height-84,width-74*2-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer4.png");
+	selectPane[10] = guienv->addImage(core::rect<s32>(width-74-10,height-84,width-74-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer5.png");*/
+
+}
+
+void CStateIngame::updateSelectPane(STowerData** list)
+{
+	for (int i=0;i<5;i++)
+	{
+		core::stringc s = "./resource/selectPane_layer";
+		s+=(i+1);
+		if (i==select_index-1)
+			s+="_hl.png";
+		else
+			s+=".png";
+		selectPane[i+6]->setImage(driver->getTexture(s));
+
+		if (list[i])
+			selectPane[i+1]->setImage(driver->getTexture(list[i]->ModelData.avatarname));			
+		else
+			selectPane[i+1]->setImage(driver->getTexture("./resource/selectPane.bmp"));
+	}
 }
 
 void CStateIngame::Update()
 {
-	//input handle
-	if (CControllerKeyManager::GetInstance()->WasAnyKeyPressed())
-	{
-		if (CControllerKeyManager::GetInstance()->WasKeyPressed(EKEY_CODE::KEY_KEY_A)) printf("A pressed");
-	}
+
 
 
 	//mode processing
@@ -145,15 +210,22 @@ void CStateIngame::Update()
 
 	CTowerObject* currentSelectTower = ObjectManager.GetTowerAtPosition((int)intersection.X,(int)intersection.Z);
 	CMapObject* Map = ObjectManager.Map;
-	if (selectedTower) selectedTower->sceneNode->getMaterial(0).AmbientColor = video::SColor(255,125,125,125);
+	if (selectedTower) 
+	{
+		selectedTower->sceneNode->getMaterial(0).AmbientColor = video::SColor(255,125,125,125);
+		updateSelectPane(selectedTower->data->UpgradeTowerList);
+	}
+	else
+		updateSelectPane(Map->data->BasicTowerList);
+
+
+
 
 	if (currentSelectTower) 
 	{
 		//core::aabbox3d<f32> TowerBox(currentSelectTower->logicposition.x+0.1,0.1,currentSelectTower->logicposition.y+0.1,currentSelectTower->logicposition.x+1.9,1.9,currentSelectTower->logicposition.y+1.9);
 		//driver->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
 		//driver->draw3DBox(TowerBox, irr::video::SColor(255,0,125,125));
-
-
 
 		if (selectedTower!=currentSelectTower)
 		{
@@ -172,8 +244,9 @@ void CStateIngame::Update()
 		{
 			switch (status)
 			{
-			case ES_TOWER:
+			case ES_TOWER:case ES_SELECT_UPGRADE:
 				//render khung select upgrade
+				
 				if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_1) && selectedTower->data->UpgradeTowerList[0])
 				{
 					select_index = 1;
@@ -204,17 +277,18 @@ void CStateIngame::Update()
 					status= ES_SELECT_UPGRADE;
 					printf("status -> ES_SELECT_UPGRADE\n");
 				}
+
+				if (status==ES_SELECT_UPGRADE)
+					if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,CIrrlichtView::GetInstance()->GetWidth(),CIrrlichtView::GetInstance()->GetHeight()))
+					{
+						selectedTower->Upgrade(selectedTower->data->UpgradeTowerList[select_index-1]);
+						status = ES_TOWER;
+						printf("status -> ES_TOWER\n");
+						select_index=-1;	
+						return;
+					}
 				break;
-			case ES_SELECT_UPGRADE:
-				if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,CIrrlichtView::GetInstance()->GetWidth(),CIrrlichtView::GetInstance()->GetHeight()))
-				{
-					selectedTower->Upgrade(selectedTower->data->UpgradeTowerList[select_index-1]);
-					status = ES_TOWER;
-					printf("status -> ES_TOWER\n");
-					select_index=-1;									
-					return;
-				}
-				break;
+			
 
 			}
 		}
@@ -223,6 +297,11 @@ void CStateIngame::Update()
 	}
 	else
 	{
+		
+
+
+
+
 		int startx=(int)intersection.X;
 		int starty=(int)intersection.Z;
 		if (intersection.X-(int)intersection.X<0.5) startx--;
@@ -261,8 +340,9 @@ void CStateIngame::Update()
 				{
 					switch (status)
 					{
-						case ES_BUILD:
+						case ES_BUILD:case ES_SELECT_BUILD:
 							//render khung select build
+							
 							if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_1) && Map->data->BasicTowerList[0])
 							{
 								select_index = 1;
@@ -293,9 +373,9 @@ void CStateIngame::Update()
 								status= ES_SELECT_BUILD;
 								printf("status -> ES_SELECT_BUILD\n");
 							}
-							break;
-						case ES_SELECT_BUILD:
-							if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,CIrrlichtView::GetInstance()->GetWidth(),CIrrlichtView::GetInstance()->GetHeight()))
+
+
+							if (status==ES_SELECT_BUILD && (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,CIrrlichtView::GetInstance()->GetWidth(),CIrrlichtView::GetInstance()->GetHeight())))
 							{
 								if (Map->BuildTower(Map->data->BasicTowerList[select_index-1],LogicPosition(select_x,select_y)))
 								{
@@ -304,7 +384,7 @@ void CStateIngame::Update()
 									selectedTower = ObjectManager.GetTowerAtPosition(select_x, select_y);
 									select_x = -1;
 									select_y = -1;
-									select_index=-1;									
+									select_index=-1;				
 								}
 								return;
 							}
@@ -316,6 +396,7 @@ void CStateIngame::Update()
 		}
 		if (status!=ES_UNBUILD)
 		{
+			
 			status = ES_UNBUILD;
 			printf("status -> ES_UNBUILD\n");
 			select_index = -1;
