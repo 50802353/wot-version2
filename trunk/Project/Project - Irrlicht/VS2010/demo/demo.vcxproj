@@ -98,6 +98,7 @@
     <ClInclude Include="EnemyObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MapObject.h" />
+    <ClInclude Include="ModelData.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ObstacleObject.h" />
     <ClInclude Include="TowerObject.h" />

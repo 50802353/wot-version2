@@ -107,5 +107,8 @@
     <ClInclude Include="TowerData.h">
       <Filter>Header Files\GameData</Filter>
     </ClInclude>
+    <ClInclude Include="ModelData.h">
+      <Filter>Header Files\GameData</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

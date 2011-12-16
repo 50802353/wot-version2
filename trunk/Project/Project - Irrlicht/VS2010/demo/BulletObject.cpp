@@ -19,8 +19,10 @@ CBulletObject::~CBulletObject(void)
 
 void CBulletObject::Init()
 {
-	sceneNode = smgr->addCubeSceneNode(0.1);
-	sceneNode->setMaterialTexture(0, driver->getTexture("./resource/sample_bullet.bmp"));
+	sceneNode = smgr->addBillboardSceneNode(0,core::dimension2df(0.5,0.5));
+	sceneNode->setMaterialTexture(0, driver->getTexture("./resource/particle.bmp"));
+	sceneNode->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING,false);
+	sceneNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	sceneNode->setPosition(irr::core::vector3df(position.x, position.z, position.y));
 }
 

@@ -26,14 +26,16 @@ public:
 	int damage;
 	int range;
 	int time_to_shoot;
+	int fade_in_time;
+	//int fade_out_time;
 	bool isSelected;
 	CEnemyObject* target;
 
 	CMapObject* Map;
+	int status;
+	irr::scene::IAnimatedMeshSceneNode* sceneNode;
 
-	irr::scene::ISceneNode* sceneNode;
-
-
+	scene::IParticleSystemSceneNode* particleSystem;
 	//TODO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 	void FindTarget();

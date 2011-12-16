@@ -1,6 +1,8 @@
 #include "gametutor.h"
 #include "CDemo.h"
 
+
+
 int main()
 {
 	SGameConfig cnf = {

@@ -14,48 +14,104 @@ CTowerObject::CTowerObject(STowerData *data)
 	this->time_to_shoot = 0;
 	this->target = NULL;
 	this->isSelected = false;
+	this->fade_in_time = 0;
 	this->Map = CObjectManager::CurrentObjectManager->Map;
+	this->particleSystem = 0;
 	Init();
 }
 
 CTowerObject::~CTowerObject(void)
 {
-	Destroy();
 }
 
 void CTowerObject::Init()
 {
-	
-	sceneNode = smgr->addSphereSceneNode(0.8,16,0,2);
-	sceneNode->setMaterialTexture(0, driver->getTexture("./resource/sample_tower.bmp"));
+	sceneNode = smgr->addAnimatedMeshSceneNode(smgr->getMesh(data->ModelData.modelname),0, 2);//smgr->addSphereSceneNode(0.8,16,0,2);
+	sceneNode->setMaterialTexture(0, driver->getTexture(data->ModelData.skinname));
+	sceneNode->setMD2Animation(scene::EMAT_STAND);
+	sceneNode->setAnimationSpeed(20.f);
+	sceneNode->setScale(irr::core::vector3df(0.05,0.05,0.05));
+	sceneNode->getMaterial(0).Lighting = true;
 	sceneNode->getMaterial(0).NormalizeNormals = true;
+	sceneNode->getMaterial(0).AmbientColor = video::SColor(255,125,125,125);
 	sceneNode->setPosition(irr::core::vector3df(position.x, position.z, position.y));
-	irr::scene::ITriangleSelector* selector = smgr->createTriangleSelector(((irr::scene::IMeshSceneNode*)sceneNode)->getMesh(),sceneNode);
+	/*irr::scene::ITriangleSelector* selector = smgr->createTriangleSelector(sceneNode);
 	sceneNode->setTriangleSelector(selector);
-	selector->drop();
+	selector->drop();*/
+	sceneNode->setMaterialType(video::EMT_SOLID); 
+	fade_in_time = 1000;
+	status=0;
+
+
 	
-	//sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+	
 }
 
 void CTowerObject::Update(int delta_time)
 {
+	if (fade_in_time>0)
+	{
+		fade_in_time -= delta_time;
+		if (fade_in_time<0) fade_in_time=0;
+		/*int alpha = (int)((float)(1000-fade_in_time)/1000.f*255);
+		smgr->getMeshManipulator()->setVertexColorAlpha(sceneNode->getMesh(), alpha);*/
+	}
+	else //if (!sceneNode->isVisible())
+	{
+		//sceneNode->setVisible(true);
+		//smgr->getMeshManipulator()->setVertexColorAlpha(sceneNode->getMesh(), 255);
+		//sceneNode->setMaterialType(video::EMT_SOLID); 
+		scene::IParticleEmitter* em = particleSystem->getEmitter();
+		em->setMinParticlesPerSecond(0);
+		em->setMaxParticlesPerSecond(0);
+		//sceneNode->setMaterialFlag(video::EMF_WIREFRAME, false); 
+	}
+
 	if ((!target) || (!target->isInMap) || ((target->position | this->position) > this->range))
 		FindTarget();
 
 	if (target)
+	{
+		/*if (status==0)
+		{
+			status=1;
+			sceneNode->setMD2Animation(scene::EMD2_ANIMATION_TYPE::EMAT_JUMP);
+		}*/
 		if (time_to_shoot<=0)
 		{
 				time_to_shoot += this->data->AttackSpeed;
 				Shoot(target);
+				sceneNode->setMD2Animation(scene::EMD2_ANIMATION_TYPE::EMAT_JUMP);
+				sceneNode->setLoopMode(false);
 		}
 		else
 		{
 			time_to_shoot -= delta_time;	
 		}
+
+		float degree = atan2(target->position.y-this->position.y,target->position.x-this->position.x)/3.1416*180;//-atan((float)(target->position.y-this->position.y)/(target->position.x-this->position.x))/3.1416*180;
+		sceneNode->setRotation(core::vector3df(0,-degree,0));
+	}
+	else
+	{
+		//status=0;
+		sceneNode->setMD2Animation(scene::EMD2_ANIMATION_TYPE::EMAT_STAND);
+		sceneNode->setLoopMode(true);
+	}
 }
 
 void CTowerObject::Render()
 {
+	/*if (fade_in_time>0 && !sceneNode->isVisible())
+	{
+		smgr->getMeshManipulator()->setVertexColors( sceneNode->getMesh(), video::SColor( (int)((float)(1000-fade_in_time)/1000.f*255), 255, 255, 255 ) ); 
+		//sceneNode->setVisible(true);
+		driver->setTransform(irr::video::ETS_WORLD,sceneNode->getAbsoluteTransformation());
+		sceneNode->render();
+		//sceneNode->setVisible(false);
+		smgr->getMeshManipulator()->setVertexColors( sceneNode->getMesh(), video::SColor( 255, 255, 255, 255 ) ); 
+	}*/
+	
 	//sceneNode->render();
 	//sceneNode->setVisible(true);
 }
@@ -88,8 +144,8 @@ void CTowerObject::FindTarget()
 
 void CTowerObject::Shoot(CEnemyObject* Enemy)
 {
-		CBulletObject* Bullet = new CBulletObject(&BulletData1,this->position,Enemy,this->damage);
-		CObjectManager::CurrentObjectManager->AddObject(Bullet);
+	CBulletObject* Bullet = new CBulletObject(&BulletData1,this->position,Enemy,this->damage);
+	CObjectManager::CurrentObjectManager->AddObject(Bullet);
 }
 
 void CTowerObject::Upgrade(STowerData *data)
@@ -97,6 +153,26 @@ void CTowerObject::Upgrade(STowerData *data)
 	this->data = data;
 	this->time_to_shoot = 0;
 	CObjectManager::CurrentObjectManager->Map->Money -= this->data->Cost;
+	sceneNode->remove();
+
+	sceneNode = smgr->addAnimatedMeshSceneNode(smgr->getMesh(data->ModelData.modelname),0, 2);//smgr->addSphereSceneNode(0.8,16,0,2);
+	sceneNode->setMaterialTexture(0, driver->getTexture(data->ModelData.skinname));
+	sceneNode->setMD2Animation(scene::EMAT_STAND);
+	sceneNode->setAnimationSpeed(20.f);
+	sceneNode->setScale(irr::core::vector3df(0.05,0.05,0.05));
+	sceneNode->getMaterial(0).Lighting = true;
+	sceneNode->getMaterial(0).NormalizeNormals = true;
+	sceneNode->setPosition(irr::core::vector3df(position.x, position.z, position.y));
+	irr::scene::ITriangleSelector* selector = smgr->createTriangleSelector(sceneNode);
+	sceneNode->setTriangleSelector(selector);
+	selector->drop();
+	sceneNode->setMaterialType(video::EMT_SOLID); 
+	fade_in_time = 1000;
+	//status=0;
+
+	scene::IParticleEmitter* em = particleSystem->getEmitter();
+	em->setMinParticlesPerSecond(8);
+	em->setMaxParticlesPerSecond(10);
 }
 
 void CTowerObject::Sell()

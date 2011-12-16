@@ -33,6 +33,7 @@ namespace GameTutor
 			memcpy(m_strTitle, xname, strlen(xname) + 1);
 		}
 		InitClientWindow(Irrlichtdevice);
+		this->device = Irrlichtdevice;
 	}
 
 	//---------------------------------------------------------------------------
@@ -53,6 +54,7 @@ namespace GameTutor
 		device = irr::createDevice( EDT_DIRECT3D9, dimension2d<u32>(m_iWidth, m_iHeight), 16,	m_isFullScreen, false, false, receiver);
 		core::stringw title = m_strTitle;
 		device->setWindowCaption(title.c_str());
+		device->getCursorControl()->setVisible(false);
 		Irrlichtdevice = device;
 	}
 
