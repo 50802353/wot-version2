@@ -2,6 +2,11 @@
 #include "CStateIngame.h"
 
 
+STowerData* EmptyTowerList[] = {0,0,0,0,0};
+
+
+
+
 
 	
 //--------------------------
@@ -19,7 +24,10 @@ void CStateIngame::Init()
 	CGameObject::driver = driver;
 	CGameObject::guienv = guienv;	
 	
-    //device->getCursorControl()->setVisible(false);
+
+	gui::ICursorControl* gcursor = CIrrlichtView::GetInstance()->device->getCursorControl();
+	//gcursor->set
+	gcursor->setVisible(false);
 
 	//TempObject:	2 tower at (5,0) and (8,5), 
 	//				1 enemy at (2,2)
@@ -73,19 +81,22 @@ void CStateIngame::Init()
 	status=ES_NONE;
 	printf("status -> ES_NONE\n");
 
-	cursor = smgr->addBillboardSceneNode(0,core::dimension2df(0.3,0.3));
+	/*cursor = smgr->addBillboardSceneNode(0,core::dimension2df(0.3,0.3));
 	cursor->setMaterialTexture(0, driver->getTexture("./resource/particle.bmp"));
 	cursor->setMaterialFlag(video::EMF_LIGHTING, false);
 	//cursor->setMaterialFlag(video::EMF_ZBUFFER, false);
 	cursor->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
-	//guienv->addImage(
+	//guienv->addImage(*/
+
+	cursor = guienv->addImage(core::rect<s32>(gcursor->getPosition(),core::dimension2di(16,16)));
+	cursor->setImage(driver->getTexture("./resource/cursor.png"));
+	cursor->setUseAlphaChannel(true);
 	
 	core::rect<s32> vp = driver->getViewPort();
 	s32 width = vp.getWidth();
 	s32 height = vp.getHeight();
 
 	selectPane[0] = guienv->addImage(core::rect<s32>(width-74*5-20,height-94,width-10,height-10),0,-1,L"");
-	selectPane[0]->setImage(driver->getTexture("./resource/selectPane.bmp"));
 	/*selectPane[1] = guienv->addImage(core::rect<s32>(width-74*5-10,height-84,width-74*5-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
 	selectPane[2] = guienv->addImage(core::rect<s32>(width-74*4-10,height-84,width-74*4-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
 	selectPane[3] = guienv->addImage(core::rect<s32>(width-74*3-10,height-84,width-74*3-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
@@ -112,24 +123,33 @@ void CStateIngame::Init()
 	for (int i=0;i<11;i++)
 		selectPane[i]->setUseAlphaChannel(true);
 
-
-	
-
-	/*selectPane[1] = guienv->addImage(core::rect<s32>(10,10,74,74),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[2] = guienv->addImage(core::rect<s32>(84,10,146,74),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[3] = guienv->addImage(core::rect<s32>(156,10,220,74),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[4] = guienv->addImage(core::rect<s32>(230,10,294,74),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[5] = guienv->addImage(core::rect<s32>(304,10,370,74),selectPane[0],-1,L"./resource/selectPane.bmp");*/
+	time_status=ES_PLAY;
 
 
+	menuIngame = guienv->addImage(vp);
 
 
-	/*selectPane[6] = guienv->addImage(core::rect<s32>(width-74*5-10,height-84,width-74*5-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer1.png");
-	selectPane[7] = guienv->addImage(core::rect<s32>(width-74*4-10,height-84,width-74*4-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer2.png");
-	selectPane[8] = guienv->addImage(core::rect<s32>(width-74*3-10,height-84,width-74*3-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer3.png");
-	selectPane[9] = guienv->addImage(core::rect<s32>(width-74*2-10,height-84,width-74*2-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer4.png");
-	selectPane[10] = guienv->addImage(core::rect<s32>(width-74-10,height-84,width-74-10+64,height-20),selectPane[0],-1,L"./resource/selectPane_layer5.png");*/
+	gui::IGUIImage* menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-206)/2-10),core::dimension2di(153+20,206+20)),menuIngame);
+	//gui::IGUIImageList* img_list = guienv->createImageList(driver->getTexture("./resource/Button_sprite.png"),core::dimension2di(153,44),true);
+	//img_list->
 
+	//guienv->addImage(core::rect<s32>(10,10,290,40),menu);
+	video::SColor color (255,255,255,255);
+	guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_WINDOW,color);
+	gui::IGUIButton* bContinue =  guienv->addButton(core::rect<s32>(10,10,162,54),menu);
+	bContinue->setImage(driver->getTexture("./resource/button/continue.png"));
+	gui::IGUIButton* bRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu);
+	bRestart->setImage(driver->getTexture("./resource/button/restart.png"));
+	gui::IGUIButton* bMainMenu = guienv->addButton(core::rect<s32>(10,118,162,162),menu);
+	bMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
+	gui::IGUIButton* bQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu);
+	bQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+
+
+	menuIngame->setVisible(false);
+
+	receiver = new IngameEventReceiver(this);
+	CIrrlichtView::GetInstance()->device->setEventReceiver(receiver);
 }
 
 void CStateIngame::updateSelectPane(STowerData** list)
@@ -153,8 +173,37 @@ void CStateIngame::updateSelectPane(STowerData** list)
 
 void CStateIngame::Update()
 {
+	if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_ESCAPE))
+	{
+		switch (time_status)
+		{
+		case ES_PLAY:
+			time_status = ES_PAUSE;
+			menuIngame->setVisible(true);
+			//render menu ingame
+			CIrrlichtView::GetInstance()->device->getTimer()->stop();
+			smgr->getActiveCamera()->setInputReceiverEnabled(false);
+			CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(true);
+			break;
+		case ES_PAUSE:
+			time_status = ES_PLAY;
+			menuIngame->setVisible(false);
+			//tat' menu ingame
+			CIrrlichtView::GetInstance()->device->getTimer()->start();
+			smgr->getActiveCamera()->setInputReceiverEnabled(true);
+			CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(false);
+			core::rect<s32> vp = driver->getViewPort();
+			CIrrlichtView::GetInstance()->device->getCursorControl()->setPosition(vp.getWidth()/2, vp.getHeight()/2);
+			break;
 
+		}
+	}
 
+	if (time_status==ES_PAUSE) return;
+
+	cursor->setRelativePosition(core::recti(CIrrlichtView::GetInstance()->device->getCursorControl()->getPosition()-core::dimension2di(8,8),core::dimension2di(16,16)));
+
+	if (ObjectManager.Map->status==2 ||ObjectManager.Map->status==3) return; //WIN/LOSE
 
 	//mode processing
 	/*static irr::scene::ISceneNode* highlightedSceneNode = 0;
@@ -181,13 +230,13 @@ void CStateIngame::Update()
 		2, // This ensures that only nodes that we have
 				// set up to be pickable are considered
 		0); // Check the entire scene (this is actually the implicit default)
-	if (selectedSceneNode) 
+	/*if (selectedSceneNode) 
 	{
 		cursor->setPosition(intersection);
 		cursor->setVisible(true);
 	}
 	else
-		cursor->setVisible(false);
+		cursor->setVisible(false);*/
 	/*if (selectedSceneNode)
 	{
 		driver->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
@@ -216,7 +265,10 @@ void CStateIngame::Update()
 		updateSelectPane(selectedTower->data->UpgradeTowerList);
 	}
 	else
-		updateSelectPane(Map->data->BasicTowerList);
+		if (status==ES_UNBUILD)
+			updateSelectPane(EmptyTowerList);
+		else
+			updateSelectPane(Map->data->BasicTowerList);
 
 
 
@@ -396,7 +448,6 @@ void CStateIngame::Update()
 		}
 		if (status!=ES_UNBUILD)
 		{
-			
 			status = ES_UNBUILD;
 			printf("status -> ES_UNBUILD\n");
 			select_index = -1;

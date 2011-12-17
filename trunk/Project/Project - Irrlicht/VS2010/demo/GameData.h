@@ -76,10 +76,15 @@ struct Position
 //Temp data
 //Temp data
 
-static SModelData ModelData1("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon.tga", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData2("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr.tga", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData3("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData4("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar.png", core::vector3df(0.1,0.1,0.1), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData1("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon.tga", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData2("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr.tga", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData3("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData4("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar.png", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+
+static SModelData ModelData5("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData6("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData7("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData8("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
 
 static STowerData* UpgradeTowerList4[5]={0,0,0,0,0};
 static STowerData TowerData4("TOWER_NAME_4", 10, 4, 1000, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList4, ModelData4, 1);
@@ -89,16 +94,25 @@ static STowerData* UpgradeTowerList2[5]={&TowerData3,0,0,0,0};
 static STowerData TowerData2("TOWER_NAME_2", 10, 4, 900, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList2, ModelData1, 1);
 static STowerData* UpgradeTowerList1[5]={&TowerData2,&TowerData4,0,0,0};
 static STowerData TowerData1("TOWER_NAME_1", 10, 4, 800, 70, ETowerType::E_TOWER_ATTACK, UpgradeTowerList1, ModelData3, 1);
-static SEnemyData EnemyData1("ENEMY_NAME_1", 50, 30, 20, ModelData3, 2);
+static SEnemyData EnemyData1("ENEMY_NAME_1", 50, 30, 20, ModelData5, 2);
+static SEnemyData EnemyData2("ENEMY_NAME_2", 20, 60, 30, ModelData6, 2);
+static SEnemyData EnemyData3("ENEMY_NAME_3", 100, 15, 25, ModelData7, 2);
+static SEnemyData EnemyData4("ENEMY_NAME_4", 100, 30, 20, ModelData8, 2);
+
 static SObstacleData ObstacleData1("OBSTACLE_NAME_1", 3, 3);
 static SBulletData BulletData1("BULLET_NAME_1", 100, 10, 4, 4);
 
-static int			SpawnTime[5]	=	{1000,			500,			500,			500,			500};
-static SEnemyData*	Enemy[5]		=	{&EnemyData1,	&EnemyData1,	&EnemyData1,	&EnemyData1,	&EnemyData1};
-static SWaveData WaveData1(5, SpawnTime, Enemy);
-static SWaveData*	 Wave[5]		=	{&WaveData1,	&WaveData1,		&WaveData1,		&WaveData1,		&WaveData1};
+static int			SpawnTime1[5]	=	{1000,			500,			500,			1000,			600};
+static SEnemyData*	Enemy1[5]		=	{&EnemyData1,	&EnemyData1,	&EnemyData1,	&EnemyData1,	&EnemyData4};
+static SWaveData WaveData1(5, SpawnTime1, Enemy1);
+
+static int			SpawnTime2[5]	=	{1000,			500,			500,			1000,			600};
+static SEnemyData*	Enemy2[5]		=	{&EnemyData2,	&EnemyData2,	&EnemyData2,	&EnemyData2,	&EnemyData3};
+static SWaveData WaveData2(5, SpawnTime2, Enemy2);
+
+static SWaveData*	 Wave[2]		=	{&WaveData1,	&WaveData2};
 static STowerData* BasicTowerList[5]={&TowerData1,0,0,0,0};
-static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 5, Wave, BasicTowerList, 0, 0);
+static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, 0, 0);
 
 
 #define SELL_PERCENT 0.3

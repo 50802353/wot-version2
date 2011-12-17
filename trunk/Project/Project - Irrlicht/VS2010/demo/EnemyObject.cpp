@@ -25,19 +25,19 @@ void CEnemyObject::Init()
 	sceneNode->setMaterialTexture(0, driver->getTexture(data->ModelData.skinname));
 	sceneNode->setMD2Animation(scene::EMAT_RUN);
 	sceneNode->setAnimationSpeed(20.f);
-	sceneNode->setScale(irr::core::vector3df(0.05,0.05,0.05));
+	sceneNode->setScale(data->ModelData.scale);
+	sceneNode->setRotation(data->ModelData.rotate);
 	sceneNode->getMaterial(0).Lighting = true;
 	sceneNode->getMaterial(0).NormalizeNormals = true;
 	sceneNode->setPosition(irr::core::vector3df(position.x, position.z, position.y));
 
-	healthBar = smgr->addBillboardSceneNode(sceneNode,core::dimension2df(1,0.1),core::vector3df(0.0,1.0,0.0));
+	healthBar = smgr->addBillboardSceneNode(sceneNode,core::dimension2df(1,0.1),core::vector3df(0.0,30.0,0.0));
 	healthBar->setMaterialTexture(0,driver->getTexture("./resource/HP.bmp"));
 	healthBar->setMaterialFlag(video::EMF_LIGHTING,false);
 	healthBar->setMaterialFlag(video::EMF_ZBUFFER,false);
 	healthBar->setMaterialType(video::EMT_TRANSPARENT_VERTEX_ALPHA);
 	healthBar->setColor(video::SColor(10,255,255,255),video::SColor(10,255,255,255));
-
-
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>("./resource/ACreepDeath.wav");
 }
 
 void CEnemyObject::Update(int delta_time)
@@ -127,6 +127,8 @@ void CEnemyObject::Die()
 		sceneNode->addAnimator(smgr->createDeleteAnimator(1000));
 		Map->Money+=this->data->Bounty;
 		CObjectManager::CurrentObjectManager->Map->NumberOfEnemyInMap--;
+
+		CAudioPlayer::GetInstance()->Play("./resource/ACreepDeath.wav",false);
 	}
 }
 
