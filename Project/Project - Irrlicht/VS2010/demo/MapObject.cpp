@@ -1,6 +1,9 @@
 #include "MapObject.h"
 #include "ObjectManager.h"
 
+#define WIN_WAV "./resource/AWin.wav"
+#define LOSE_WAV "./resource/ALose.wav"
+
 CMapObject::CMapObject(SMapData *data)
 {
 	this->ObjectType = EGameObject::E_OBJ_MAP;
@@ -11,7 +14,7 @@ CMapObject::CMapObject(SMapData *data)
 	memset(DirectionMap, 0, sizeof(int) * this->data->Height * this->data->Width);
 	RemainingLife = data->GivenLife;
 	Money = data->GivenMoney;
-	memset(Enemy, 0, sizeof(Enemy));
+	//memset(Enemy, 0, sizeof(Enemy));
 	isSpawnTime = false;
 	NumberOfEnemyInMap = 0;
 	CalculateEnemyPath(ObjectMap, DirectionMap);
@@ -61,6 +64,10 @@ void CMapObject::Init()
 		skydome =smgr->addSkyDomeSceneNode(driver->getTexture("./resource/skydome.jpg"),16,8,0.95f,2.0f);
 		irr::scene::IMesh* m = sceneNode->getMesh();
 		int a=1;
+
+		
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(WIN_WAV);
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(LOSE_WAV);
 }
 
 void CMapObject::Update(int delta_time)
@@ -110,6 +117,9 @@ void CMapObject::Update(int delta_time)
 			}
 		}
 	} ///if status == ESTATUS_PLAY
+
+
+
 }
 
 void CMapObject::Render()
@@ -310,12 +320,20 @@ void CMapObject::AddObstacle(SObstacleData* data, LogicPosition position, int si
 
 void CMapObject::Win()
 {
-	status = ESTATUS_WIN;
-	printf("WIN\n");
+	if (status!=ESTATUS_WIN)
+	{
+		status = ESTATUS_WIN;
+		printf("WIN\n");
+		CAudioPlayer::GetInstance()->Play(WIN_WAV,false);
+	}
 }
 
 void CMapObject::Lose()
 {
-	status = ESTATUS_LOSE;
-	printf("LOSE\n");
+	if (status!=ESTATUS_LOSE)
+	{
+		status = ESTATUS_LOSE;
+		printf("LOSE\n");
+		CAudioPlayer::GetInstance()->Play(LOSE_WAV,false);
+	}
 }

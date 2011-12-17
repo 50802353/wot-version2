@@ -30,7 +30,8 @@ void CTowerObject::Init()
 	sceneNode->setMaterialTexture(0, driver->getTexture(data->ModelData.skinname));
 	sceneNode->setMD2Animation(scene::EMAT_STAND);
 	sceneNode->setAnimationSpeed(20.f);
-	sceneNode->setScale(irr::core::vector3df(0.05,0.05,0.05));
+	sceneNode->setScale(data->ModelData.scale);
+	sceneNode->setRotation(data->ModelData.rotate);
 	sceneNode->getMaterial(0).Lighting = true;
 	sceneNode->getMaterial(0).NormalizeNormals = true;
 	sceneNode->getMaterial(0).AmbientColor = video::SColor(255,125,125,125);
@@ -42,9 +43,10 @@ void CTowerObject::Init()
 	fade_in_time = 1000;
 	status=0;
 
-
-	
-	
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>("./resource/AMagic.wav");
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>("./resource/AUpgrade.wav");
+	CAudioPlayer::GetInstance()->Play("./resource/AMagic.wav",false);
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>("./resource/ASplash.wav");
 }
 
 void CTowerObject::Update(int delta_time)
@@ -81,7 +83,7 @@ void CTowerObject::Update(int delta_time)
 		{
 				time_to_shoot += this->data->AttackSpeed;
 				Shoot(target);
-				sceneNode->setMD2Animation(scene::EMD2_ANIMATION_TYPE::EMAT_JUMP);
+				sceneNode->setMD2Animation(scene::EMAT_JUMP);
 				sceneNode->setLoopMode(false);
 		}
 		else
@@ -95,7 +97,7 @@ void CTowerObject::Update(int delta_time)
 	else
 	{
 		//status=0;
-		sceneNode->setMD2Animation(scene::EMD2_ANIMATION_TYPE::EMAT_STAND);
+		sceneNode->setMD2Animation(scene::EMAT_STAND);
 		sceneNode->setLoopMode(true);
 	}
 }
@@ -146,6 +148,7 @@ void CTowerObject::Shoot(CEnemyObject* Enemy)
 {
 	CBulletObject* Bullet = new CBulletObject(&BulletData1,this->position,Enemy,this->damage);
 	CObjectManager::CurrentObjectManager->AddObject(Bullet);
+	CAudioPlayer::GetInstance()->Play("./resource/ASplash.wav",false);
 }
 
 void CTowerObject::Upgrade(STowerData *data)
@@ -173,6 +176,8 @@ void CTowerObject::Upgrade(STowerData *data)
 	scene::IParticleEmitter* em = particleSystem->getEmitter();
 	em->setMinParticlesPerSecond(8);
 	em->setMaxParticlesPerSecond(10);
+
+	CAudioPlayer::GetInstance()->Play("./resource/AUpgrade.wav",false);
 }
 
 void CTowerObject::Sell()

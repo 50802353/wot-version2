@@ -24,6 +24,8 @@ void CBulletObject::Init()
 	sceneNode->setMaterialFlag(video::E_MATERIAL_FLAG::EMF_LIGHTING,false);
 	sceneNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 	sceneNode->setPosition(irr::core::vector3df(position.x, position.z, position.y));
+
+	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>("./resource/ABomb.wav");
 }
 
 void CBulletObject::Update(int delta_time)
@@ -82,6 +84,10 @@ void CBulletObject::Move(int delta_time)
 
 void CBulletObject::Hit()
 {
-	this->target->Damaged(this->damage);
+	if (this->target->isInMap)
+	{
+		this->target->Damaged(this->damage);
+		CAudioPlayer::GetInstance()->Play("./resource/ABomb.wav",false);
+	}
 	delete this;
 }

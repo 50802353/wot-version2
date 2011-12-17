@@ -60,6 +60,9 @@
     <ClCompile Include="TowerObject.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="CStateLogo.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDemo.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="ModelData.h">
       <Filter>Header Files\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateLogo.h">
+      <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
