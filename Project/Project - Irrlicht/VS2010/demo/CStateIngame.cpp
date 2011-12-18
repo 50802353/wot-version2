@@ -16,6 +16,8 @@ CStateIngame::CStateIngame():CState()
 
 void CStateIngame::Init()
 {
+	core::rect<s32> vp = driver->getViewPort();
+
 	Log("State Ingame: Init");
 
 	//intial irr devices
@@ -41,9 +43,7 @@ void CStateIngame::Init()
 	ObjectManager.SetMapObject(map);
 	map->BuildTower(&TowerData1, LogicPosition(5,0));
 	map->BuildTower(&TowerData1, LogicPosition(8,5));
-	map->AddObstacle(&ObstacleData1, LogicPosition(5,5),2);
-	map->AddObstacle(&ObstacleData1, LogicPosition(3,0),2);
-	map->AddObstacle(&ObstacleData1, LogicPosition(6,8),1);
+
 
 
 	//camera
@@ -74,9 +74,19 @@ void CStateIngame::Init()
 	light->setLightData(light_data);
 
 	//
-	
-	Money_text = guienv->addStaticText(L"Money : -",irr::core::rect<irr::s32>(10,10,110,20),false,false,0,-1,true);
-	Life_text = guienv->addStaticText(L"Lives : -",irr::core::rect<irr::s32>(10,30,110,40),false,false,0,-1,true);
+	gui::IGUIFont* font = guienv->getFont("./resource/myfont.xml");
+
+	Money_text = guienv->addStaticText(L"Money : -",irr::core::rect<irr::s32>(10,10,410,110),false,false,0,-1,false);
+	Money_text->setOverrideFont(font);
+	Money_text->setOverrideColor(video::SColor(180,255,255,125));
+	Money_text->enableOverrideColor(true);
+
+
+	Life_text = guienv->addStaticText(L"Lives : -",irr::core::rect<irr::s32>(vp.LowerRightCorner.X-10-400,10,vp.LowerRightCorner.X,110),false,false,0,-1,false);
+	Life_text->setOverrideFont(font);
+	Life_text->setOverrideColor(video::SColor(180,255,125,125));
+	Life_text->enableOverrideColor(true);
+	Life_text->setTextAlignment(gui::EGUIA_CENTER,gui::EGUIA_CENTER);
 
 	status=ES_NONE;
 	printf("status -> ES_NONE\n");
@@ -92,7 +102,7 @@ void CStateIngame::Init()
 	cursor->setImage(driver->getTexture("./resource/cursor.png"));
 	cursor->setUseAlphaChannel(true);
 	
-	core::rect<s32> vp = driver->getViewPort();
+	
 	s32 width = vp.getWidth();
 	s32 height = vp.getHeight();
 
@@ -136,13 +146,13 @@ void CStateIngame::Init()
 	//guienv->addImage(core::rect<s32>(10,10,290,40),menu);
 	video::SColor color (255,255,255,255);
 	guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_WINDOW,color);
-	gui::IGUIButton* bContinue =  guienv->addButton(core::rect<s32>(10,10,162,54),menu);
+	gui::IGUIButton* bContinue =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_CONTINUE);
 	bContinue->setImage(driver->getTexture("./resource/button/continue.png"));
-	gui::IGUIButton* bRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu);
+	gui::IGUIButton* bRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_RESTART);
 	bRestart->setImage(driver->getTexture("./resource/button/restart.png"));
-	gui::IGUIButton* bMainMenu = guienv->addButton(core::rect<s32>(10,118,162,162),menu);
+	gui::IGUIButton* bMainMenu = guienv->addButton(core::rect<s32>(10,118,162,162),menu,E_GBIG_MAINMENU);
 	bMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
-	gui::IGUIButton* bQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu);
+	gui::IGUIButton* bQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu,E_GBIG_QUIT);
 	bQuit->setImage(driver->getTexture("./resource/button/quit.png"));
 
 
@@ -214,7 +224,8 @@ void CStateIngame::Update()
 	}*/
 	ObjectManager.Update(CFpsController::GetInstance()->GetFrameDt());
 	
-	Money_text->setText((irr::core::stringw(L"Money : ")+irr::core::stringw(ObjectManager.Map->Money)).c_str());
+
+	Money_text->setText((irr::core::stringw(L"Money : ")+irr::core::stringw(ObjectManager.Map->Money)).c_str());	
 	Life_text->setText((irr::core::stringw(L"Lives : ")+irr::core::stringw(ObjectManager.Map->RemainingLife)).c_str());
 
 	irr::core::line3d<irr::f32> ray;
@@ -294,54 +305,84 @@ void CStateIngame::Update()
 		}
 		else
 		{
-			switch (status)
+			if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_E))
 			{
-			case ES_TOWER:case ES_SELECT_UPGRADE:
-				//render khung select upgrade
-				
-				if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_1) && selectedTower->data->UpgradeTowerList[0])
-				{
-					select_index = 1;
-					status= ES_SELECT_UPGRADE;
-					printf("status -> ES_SELECT_UPGRADE\n");
-				}
-				else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_2) && selectedTower->data->UpgradeTowerList[1])
-				{
-					select_index = 2;
-					status= ES_SELECT_UPGRADE;
-					printf("status -> ES_SELECT_UPGRADE\n");
-				}
-				else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_3) && selectedTower->data->UpgradeTowerList[2])
-				{
-					select_index = 3;
-					status= ES_SELECT_UPGRADE;
-					printf("status -> ES_SELECT_UPGRADE\n");
-				}
-				else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_4) && selectedTower->data->UpgradeTowerList[3])
-				{
-					select_index = 4;
-					status= ES_SELECT_UPGRADE;
-					printf("status -> ES_SELECT_UPGRADE\n");
-				}
-				else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_5) && selectedTower->data->UpgradeTowerList[4])
-				{
-					select_index = 5;
-					status= ES_SELECT_UPGRADE;
-					printf("status -> ES_SELECT_UPGRADE\n");
-				}
+				select_index = -1;
+				status = ES_NONE;
+				printf("status -> ES_NONE\n");
+				selectedTower->Sell();
+				selectedTower=0;
+				select_x = -1;
+				select_y = -1;
+				return;
+			}
+			else
+			{
 
-				if (status==ES_SELECT_UPGRADE)
-					if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,CIrrlichtView::GetInstance()->GetWidth(),CIrrlichtView::GetInstance()->GetHeight()))
+				switch (status)
+				{
+				case ES_TOWER:case ES_SELECT_UPGRADE:
+					//render khung select upgrade
+				
+					if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_1) && selectedTower->data->UpgradeTowerList[0])
 					{
-						selectedTower->Upgrade(selectedTower->data->UpgradeTowerList[select_index-1]);
-						status = ES_TOWER;
-						printf("status -> ES_TOWER\n");
-						select_index=-1;	
-						return;
+						if (Map->Money>=selectedTower->data->UpgradeTowerList[0]->Cost)
+						{
+							select_index = 1;
+							status= ES_SELECT_UPGRADE;
+							printf("status -> ES_SELECT_UPGRADE\n");
+						}
 					}
-				break;
+					else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_2) && selectedTower->data->UpgradeTowerList[1])
+					{
+						if (Map->Money>=selectedTower->data->UpgradeTowerList[1]->Cost)
+						{
+							select_index = 2;
+							status= ES_SELECT_UPGRADE;
+							printf("status -> ES_SELECT_UPGRADE\n");
+						}
+					}
+					else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_3) && selectedTower->data->UpgradeTowerList[2])
+					{
+						if (Map->Money>=selectedTower->data->UpgradeTowerList[2]->Cost)
+						{
+							select_index = 3;
+							status= ES_SELECT_UPGRADE;
+							printf("status -> ES_SELECT_UPGRADE\n");
+						}
+					}
+					else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_4) && selectedTower->data->UpgradeTowerList[3])
+					{
+						if (Map->Money>=selectedTower->data->UpgradeTowerList[3]->Cost)
+						{
+							select_index = 4;
+							status= ES_SELECT_UPGRADE;
+							printf("status -> ES_SELECT_UPGRADE\n");
+						}
+					}
+					else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_5) && selectedTower->data->UpgradeTowerList[4])
+					{
+						if (Map->Money>=selectedTower->data->UpgradeTowerList[4]->Cost)
+						{
+							select_index = 5;
+							status= ES_SELECT_UPGRADE;
+							printf("status -> ES_SELECT_UPGRADE\n");
+						}
+					}
+
+					if (status==ES_SELECT_UPGRADE)
+						if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,CIrrlichtView::GetInstance()->GetWidth(),CIrrlichtView::GetInstance()->GetHeight()))
+						{
+							selectedTower->Upgrade(selectedTower->data->UpgradeTowerList[select_index-1]);
+							status = ES_TOWER;
+							printf("status -> ES_TOWER\n");
+							select_index=-1;	
+							return;
+						}
+					break;
 			
 
+				}
 			}
 		}
 
@@ -397,33 +438,48 @@ void CStateIngame::Update()
 							
 							if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_1) && Map->data->BasicTowerList[0])
 							{
-								select_index = 1;
-								status= ES_SELECT_BUILD;
-								printf("status -> ES_SELECT_BUILD\n");
+								if (Map->Money>=Map->data->BasicTowerList[0]->Cost)
+								{
+									select_index = 1;
+									status= ES_SELECT_BUILD;
+									printf("status -> ES_SELECT_BUILD\n");
+								}
 							}
 							else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_2) && Map->data->BasicTowerList[1])
 							{
-								select_index = 2;
-								status= ES_SELECT_BUILD;
-								printf("status -> ES_SELECT_BUILD\n");
+								if (Map->Money>=Map->data->BasicTowerList[1]->Cost)
+								{
+									select_index = 2;
+									status= ES_SELECT_BUILD;
+									printf("status -> ES_SELECT_BUILD\n");
+								}
 							}
 							else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_3) && Map->data->BasicTowerList[2])
 							{
-								select_index = 3;
-								status= ES_SELECT_BUILD;
-								printf("status -> ES_SELECT_BUILD\n");
+								if (Map->Money>=Map->data->BasicTowerList[2]->Cost)
+								{
+									select_index = 3;
+									status= ES_SELECT_BUILD;
+									printf("status -> ES_SELECT_BUILD\n");
+								}
 							}
 							else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_4) && Map->data->BasicTowerList[3])
 							{
-								select_index = 4;
-								status= ES_SELECT_BUILD;
-								printf("status -> ES_SELECT_BUILD\n");
+								if (Map->Money>=Map->data->BasicTowerList[3]->Cost)
+								{
+									select_index = 4;
+									status= ES_SELECT_BUILD;
+									printf("status -> ES_SELECT_BUILD\n");
+								}
 							}
 							else if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_KEY_5) && Map->data->BasicTowerList[4])
 							{
-								select_index = 5;
-								status= ES_SELECT_BUILD;
-								printf("status -> ES_SELECT_BUILD\n");
+								if (Map->Money>=Map->data->BasicTowerList[4]->Cost)
+								{
+									select_index = 5;
+									status= ES_SELECT_BUILD;
+									printf("status -> ES_SELECT_BUILD\n");
+								}
 							}
 
 

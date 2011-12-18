@@ -8,17 +8,9 @@ CMapObject::CMapObject(SMapData *data)
 {
 	this->ObjectType = EGameObject::E_OBJ_MAP;
 	this->data = data;
-	ObjectMap = new int[this->data->Height * this->data->Width];
-	memset(ObjectMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	ObjectMap = new int[this->data->Height * this->data->Width];	
 	DirectionMap = new int[this->data->Height * this->data->Width];
-	memset(DirectionMap, 0, sizeof(int) * this->data->Height * this->data->Width);
-	RemainingLife = data->GivenLife;
-	Money = data->GivenMoney;
-	//memset(Enemy, 0, sizeof(Enemy));
-	isSpawnTime = false;
-	NumberOfEnemyInMap = 0;
-	CalculateEnemyPath(ObjectMap, DirectionMap);
-	status = ESTATUS_PLAY;
+	Reset();
 
 	//CImageManager::GetInstance()->AddImage<CFileWin32Driver>("..\\..\\resource\\grid_cell.tga",true);
 	//MapGridTexture = CImageManager::GetInstance()->Get("..\\..\\resource\\grid_cell.tga");
@@ -65,7 +57,11 @@ void CMapObject::Init()
 		irr::scene::IMesh* m = sceneNode->getMesh();
 		int a=1;
 
+
+
 		
+
+
 	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(WIN_WAV);
 	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(LOSE_WAV);
 }
@@ -74,9 +70,8 @@ void CMapObject::Update(int delta_time)
 {
 	if (status == ESTATUS_PLAY)
 	{
-		static int CurrentWave = 0;
-		static int NextSpawnTime;
-		static int EnemyIndexInWave;
+
+
 		if ((!isSpawnTime) && (NumberOfEnemyInMap==0))
 		{
 			if (CObjectManager::CurrentObjectManager->BulletList.GetCount()==0)
@@ -190,6 +185,8 @@ bool CMapObject::CalculateEnemyPath(int* ObjectMap, int* DirectionMap)
 
 bool CMapObject::BuildTower(STowerData* data, LogicPosition position)
 {
+	if (Money<data->Cost) return false;
+	
 	CTowerObject* tower = new CTowerObject(data);
 	int* NewObjectMap = new int[this->data->Width* this->data->Height];
 	memcpy(NewObjectMap, this->ObjectMap, sizeof(int)*this->data->Width* this->data->Height);
@@ -215,6 +212,7 @@ bool CMapObject::BuildTower(STowerData* data, LogicPosition position)
 	memset(NewDirectionMap, 0, sizeof(int)*this->data->Width* this->data->Height);
 	if (CalculateEnemyPath(NewObjectMap, NewDirectionMap))
 	{
+		Money-= data->Cost;
 		tower->logicposition = position;
 		tower->position = Position(position.x+1, position.y+1, 0.8);
 		tower->sceneNode->setPosition(irr::core::vector3df(tower->position.x, tower->position.z, tower->position.y));
@@ -263,6 +261,8 @@ bool CMapObject::BuildTower(STowerData* data, LogicPosition position)
 		this->ObjectMap = NewObjectMap;
 		SAFE_DEL(DirectionMap);
 		this->DirectionMap = NewDirectionMap;
+
+		
 		return true;
 	}	
 	else
@@ -335,5 +335,31 @@ void CMapObject::Lose()
 		status = ESTATUS_LOSE;
 		printf("LOSE\n");
 		CAudioPlayer::GetInstance()->Play(LOSE_WAV,false);
+	}
+}
+
+void CMapObject::Reset()
+{
+	memset(ObjectMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	memset(DirectionMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	RemainingLife = data->GivenLife;
+	Money = data->GivenMoney;
+	isSpawnTime = false;
+	NumberOfEnemyInMap = 0;
+
+	CalculateEnemyPath(ObjectMap, DirectionMap);
+	status = ESTATUS_PLAY;
+
+	CurrentWave = 0;
+	NextSpawnTime = 0;
+	EnemyIndexInWave = 0;
+	for (int i=0;i<MAX_OBSTACLE_PER_MAP;i++)
+	{
+		if (data->ObstacleList[i])
+		{
+			AddObstacle(data->ObstacleList[i],ObstaclePositionList[i],ObstacleSizeList[i]);
+		}
+		else break;
+	
 	}
 }

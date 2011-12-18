@@ -143,24 +143,7 @@ void CObjectManager::Render()
 
 void CObjectManager::RenderInSelectMode()
 {
-	/*glInitNames();
-	glPushName(1);
-	if (Map) Map->Render();
-	glPopName();
 
-	glPushName(2);
-	TowerList.BeginTravel();
-	int count = 0;
-	while (!TowerList.IsEndOfTravel())
-	{
-		CTowerObject* cur = (CTowerObject*)TowerList.Travel();
-		glPushName((unsigned int)cur);
-		cur->Render();
-		cur->isSelected=false;
-		glPopName();
-	}
-	glPopName();
-	*/
 }
 
 void CObjectManager::Destroy()
@@ -178,12 +161,6 @@ void CObjectManager::Destroy()
 
 void CObjectManager::ClearEnemy()
 {
-	/*EnemyList.BeginTravel();
-	while (!EnemyList.IsEndOfTravel())
-	{
-		CEnemyObject* cur = (CEnemyObject*)EnemyList.Travel();
-		cur->sceneNode->drop();
-	}*/
 	EnemyList.DeallocateElementPointer();
 	EnemyList.Clear();
 }
@@ -233,4 +210,15 @@ int* CObjectManager::GetMapObjectIncludingEnemy()
 		cloneOMap[CurLogicPos.y*Map->data->Width+CurLogicPos.x] = E_OBJ_ENEMY;		
 	}
 	return cloneOMap;
+}
+
+
+void CObjectManager::Reset()
+{
+	
+	ClearTower();
+	ClearEnemy();
+	ClearBullet();
+	ClearObstacle();
+	Map->Reset();
 }

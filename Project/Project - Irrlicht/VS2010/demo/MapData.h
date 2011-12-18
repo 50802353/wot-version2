@@ -2,6 +2,7 @@
 #define __MAPDATA_H__
 
 #include "EnemyData.h"
+#include "ObstacleData.h"
 
 struct LogicPosition
 {
@@ -55,6 +56,7 @@ struct SWaveData
 };
 
 #define MAX_WAVES_PER_MAP 20
+#define MAX_OBSTACLE_PER_MAP 20
 struct SMapData
 {
 	//logic attributes
@@ -68,15 +70,13 @@ struct SMapData
 	int NumberOfWaves;
 	SWaveData* Wave[MAX_WAVES_PER_MAP];
 	STowerData* BasicTowerList[5];
+	SObstacleData* ObstacleList[MAX_OBSTACLE_PER_MAP];
+	LogicPosition ObstaclePositionList[MAX_OBSTACLE_PER_MAP];
+	int ObstacleSizeList[MAX_OBSTACLE_PER_MAP];
 
 
-	//graphic attributes
-	int ModelID;
-	
-	//sound attributes
-	int SoundID;
-
-	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, int NumberOfWaves, SWaveData** Wave, STowerData** BasicTowerList, int ModelID, int SoundID)
+	SMapData(char* MapName, int Width, int Height, LogicPosition SourcePosition, LogicPosition DestinationPosition, int GivenLife, int GivenMoney, 
+		int NumberOfWaves, SWaveData** Wave, STowerData** BasicTowerList, SObstacleData** ObstacleList, LogicPosition* ObstaclPositionList, int* ObstacleSizeList)
 	{
 		strcpy(this->MapName, MapName);
 		this->Width = Width;
@@ -89,8 +89,10 @@ struct SMapData
 		memset(this->Wave, 0, sizeof(this->Wave));
 		memcpy(this->Wave, Wave, sizeof(SWaveData*)*NumberOfWaves);
 		memcpy(this->BasicTowerList,BasicTowerList, sizeof(STowerData*)*5);
-		this->ModelID = ModelID;
-		this->SoundID = SoundID;		
+		memcpy(this->ObstacleList, ObstacleList, sizeof(SObstacleData*)*MAX_OBSTACLE_PER_MAP);
+		memcpy(this->ObstaclePositionList, ObstaclPositionList, sizeof(LogicPosition)*MAX_OBSTACLE_PER_MAP);
+		memcpy(this->ObstacleSizeList, ObstacleSizeList, sizeof(int)*MAX_OBSTACLE_PER_MAP);
+	
 	}
 
 };

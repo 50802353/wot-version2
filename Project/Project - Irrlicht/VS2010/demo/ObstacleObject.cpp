@@ -52,5 +52,9 @@ void CObstacleObject::Render()
 
 void CObstacleObject::Destroy()
 {
-	sceneNode->remove();
+	if (sceneNode)
+	{
+		sceneNode->remove();
+		sceneNode = 0;
+	}
 }

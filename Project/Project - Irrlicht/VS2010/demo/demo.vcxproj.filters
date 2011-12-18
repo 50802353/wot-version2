@@ -63,6 +63,12 @@
     <ClCompile Include="CStateLogo.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
+    <ClCompile Include="CStateMainMenu.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateChoseMap.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDemo.h">
@@ -114,6 +120,12 @@
       <Filter>Header Files\GameData</Filter>
     </ClInclude>
     <ClInclude Include="CStateLogo.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateMainMenu.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateChoseMap.h">
       <Filter>Header Files\States</Filter>
     </ClInclude>
   </ItemGroup>

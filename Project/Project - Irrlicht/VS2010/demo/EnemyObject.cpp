@@ -11,6 +11,7 @@ CEnemyObject::CEnemyObject(SEnemyData* data, LogicPosition position)
 	NextPos = this->position;
 	Map = CObjectManager::CurrentObjectManager->Map;
 	this->currentHP = data->MaxHP;
+	this->time_to_invi = -1;
 	Init();
 }
 
@@ -42,6 +43,20 @@ void CEnemyObject::Init()
 
 void CEnemyObject::Update(int delta_time)
 {
+	if (time_to_invi>=0)
+	{
+		if (time_to_invi>delta_time)
+		{
+			time_to_invi-=delta_time;
+		}
+		else
+		{
+			time_to_invi = -1;
+			sceneNode->setVisible(false);
+			return;
+		}
+
+	}
 	if (!isInMap) return;
 	Move(delta_time);
 
@@ -55,6 +70,12 @@ void CEnemyObject::Render()
 void CEnemyObject::Destroy()
 {
 	//if (sceneNode->is) sceneNode->remove();
+	//CObjectManager::CurrentObjectManager->RemoveObject(this);
+	if (sceneNode)
+	{
+		sceneNode->remove();
+		sceneNode=0;
+	}
 }
 
 void CEnemyObject::Move(int delta_time)
@@ -103,10 +124,11 @@ void CEnemyObject::ReachDestination()
 	Map->RemainingLife--;
 	isInMap = false;
 	//sceneNode->setVisible(isInMap);
-	sceneNode->remove();
 	printf("Reach destination");
-	CObjectManager::CurrentObjectManager->Map->NumberOfEnemyInMap--;
+	
 	if (Map->RemainingLife<=0) Map->Lose();
+	CObjectManager::CurrentObjectManager->Map->NumberOfEnemyInMap--;
+	time_to_invi=100;
 }
 
 void CEnemyObject::Spawn()
@@ -124,7 +146,8 @@ void CEnemyObject::Die()
 		//sceneNode->setVisible(isInMap);
 		sceneNode->setMD2Animation(scene::EMD2_ANIMATION_TYPE::EMAT_DEATH_FALLBACK);
 		sceneNode->setLoopMode(false);
-		sceneNode->addAnimator(smgr->createDeleteAnimator(1000));
+		//sceneNode->addAnimator(smgr->createDeleteAnimator(1000));
+		time_to_invi=1000;
 		Map->Money+=this->data->Bounty;
 		CObjectManager::CurrentObjectManager->Map->NumberOfEnemyInMap--;
 

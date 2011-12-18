@@ -45,7 +45,7 @@ public:
 
 	void Die(); //huy quai' vat, remove khoi map, tang money
 	void ReachDestination();  //den' dich', huy quai vat, remove khoi map, giam LIFE
-
+	int time_to_invi;
 	//TODO------------------------------------------------------------------------------
 
 

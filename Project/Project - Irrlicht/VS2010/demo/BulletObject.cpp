@@ -39,8 +39,12 @@ void CBulletObject::Render()
 
 void CBulletObject::Destroy()
 {
-	CObjectManager::CurrentObjectManager->RemoveObject(this);
-	sceneNode->remove();
+	//CObjectManager::CurrentObjectManager->RemoveObject(this);
+	if (sceneNode)
+	{
+		sceneNode->remove();
+		sceneNode=0;
+	}
 }
 
 void CBulletObject::Move(int delta_time)
@@ -89,5 +93,6 @@ void CBulletObject::Hit()
 		this->target->Damaged(this->damage);
 		CAudioPlayer::GetInstance()->Play("./resource/ABomb.wav",false);
 	}
+	CObjectManager::CurrentObjectManager->RemoveObject(this);
 	delete this;
 }
