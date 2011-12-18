@@ -81,7 +81,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CDemo.cpp" />
+    <ClCompile Include="CStateChoseMap.cpp" />
     <ClCompile Include="CStateLogo.cpp" />
+    <ClCompile Include="CStateMainMenu.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CStateIngame.cpp" />
     <ClCompile Include="BulletObject.cpp" />
@@ -94,9 +96,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDemo.h" />
+    <ClInclude Include="CStateChoseMap.h" />
     <ClInclude Include="CStateIngame.h" />
     <ClInclude Include="BulletObject.h" />
     <ClInclude Include="CStateLogo.h" />
+    <ClInclude Include="CStateMainMenu.h" />
     <ClInclude Include="EnemyObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MapObject.h" />

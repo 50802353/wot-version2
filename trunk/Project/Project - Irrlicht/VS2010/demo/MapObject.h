@@ -79,7 +79,10 @@ public:
 	int NumberOfEnemyInMap;
 
 	//TODO------------------------------------------------------------------------------
-
+	void Reset();
+	int CurrentWave;
+	int NextSpawnTime;
+	int EnemyIndexInWave;
 };
 
 #endif

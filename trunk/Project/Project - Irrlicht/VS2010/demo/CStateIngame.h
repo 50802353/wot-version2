@@ -23,7 +23,15 @@ enum ESTATUS_TIME{
 
 extern class IngameEventReceiver;
 
+enum E_GUI_BUTTON_INGAME{
+	E_GBIG_CONTINUE=5000,
+	E_GBIG_RESTART,
+	E_GBIG_QUIT,
+	E_GBIG_MAINMENU,
+	//E_GBIG_YES,
+	//E_GBIG_NO,
 
+};
 
 
 class CStateIngame: public CState
@@ -81,23 +89,44 @@ public:
 			{
 			case gui::EGUI_EVENT_TYPE::EGET_BUTTON_CLICKED:
 				{
-					if ((gui::IGUIButton*)event.GUIEvent.Caller==state->bContinue)
+					if (event.GUIEvent.Caller->getID()==E_GBIG_CONTINUE)
+					{
+						printf("CONTINUE\n");
+						state->time_status = ES_PLAY;
+						state->menuIngame->setVisible(false);
+						//tat' menu ingame
+						CIrrlichtView::GetInstance()->device->getTimer()->start();
+						state->smgr->getActiveCamera()->setInputReceiverEnabled(true);
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(false);
+						core::rect<s32> vp = state->driver->getViewPort();
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setPosition(vp.getWidth()/2, vp.getHeight()/2);
+					}
+					else if (event.GUIEvent.Caller->getID()==E_GBIG_RESTART)
 					{
 						//do something
+						state->ObjectManager.Reset();
+						state->selectedTower = 0;
+						state->select_index = -1;
+						state->select_x = -1;
+						state->select_y = -1;
+						state->status = ES_NONE;
+						state->time_status = ES_PLAY;
 
-						
+						state->menuIngame->setVisible(false);
+						//tat' menu ingame
+						CIrrlichtView::GetInstance()->device->getTimer()->start();
+						state->smgr->getActiveCamera()->setInputReceiverEnabled(true);
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(false);
+						core::rect<s32> vp = state->driver->getViewPort();
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setPosition(vp.getWidth()/2, vp.getHeight()/2);
 					}
-					else if ((gui::IGUIButton*)event.GUIEvent.Caller==state->bRestart)
+					else if (event.GUIEvent.Caller->getID()==E_GBIG_QUIT)
 					{
 						//do something
+						CGame::GetInstance()->Exit();
 
 					}
-					else if ((gui::IGUIButton*)event.GUIEvent.Caller==state->bQuit)
-					{
-						//do something
-
-					}
-					else if ((gui::IGUIButton*)event.GUIEvent.Caller==state->bMainMenu)
+					else if (event.GUIEvent.Caller==state->bMainMenu)
 					{
 						//do something
 					}

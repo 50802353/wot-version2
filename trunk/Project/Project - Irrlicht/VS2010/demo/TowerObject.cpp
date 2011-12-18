@@ -22,6 +22,7 @@ CTowerObject::CTowerObject(STowerData *data)
 
 CTowerObject::~CTowerObject(void)
 {
+	Destroy();
 }
 
 void CTowerObject::Init()
@@ -85,6 +86,7 @@ void CTowerObject::Update(int delta_time)
 				Shoot(target);
 				sceneNode->setMD2Animation(scene::EMAT_JUMP);
 				sceneNode->setLoopMode(false);
+				status=1;
 		}
 		else
 		{
@@ -97,8 +99,12 @@ void CTowerObject::Update(int delta_time)
 	else
 	{
 		//status=0;
-		sceneNode->setMD2Animation(scene::EMAT_STAND);
-		sceneNode->setLoopMode(true);
+		if (status!=0)
+		{
+			status=0;
+			sceneNode->setMD2Animation(scene::EMAT_STAND);
+			sceneNode->setLoopMode(true);
+		}
 	}
 }
 
@@ -120,9 +126,18 @@ void CTowerObject::Render()
 
 void CTowerObject::Destroy()
 {
-	sceneNode->remove();
-	CObjectManager::CurrentObjectManager->RemoveObject(this);
-	delete this;
+	if (sceneNode) 
+	{
+		sceneNode->remove();
+		sceneNode = 0;
+	}
+	if (particleSystem) 
+	{
+		particleSystem->remove();
+		particleSystem = 0;
+	}
+	
+	//CObjectManager::CurrentObjectManager->RemoveObject(this);
 }
 
 void CTowerObject::FindTarget()
@@ -183,7 +198,8 @@ void CTowerObject::Upgrade(STowerData *data)
 void CTowerObject::Sell()
 {
 	CObjectManager::CurrentObjectManager->Map->Money += int(this->data->Cost * SELL_PERCENT);
-	Destroy();	
+	CObjectManager::CurrentObjectManager->RemoveObject(this);
+	delete this;
 }
 
 

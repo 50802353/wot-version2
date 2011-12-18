@@ -87,13 +87,13 @@ static SModelData ModelData7("./resource/model/_DragoonJr/dragoonjr.md2", "./res
 static SModelData ModelData8("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
 
 static STowerData* UpgradeTowerList4[5]={0,0,0,0,0};
-static STowerData TowerData4("TOWER_NAME_4", 10, 4, 1000, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList4, ModelData4, 1);
+static STowerData TowerData4("TOWER_NAME_4", 10, 4, 1000, 30, ETowerType::E_TOWER_ATTACK, UpgradeTowerList4, ModelData4, 1);
 static STowerData* UpgradeTowerList3[5]={0,0,0,0,0};
-static STowerData TowerData3("TOWER_NAME_3", 10, 4, 1000, 100, ETowerType::E_TOWER_ATTACK, UpgradeTowerList3, ModelData2, 1);
+static STowerData TowerData3("TOWER_NAME_3", 10, 4, 1000, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList3, ModelData2, 1);
 static STowerData* UpgradeTowerList2[5]={&TowerData3,0,0,0,0};
-static STowerData TowerData2("TOWER_NAME_2", 10, 4, 900, 50, ETowerType::E_TOWER_ATTACK, UpgradeTowerList2, ModelData1, 1);
+static STowerData TowerData2("TOWER_NAME_2", 10, 4, 900, 20, ETowerType::E_TOWER_ATTACK, UpgradeTowerList2, ModelData1, 1);
 static STowerData* UpgradeTowerList1[5]={&TowerData2,&TowerData4,0,0,0};
-static STowerData TowerData1("TOWER_NAME_1", 10, 4, 800, 70, ETowerType::E_TOWER_ATTACK, UpgradeTowerList1, ModelData3, 1);
+static STowerData TowerData1("TOWER_NAME_1", 10, 4, 800, 10, ETowerType::E_TOWER_ATTACK, UpgradeTowerList1, ModelData3, 1);
 static SEnemyData EnemyData1("ENEMY_NAME_1", 50, 30, 20, ModelData5, 2);
 static SEnemyData EnemyData2("ENEMY_NAME_2", 20, 60, 30, ModelData6, 2);
 static SEnemyData EnemyData3("ENEMY_NAME_3", 100, 15, 25, ModelData7, 2);
@@ -112,7 +112,15 @@ static SWaveData WaveData2(5, SpawnTime2, Enemy2);
 
 static SWaveData*	 Wave[2]		=	{&WaveData1,	&WaveData2};
 static STowerData* BasicTowerList[5]={&TowerData1,0,0,0,0};
-static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, 0, 0);
+static SObstacleData* ObstacleList[MAX_OBSTACLE_PER_MAP] = {&ObstacleData1,&ObstacleData1,&ObstacleData1,0,0,0,0,0,0,0,
+															0,0,0,0,0,0,0,0,0,0};
+static LogicPosition ObstaclePositionList[MAX_OBSTACLE_PER_MAP] = { LogicPosition(5,5),LogicPosition(3,0),LogicPosition(6,8),LogicPosition(),LogicPosition(),
+																	LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),
+																	LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),
+																	LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition()};
+static int ObstacleSizeList[MAX_OBSTACLE_PER_MAP] = {2,2,1};
+
+static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, ObstacleList,ObstaclePositionList,ObstacleSizeList);
 
 
 #define SELL_PERCENT 0.3

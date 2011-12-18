@@ -52,7 +52,7 @@ public:
 	CTowerObject* GetTowerAtPosition(int x, int y);
 	int* GetMapObjectIncludingEnemy();
 
-
+	void Reset();
 };
 
 #endif
