@@ -70,14 +70,14 @@ namespace GameTutor
 		while (device->run())
 		{
 			driver->beginScene(true, true, SColor(255,0,0,0));     
-
+			smgr->drawAll();
 			CGame::GetInstance()->Update();
 			if (!CGame::GetInstance()->IsAlive())
 			{
 				device->closeDevice();
 				break;
 			}
-			smgr->drawAll();
+			
 			guienv->drawAll();
 
 			driver->endScene();

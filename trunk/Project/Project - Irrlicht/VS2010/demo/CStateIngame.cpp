@@ -1,18 +1,104 @@
 
 #include "CStateIngame.h"
-
+#include "CStateMainMenu.h"
 
 STowerData* EmptyTowerList[] = {0,0,0,0,0};
 
 
 
+class IngameEventReceiver: public MyEventReceiver
+{
+public:
+	IngameEventReceiver(CStateIngame* state):MyEventReceiver()
+	{
+		this->state = state;
+	}
 
+	virtual bool OnEvent(const SEvent& event)
+	{
+		bool inAction = false;
+		if (MyEventReceiver::OnEvent(event)) inAction=true;
+		if (event.EventType==EEVENT_TYPE::EET_GUI_EVENT)
+		{
+			switch (event.GUIEvent.EventType)
+			{
+			case gui::EGUI_EVENT_TYPE::EGET_BUTTON_CLICKED:
+				{
+					if (event.GUIEvent.Caller->getID()==E_GBIG_CONTINUE)
+					{
+						printf("CONTINUE\n");
+						state->time_status = ES_PLAY;
+						state->menuIngame->setVisible(false);
+						//tat' menu ingame
+						CIrrlichtView::GetInstance()->device->getTimer()->start();
+						state->smgr->getActiveCamera()->setInputReceiverEnabled(true);
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(false);
+						core::rect<s32> vp = state->driver->getViewPort();
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setPosition(vp.getWidth()/2, vp.getHeight()/2);
+					}
+					else if (event.GUIEvent.Caller->getID()==E_GBIG_RESTART)
+					{
+						//do something
+						state->ObjectManager.Reset();
+						state->selectedTower = 0;
+						state->select_index = -1;
+						state->select_x = -1;
+						state->select_y = -1;
+						state->status = ES_NONE;
+						state->time_status = ES_PLAY;
+
+						state->menuIngame->setVisible(false);
+						state->menuIngame_WIN->setVisible(false);
+						state->menuIngame_LOSE->setVisible(false);
+						//tat' menu ingame
+						CIrrlichtView::GetInstance()->device->getTimer()->start();
+						state->smgr->getActiveCamera()->setInputReceiverEnabled(true);
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(false);
+						core::rect<s32> vp = state->driver->getViewPort();
+						CIrrlichtView::GetInstance()->device->getCursorControl()->setPosition(vp.getWidth()/2, vp.getHeight()/2);
+					}
+					else if (event.GUIEvent.Caller->getID()==E_GBIG_QUIT)
+					{
+						//do something
+						CGame::GetInstance()->Exit();
+
+					}
+					else if (event.GUIEvent.Caller->getID()==E_GBIG_MAINMENU)
+					{
+						CIrrlichtView::GetInstance()->device->getTimer()->start();
+						CStateManagement::GetInstance()->SwitchState(new CStateMainMenu());
+					}
+					else if (event.GUIEvent.Caller->getID()==E_GBIG_NEXT)
+					{
+						CIrrlichtView::GetInstance()->device->getTimer()->start();
+						CStateManagement::GetInstance()->SwitchState(new CStateIngame(state->MapDataList,state->currentMapIndex+1));
+					}
+					inAction = true;
+				}
+				break;
+			default:
+				{
+					
+				}
+				break;
+			}
+		}
+		return inAction;
+	}
+
+private:
+	CStateIngame* state;
+
+};
 
 	
 //--------------------------
 
-CStateIngame::CStateIngame():CState()
-{}
+CStateIngame::CStateIngame(SMapData** MapDataList, int index):CState()
+{
+	this->MapDataList = MapDataList;
+	currentMapIndex = index;
+}
 
 void CStateIngame::Init()
 {
@@ -39,12 +125,8 @@ void CStateIngame::Init()
 	select_x = -1;
 	select_y = -1;
 
-	CMapObject* map = new CMapObject(&MapData1);
+	CMapObject* map = new CMapObject(MapDataList[currentMapIndex]);
 	ObjectManager.SetMapObject(map);
-	map->BuildTower(&TowerData1, LogicPosition(5,0));
-	map->BuildTower(&TowerData1, LogicPosition(8,5));
-
-
 
 	//camera
 	irr::core::vector3df center = ObjectManager.Map->sceneNode->getTerrainCenter();
@@ -78,13 +160,13 @@ void CStateIngame::Init()
 
 	Money_text = guienv->addStaticText(L"Money : -",irr::core::rect<irr::s32>(10,10,410,110),false,false,0,-1,false);
 	Money_text->setOverrideFont(font);
-	Money_text->setOverrideColor(video::SColor(180,255,255,125));
+	Money_text->setOverrideColor(video::SColor(180,255,255,0));
 	Money_text->enableOverrideColor(true);
 
 
 	Life_text = guienv->addStaticText(L"Lives : -",irr::core::rect<irr::s32>(vp.LowerRightCorner.X-10-400,10,vp.LowerRightCorner.X,110),false,false,0,-1,false);
 	Life_text->setOverrideFont(font);
-	Life_text->setOverrideColor(video::SColor(180,255,125,125));
+	Life_text->setOverrideColor(video::SColor(180,255,0,0));
 	Life_text->enableOverrideColor(true);
 	Life_text->setTextAlignment(gui::EGUIA_CENTER,gui::EGUIA_CENTER);
 
@@ -107,43 +189,48 @@ void CStateIngame::Init()
 	s32 height = vp.getHeight();
 
 	selectPane[0] = guienv->addImage(core::rect<s32>(width-74*5-20,height-94,width-10,height-10),0,-1,L"");
-	/*selectPane[1] = guienv->addImage(core::rect<s32>(width-74*5-10,height-84,width-74*5-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[2] = guienv->addImage(core::rect<s32>(width-74*4-10,height-84,width-74*4-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[3] = guienv->addImage(core::rect<s32>(width-74*3-10,height-84,width-74*3-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[4] = guienv->addImage(core::rect<s32>(width-74*2-10,height-84,width-74*2-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");
-	selectPane[5] = guienv->addImage(core::rect<s32>(width-74-10,height-84,width-74-10+64,height-20),selectPane[0],-1,L"./resource/selectPane.bmp");*/
 
-	selectPane[6] = guienv->addImage(core::rect<s32>(10,10,74,74),selectPane[0],-1,L"");	
-	selectPane[6]->setImage(driver->getTexture("./resource/selectPane_layer1.png"));
-	selectPane[7] = guienv->addImage(core::rect<s32>(84,10,146,74),selectPane[0],-1,L"");
-	selectPane[7]->setImage(driver->getTexture("./resource/selectPane_layer2.png"));
-	selectPane[8] = guienv->addImage(core::rect<s32>(156,10,220,74),selectPane[0],-1,L"");
-	selectPane[8]->setImage(driver->getTexture("./resource/selectPane_layer3.png"));
-	selectPane[9] = guienv->addImage(core::rect<s32>(230,10,294,74),selectPane[0],-1,L"");
-	selectPane[9]->setImage(driver->getTexture("./resource/selectPane_layer4.png"));
-	selectPane[10] = guienv->addImage(core::rect<s32>(304,10,370,74),selectPane[0],-1,L"");
-	selectPane[10]->setImage(driver->getTexture("./resource/selectPane_layer5.png"));
+	selectPane[1] = guienv->addImage(core::rect<s32>(10,10,74,74),selectPane[0],-1,L"");
+	selectPane[2] = guienv->addImage(core::rect<s32>(84,10,146,74),selectPane[0],-1,L"");
+	selectPane[3] = guienv->addImage(core::rect<s32>(156,10,220,74),selectPane[0],-1,L"");
+	selectPane[4] = guienv->addImage(core::rect<s32>(230,10,294,74),selectPane[0],-1,L"");
+	selectPane[5] = guienv->addImage(core::rect<s32>(304,10,370,74),selectPane[0],-1,L"");
 
-	selectPane[1] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[6],-1,L"");
-	selectPane[2] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[7],-1,L"");
-	selectPane[3] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[8],-1,L"");
-	selectPane[4] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[9],-1,L"");
-	selectPane[5] = guienv->addImage(core::rect<s32>(0,0,64,64),selectPane[10],-1,L"");
+	gui::IGUIStaticText* text;
+	text = guienv->addStaticText(L"1",core::rect<s32>(-5,69,5,79),false,false,selectPane[1],-1,false);
+	text->setNotClipped(true);
+	//text->setOverrideFont(font);
+	text->setOverrideColor(video::SColor(255,0,255,0));
 
-	for (int i=0;i<11;i++)
+	text = guienv->addStaticText(L"2",core::rect<s32>(-5,69,5,79),false,false,selectPane[2],-1,false);
+	text->setNotClipped(true);
+	//text->setOverrideFont(font);
+	text->setOverrideColor(video::SColor(255,0,255,0));
+
+	text = guienv->addStaticText(L"3",core::rect<s32>(-5,69,5,79),false,false,selectPane[3],-1,false);
+	text->setNotClipped(true);
+	//text->setOverrideFont(font);
+	text->setOverrideColor(video::SColor(255,0,255,0));
+
+	text = guienv->addStaticText(L"4",core::rect<s32>(-5,69,5,79),false,false,selectPane[4],-1,false);
+	text->setNotClipped(true);
+	//text->setOverrideFont(font);
+	text->setOverrideColor(video::SColor(255,0,255,0));
+
+	text = guienv->addStaticText(L"5",core::rect<s32>(-5,69,5,79),false,false,selectPane[5],-1,false);
+	text->setNotClipped(true);
+	//text->setOverrideFont(font);
+	text->setOverrideColor(video::SColor(255,0,255,0));
+
+
+	for (int i=0;i<6;i++)
 		selectPane[i]->setUseAlphaChannel(true);
 
 	time_status=ES_PLAY;
 
 
 	menuIngame = guienv->addImage(vp);
-
-
 	gui::IGUIImage* menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-206)/2-10),core::dimension2di(153+20,206+20)),menuIngame);
-	//gui::IGUIImageList* img_list = guienv->createImageList(driver->getTexture("./resource/Button_sprite.png"),core::dimension2di(153,44),true);
-	//img_list->
-
-	//guienv->addImage(core::rect<s32>(10,10,290,40),menu);
 	video::SColor color (255,255,255,255);
 	guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_WINDOW,color);
 	gui::IGUIButton* bContinue =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_CONTINUE);
@@ -154,9 +241,31 @@ void CStateIngame::Init()
 	bMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
 	gui::IGUIButton* bQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu,E_GBIG_QUIT);
 	bQuit->setImage(driver->getTexture("./resource/button/quit.png"));
-
-
 	menuIngame->setVisible(false);
+
+	menuIngame_WIN = guienv->addImage(vp);
+	menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-206)/2-10),core::dimension2di(153+20,206+20)),menuIngame_WIN);
+	gui::IGUIButton* bwNext =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_NEXT);
+	bwNext->setImage(driver->getTexture("./resource/button/next.png"));
+	if (currentMapIndex>=3) bwNext->setEnabled(false);
+
+	gui::IGUIButton* bwRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_RESTART);
+	bwRestart->setImage(driver->getTexture("./resource/button/restart.png"));
+	gui::IGUIButton* bwMainMenu = guienv->addButton(core::rect<s32>(10,118,162,162),menu,E_GBIG_MAINMENU);
+	bwMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
+	gui::IGUIButton* bwQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu,E_GBIG_QUIT);
+	bwQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+	menuIngame_WIN->setVisible(false);
+
+	menuIngame_LOSE = guienv->addImage(vp);
+	menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-152)/2-10),core::dimension2di(153+20,152+20)),menuIngame_LOSE);
+	gui::IGUIButton* blRestart =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_RESTART);
+	blRestart->setImage(driver->getTexture("./resource/button/restart.png"));
+	gui::IGUIButton* blMainMenu = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_MAINMENU);
+	blMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
+	gui::IGUIButton* blQuit = guienv->addButton(core::rect<s32>(10,118,162,162),menu,E_GBIG_QUIT);
+	blQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+	menuIngame_LOSE->setVisible(false);
 
 	receiver = new IngameEventReceiver(this);
 	CIrrlichtView::GetInstance()->device->setEventReceiver(receiver);
@@ -166,16 +275,26 @@ void CStateIngame::updateSelectPane(STowerData** list)
 {
 	for (int i=0;i<5;i++)
 	{
-		core::stringc s = "./resource/selectPane_layer";
+		/*core::stringc s = "./resource/selectPane_layer";
 		s+=(i+1);
 		if (i==select_index-1)
 			s+="_hl.png";
 		else
 			s+=".png";
-		selectPane[i+6]->setImage(driver->getTexture(s));
+		selectPane[i+6]->setImage(driver->getTexture(s));*/
 
 		if (list[i])
+		{
 			selectPane[i+1]->setImage(driver->getTexture(list[i]->ModelData.avatarname));			
+			if (ObjectManager.Map->Money>=list[i]->Cost)
+				selectPane[i+1]->setColor(video::SColor(125,255,255,255));
+			else
+				selectPane[i+1]->setColor(video::SColor(125,255,150,150));
+			if (select_index==i+1) 
+			{
+				selectPane[i+1]->setColor(video::SColor(255,255,255,255));
+			}
+		}
 		else
 			selectPane[i+1]->setImage(driver->getTexture("./resource/selectPane.bmp"));
 	}
@@ -183,6 +302,25 @@ void CStateIngame::updateSelectPane(STowerData** list)
 
 void CStateIngame::Update()
 {
+	if (time_status==ES_WAIT_END) return;
+
+	if (ObjectManager.Map->status==2 ||ObjectManager.Map->status==3) 
+	{
+		if (ObjectManager.Map->status==2)
+			menuIngame_WIN->setVisible(true);
+		else 
+			menuIngame_LOSE->setVisible(true);
+
+		time_status = ES_WAIT_END;
+
+		CIrrlichtView::GetInstance()->device->getTimer()->stop();
+		smgr->getActiveCamera()->setInputReceiverEnabled(false);
+		CIrrlichtView::GetInstance()->device->getCursorControl()->setVisible(true);
+
+		return; //WIN/LOSE
+	}
+
+
 	if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_ESCAPE))
 	{
 		switch (time_status)
@@ -209,11 +347,16 @@ void CStateIngame::Update()
 		}
 	}
 
+	if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_SPACE))
+	{
+		ObjectManager.Map->drawGrid = !ObjectManager.Map->drawGrid;
+	}
+
 	if (time_status==ES_PAUSE) return;
 
 	cursor->setRelativePosition(core::recti(CIrrlichtView::GetInstance()->device->getCursorControl()->getPosition()-core::dimension2di(8,8),core::dimension2di(16,16)));
 
-	if (ObjectManager.Map->status==2 ||ObjectManager.Map->status==3) return; //WIN/LOSE
+	
 
 	//mode processing
 	/*static irr::scene::ISceneNode* highlightedSceneNode = 0;
@@ -523,14 +666,32 @@ void CStateIngame::Render()
 		material.setTexture(0, 0);
 		material.Lighting = false;
 		material.NormalizeNormals = false;
-		material.Wireframe = true;
+		material.Wireframe = false;
+		material.MaterialType = video::EMT_TRANSPARENT_ADD_COLOR;
 		driver->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
 		driver->setMaterial(material);
-		driver->draw3DBox(core::aabbox3df(select_x,0.1,select_y,select_x+2,0.2,select_y+2),video::SColor(255,0,125,0));
+		driver->draw3DBox(core::aabbox3df(select_x,0.1,select_y,select_x+2,0.2,select_y+2),video::SColor(255,0,125,0));		
 	}
 }
 
 void CStateIngame::Exit()
 {
 	Log("State Ingame: Exit");
+
+
+	menuIngame->remove();
+	menuIngame_LOSE->remove();
+	menuIngame_WIN->remove();
+	selectPane[0]->remove();
+
+	Money_text->remove();
+	Life_text->remove();
+	cursor->remove();
+	ObjectManager.ClearTower();
+	ObjectManager.ClearEnemy();
+	ObjectManager.ClearBullet();
+	ObjectManager.ClearObstacle();
+	delete ObjectManager.Map;
+	//ObjectManager.SetMapObject(0);
+	
 }

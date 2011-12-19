@@ -2,7 +2,7 @@
 #include "CStateMainMenu.h"
 #include "CStateIngame.h"
 
-#define CHOSEMAP_BACKGROUND_IMAGE "./resource/backgroundChoseMap.jpg"
+#define CHOSEMAP_BACKGROUND_IMAGE "./resource/world-map.png"
 #define CHOSEMAP_BACKGROUND_MUSIC "./resource/backgroundChoseMap.wav"
 
 class ChoseMapEventReceiver:public MyEventReceiver
@@ -28,11 +28,19 @@ public:
 				}
 				else if (event.GUIEvent.Caller->getID()==E_GBCM_MAP1)
 				{
-					CStateManagement::GetInstance()->SwitchState(new CStateIngame());
+					CStateManagement::GetInstance()->SwitchState(new CStateIngame(MapData,0));
 				}
 				else if (event.GUIEvent.Caller->getID()==E_GBCM_MAP2)
 				{
-					CStateManagement::GetInstance()->SwitchState(new CStateIngame());
+					CStateManagement::GetInstance()->SwitchState(new CStateIngame(MapData,1));
+				}
+				else if (event.GUIEvent.Caller->getID()==E_GBCM_MAP3)
+				{
+					CStateManagement::GetInstance()->SwitchState(new CStateIngame(MapData,2));
+				}
+				else if (event.GUIEvent.Caller->getID()==E_GBCM_MAP4)
+				{
+					CStateManagement::GetInstance()->SwitchState(new CStateIngame(MapData,3));
 				}
 
 				inAction=true;
@@ -56,14 +64,24 @@ void CStateChoseMap::Init()
 	screen->setImage(driver->getTexture(CHOSEMAP_BACKGROUND_IMAGE));
 	screen->setScaleImage(true);
 
-	bBack = guienv->addButton(core::recti(vp.LowerRightCorner-core::dimension2di(220,90),core::dimension2di(200,20)),screen, E_GBCM_BACK);
-	bBack->setImage(driver->getTexture("./resource/button/back.png"));
+	guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_WINDOW, video::SColor(0,0,0,0));
+	
+	bBack = guienv->addButton(core::recti(vp.LowerRightCorner-core::dimension2di(218,117),core::dimension2di(218,117)),screen, E_GBCM_BACK);
+	bBack->setImage(driver->getTexture("./resource/back-arrow.png"));
+	bBack->setUseAlphaChannel(true);
+	
 
-	bMap1 = guienv->addButton(core::recti(vp.LowerRightCorner-core::dimension2di(220,60),core::dimension2di(200,20)),screen, E_GBCM_MAP1);
-	bMap1->setImage(driver->getTexture("./resource/button/map1.png"));
+	bMap1 = guienv->addButton(core::recti(core::vector2di(150,180),core::dimension2di(50,50)),screen, E_GBCM_MAP1);
+	bMap1->setImage(driver->getTexture("./resource/castle1.png"));
 
-	bMap2 = guienv->addButton(core::recti(vp.LowerRightCorner-core::dimension2di(220,30),core::dimension2di(200,20)),screen, E_GBCM_MAP2);
-	bMap2->setImage(driver->getTexture("./resource/button/map2.png"));
+	bMap2 = guienv->addButton(core::recti(core::vector2di(230,380),core::dimension2di(50,50)),screen, E_GBCM_MAP2);
+	bMap2->setImage(driver->getTexture("./resource/castle2.png"));
+
+	bMap3 = guienv->addButton(core::recti(core::vector2di(530,150),core::dimension2di(50,50)),screen, E_GBCM_MAP3);
+	bMap3->setImage(driver->getTexture("./resource/castle3.png"));
+
+	bMap4 = guienv->addButton(core::recti(core::vector2di(420,270),core::dimension2di(50,50)),screen, E_GBCM_MAP4);
+	bMap4->setImage(driver->getTexture("./resource/castle4.png"));
 
 	Log("State ChoseMap: Init");
 	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(CHOSEMAP_BACKGROUND_MUSIC);

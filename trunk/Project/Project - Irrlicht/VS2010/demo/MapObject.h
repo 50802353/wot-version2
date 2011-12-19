@@ -83,6 +83,10 @@ public:
 	int CurrentWave;
 	int NextSpawnTime;
 	int EnemyIndexInWave;
+	bool drawGrid;
+
+	scene::IParticleSystemSceneNode* PSsrc;
+	scene::IParticleSystemSceneNode* PSdst;
 };
 
 #endif
