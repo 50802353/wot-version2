@@ -4,6 +4,43 @@
 #define WIN_WAV "./resource/AWin.wav"
 #define LOSE_WAV "./resource/ALose.wav"
 
+
+/*class CSampleSceneNode : public scene::ITerrainSceneNode
+{	
+	virtual void render()
+	{
+		scene::ITerrainSceneNode::render();
+
+		video::IVideoDriver* driver = SceneManager->getVideoDriver();
+		video::SMaterial Material = getMaterial(0);
+		Material.Wireframe = true;
+		driver->setMaterial(Material);
+		if (!IsVisible || !SceneManager->getActiveCamera())
+			return;
+
+		if (!Mesh->getMeshBufferCount())
+			return;
+
+		video::IVideoDriver* driver = SceneManager->getVideoDriver();
+
+		driver->setTransform (video::ETS_WORLD, core::IdentityMatrix);
+		driver->setMaterial(Mesh->getMeshBuffer(0)->getMaterial());
+
+		RenderBuffer->getIndexBuffer().set_used(IndicesToRender);
+
+		// For use with geomorphing
+		driver->drawMeshBuffer(RenderBuffer);
+
+		RenderBuffer->getIndexBuffer().set_used(RenderBuffer->getIndexBuffer().allocated_size());
+
+	}
+};*/
+
+
+
+
+
+
 CMapObject::CMapObject(SMapData *data)
 {
 	this->ObjectType = EGameObject::E_OBJ_MAP;
@@ -20,6 +57,8 @@ CMapObject::CMapObject(SMapData *data)
 CMapObject::~CMapObject(void)
 {
 	SAFE_DEL_ARRAY(ObjectMap);
+	SAFE_DEL_ARRAY(DirectionMap);
+	Destroy();
 }
 
 void CMapObject::Init()
@@ -38,28 +77,80 @@ void CMapObject::Init()
                 4											 // smoothFactor
                 );
 
-        //sceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
+    //sceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, true);
 
-        sceneNode->setMaterialTexture(0,
-                        driver->getTexture("./resource/terrain-texture.jpg"));
-        sceneNode->setMaterialTexture(1,
-                        driver->getTexture("./resource/detailmap3.jpg"));
+    sceneNode->setMaterialTexture(0,
+                    driver->getTexture("./resource/terrain-texture.jpg"));
+    sceneNode->setMaterialTexture(1,
+                    driver->getTexture("./resource/detailmap3.jpg"));
         
-        sceneNode->setMaterialType(irr::video::EMT_DETAIL_MAP);
+    sceneNode->setMaterialType(irr::video::EMT_DETAIL_MAP);
 
-        sceneNode->scaleTexture(1.0f, 20.0f);
+    sceneNode->scaleTexture(1.0f, 20.0f);
 
-		irr::scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(sceneNode, 0);
-		sceneNode->setTriangleSelector(selector);
-		selector->drop();
+	irr::scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(sceneNode, 0);
+	sceneNode->setTriangleSelector(selector);
+	selector->drop();
 
-		skydome =smgr->addSkyDomeSceneNode(driver->getTexture("./resource/skydome.jpg"),16,8,0.95f,2.0f);
-		irr::scene::IMesh* m = sceneNode->getMesh();
-		int a=1;
+	skydome =smgr->addSkyDomeSceneNode(driver->getTexture("./resource/skydome.jpg"),16,8,0.95f,2.0f);
+	//irr::scene::IMesh* m = sceneNode->getMesh();
+	//int a=1;
+
+
+	drawGrid=false;
+	
+	PSsrc = smgr->addParticleSystemSceneNode(false);
+	scene::IParticleEmitter* em = PSsrc->createRingEmitter(
+		core::vector3df(0,0,0),0.4,0.3,core::vector3df(0,0.001,0),10U,20U,video::SColor(255,255,255,255),video::SColor(255,255,255,255),2000U,4000U,0,core::dimension2df(0.2,0.2),core::dimension2df(0.5,0.5));
+	PSsrc->setEmitter(em);
+	PSsrc->setScale(core::vector3df(1,1,1));
+	PSsrc->setMaterialFlag(video::EMF_LIGHTING, false);
+	PSsrc->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	PSsrc->setMaterialTexture(0, driver->getTexture("./resource/particle2.bmp"));
+	PSsrc->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+	em->drop();
+
+	scene::IParticleAffector* paf = PSsrc->createRotationAffector(core::vector3df(0,135,0),core::vector3df(data->SourcePosition.x+0.5,0,data->SourcePosition.y+0.5));
+	PSsrc->addAffector(paf);
+	paf->drop();
+
+	paf = PSsrc->createFadeOutParticleAffector(video::SColor(0,0,0,0),2000);
+	PSsrc->addAffector(paf);
+	paf->drop();
+
+	//scene::
+	PSsrc->setPosition(core::vector3df(data->SourcePosition.x+0.5,0,data->SourcePosition.y+0.5));
 
 
 
-		
+
+	PSdst = smgr->addParticleSystemSceneNode(false);
+	em = PSdst->createRingEmitter(
+		core::vector3df(0,0,0),0.4,0.3,core::vector3df(0,0.001,0),10U,20U,video::SColor(255,255,255,255),video::SColor(255,255,255,255),2000U,4000U,0,core::dimension2df(0.2,0.2),core::dimension2df(0.5,0.5));
+	PSdst->setEmitter(em);
+	PSdst->setScale(core::vector3df(1,1,1));
+	PSdst->setMaterialFlag(video::EMF_LIGHTING, false);
+	PSdst->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	PSdst->setMaterialTexture(0, driver->getTexture("./resource/particle2.bmp"));
+	PSdst->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+	em->drop();
+
+	paf = PSdst->createRotationAffector(core::vector3df(0,260,0),core::vector3df(data->DestinationPosition.x+0.5,0,data->DestinationPosition.y+0.5));
+	PSdst->addAffector(paf);
+	paf->drop();
+
+	paf = PSdst->createAttractionAffector(core::vector3df(data->DestinationPosition.x+0.5,0,data->DestinationPosition.y+0.5),1);
+	PSdst->addAffector(paf);
+	paf->drop();
+
+	paf = PSdst->createFadeOutParticleAffector(video::SColor(0,0,0,0),2000);
+	PSdst->addAffector(paf);
+	paf->drop();
+
+	//scene::
+	PSdst->setPosition(core::vector3df(data->DestinationPosition.x+0.5,0,data->DestinationPosition.y+0.5));
+
+
 
 
 	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(WIN_WAV);
@@ -119,14 +210,35 @@ void CMapObject::Update(int delta_time)
 
 void CMapObject::Render()
 {
+	if (!drawGrid) return;
+	video::SMaterial material;
+	material.setTexture(0,0);
+	material.Wireframe = true;
+	material.Lighting = false;
+	material.ZBuffer = false;
+	material.ZWriteEnable = false;
+	material.NormalizeNormals = false;
+	material.MaterialType = video::EMT_TRANSPARENT_ADD_COLOR;
+
+
+	driver->setMaterial(material);
+	driver->setTransform (video::ETS_WORLD, core::IdentityMatrix);
+	for (int i=0;i<=data->Width;i++)
+		driver->draw3DLine(core::vector3df(i,sceneNode->getHeight(i,0),0),core::vector3df(i,sceneNode->getHeight(i,data->Height),data->Height),video::SColor(0,125,55,0));
+	for (int i=0;i<=data->Height;i++)
+		driver->draw3DLine(core::vector3df(0,sceneNode->getHeight(0,i),i),core::vector3df(data->Width,sceneNode->getHeight(data->Width,i),i),video::SColor(0,125,55,0));
+	
 }
 
 void CMapObject::Destroy()
 {
 	sceneNode->remove();
 	skydome->remove();
+	PSsrc->remove();
+	PSdst->remove();
+
 	CObjectManager::CurrentObjectManager->SetMapObject(NULL);
-	delete this;
+	//delete this;
 }
 
 bool CMapObject::CalculateEnemyPath(int* ObjectMap, int* DirectionMap)

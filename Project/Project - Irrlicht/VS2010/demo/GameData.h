@@ -76,15 +76,15 @@ struct Position
 //Temp data
 //Temp data
 
-static SModelData ModelData1("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon.tga", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData2("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr.tga", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData3("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData4("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar.png", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData1("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon2.png", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData2("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr2.png", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData3("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk2.png", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData4("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar2.png", core::vector3df(0.08,0.08,0.08), core::vector3df(0,0,0),20.0f);
 
-static SModelData ModelData5("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData6("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData7("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
-static SModelData ModelData8("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk.tga", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData5("./resource/model/_Boss/boss.md2", "./resource/model/_Boss/boss.pcx", "./resource/model/_Boss/boss_avatar2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData6("./resource/model/_Dragoon/dragoon.md2", "./resource/model/_Dragoon/dragoon.pcx", "./resource/model/_Dragoon/dragoon2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData7("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData8("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
 
 static STowerData* UpgradeTowerList4[5]={0,0,0,0,0};
 static STowerData TowerData4("TOWER_NAME_4", 10, 4, 1000, 30, ETowerType::E_TOWER_ATTACK, UpgradeTowerList4, ModelData4, 1);
@@ -120,7 +120,10 @@ static LogicPosition ObstaclePositionList[MAX_OBSTACLE_PER_MAP] = { LogicPositio
 																	LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition()};
 static int ObstacleSizeList[MAX_OBSTACLE_PER_MAP] = {2,2,1};
 
+
 static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, ObstacleList,ObstaclePositionList,ObstacleSizeList);
+//static SMapData MapData2("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, ObstacleList,ObstaclePositionList,ObstacleSizeList);
+static SMapData*  MapData[4] = {&MapData1,&MapData1,&MapData1,&MapData1};
 
 
 #define SELL_PERCENT 0.3

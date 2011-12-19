@@ -8,8 +8,8 @@ enum E_GUI_BUTTON_CHOSEMAP {
 	E_GBCM_BACK,
 	E_GBCM_MAP1,
 	E_GBCM_MAP2,
-	//E_GBCM_MAP3,
-	//E_GBCM_MAP4,
+	E_GBCM_MAP3,
+	E_GBCM_MAP4,
 };
 
 extern class ChoseMapEventReceiver;
@@ -32,8 +32,8 @@ private:
 	gui::IGUIButton* bBack;
 	gui::IGUIButton* bMap1;
 	gui::IGUIButton* bMap2;
-	//gui::IGUIButton* bMap3;
-	//gui::IGUIButton* bMap4;
+	gui::IGUIButton* bMap3;
+	gui::IGUIButton* bMap4;
 
 
 

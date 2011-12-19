@@ -84,7 +84,7 @@ void CTowerObject::Update(int delta_time)
 		{
 				time_to_shoot += this->data->AttackSpeed;
 				Shoot(target);
-				sceneNode->setMD2Animation(scene::EMAT_JUMP);
+				sceneNode->setMD2Animation(scene::EMAT_ATTACK);
 				sceneNode->setLoopMode(false);
 				status=1;
 		}
