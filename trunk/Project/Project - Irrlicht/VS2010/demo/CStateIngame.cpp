@@ -18,7 +18,41 @@ public:
 	{
 		bool inAction = false;
 		if (MyEventReceiver::OnEvent(event)) inAction=true;
-		if (event.EventType==EEVENT_TYPE::EET_GUI_EVENT)
+		/*if (event.EventType==EEVENT_TYPE::EET_KEY_INPUT_EVENT)
+		{
+			core::vector3df campos = state->camera->getPosition();
+			core::vector3df camtar = state->camera->getTarget();
+				
+			core::vector3df dir = (camtar - campos);dir.Y = 0;dir.normalize();
+			if (dir.getLength()<0.001)
+			{
+				dir = state->camera->getUpVector();
+				dir.Y = 0;
+				dir.normalize();
+			}
+
+			core::vector3df camfw = campos+dir;
+			printf("W dir %f %f %f",camfw.X, camfw.Y, camfw.Z);
+
+			switch (event.KeyInput.Key)
+			{
+			case EKEY_CODE::KEY_KEY_W:	
+				printf("W dir %f %f %f",dir.X, dir.Y, dir.Z);
+				state->camera->setPosition(camfw);
+				state->camera->setTarget(camtar+dir);
+				break;
+			case EKEY_CODE::KEY_KEY_A:
+				break;
+			case EKEY_CODE::KEY_KEY_S:
+				state->camera->setPosition(campos-dir);
+				state->camera->setTarget(camtar-dir);
+				break;
+			case EKEY_CODE::KEY_KEY_D:
+				break;
+
+			}
+		}
+		else */if (event.EventType==EEVENT_TYPE::EET_GUI_EVENT)
 		{
 			switch (event.GUIEvent.EventType)
 			{
@@ -130,14 +164,27 @@ void CStateIngame::Init()
 
 	//camera
 	irr::core::vector3df center = ObjectManager.Map->sceneNode->getTerrainCenter();
-	irr::scene::ICameraSceneNode *camera = NULL;
-	camera = smgr->addCameraSceneNodeFPS(0, 100, 0.05);
-	camera->setPosition(center+irr::core::vector3df(0,10,-10));
+
+	irr:SKeyMap keymap[4];
+	keymap[0].Action = EKEY_ACTION::EKA_MOVE_FORWARD;
+	keymap[0].KeyCode = EKEY_CODE::KEY_KEY_W;
+
+	keymap[1].Action = EKEY_ACTION::EKA_MOVE_BACKWARD;
+	keymap[1].KeyCode = EKEY_CODE::KEY_KEY_S;
+
+	keymap[2].Action = EKEY_ACTION::EKA_STRAFE_LEFT;
+	keymap[2].KeyCode = EKEY_CODE::KEY_KEY_A;
+
+	keymap[3].Action = EKEY_ACTION::EKA_STRAFE_RIGHT;
+	keymap[3].KeyCode = EKEY_CODE::KEY_KEY_D;
+
+	camera = smgr->addCameraSceneNodeFPS(0, 100, 0.05, -1, keymap, 4, true);
+	camera->setPosition(center+irr::core::vector3df(ObjectManager.Map->data->Width/2,6,-ObjectManager.Map->data->Height/2));
 	camera->setTarget(center);
 	camera->setFarValue(42000.0f);
 
 	
-	irr::scene::ISceneNodeAnimator* anim = smgr->createCollisionResponseAnimator(map->sceneNode->getTriangleSelector(), camera, irr::core::vector3df(1,10,1),irr::core::vector3df(0,-10000.0f,0));
+	irr::scene::ISceneNodeAnimator* anim = smgr->createCollisionResponseAnimator(map->sceneNode->getTriangleSelector(), camera, irr::core::vector3df(1,6,1),irr::core::vector3df(0,-10000.0f,0));
 	camera->addAnimator(anim);
 	anim->drop();
 
@@ -196,30 +243,32 @@ void CStateIngame::Init()
 	selectPane[4] = guienv->addImage(core::rect<s32>(230,10,294,74),selectPane[0],-1,L"");
 	selectPane[5] = guienv->addImage(core::rect<s32>(304,10,370,74),selectPane[0],-1,L"");
 
+
+	gui::IGUIFont * numberfont = guienv->getFont("./resource/number.xml");
 	gui::IGUIStaticText* text;
-	text = guienv->addStaticText(L"1",core::rect<s32>(-5,69,5,79),false,false,selectPane[1],-1,false);
+	text = guienv->addStaticText(L"1",core::rect<s32>(10,49,25,79),false,false,selectPane[1],-1,false);
 	text->setNotClipped(true);
-	//text->setOverrideFont(font);
+	text->setOverrideFont(numberfont);
 	text->setOverrideColor(video::SColor(255,0,255,0));
 
-	text = guienv->addStaticText(L"2",core::rect<s32>(-5,69,5,79),false,false,selectPane[2],-1,false);
+	text = guienv->addStaticText(L"2",core::rect<s32>(10,49,25,79),false,false,selectPane[2],-1,false);
 	text->setNotClipped(true);
-	//text->setOverrideFont(font);
+	text->setOverrideFont(numberfont);
 	text->setOverrideColor(video::SColor(255,0,255,0));
 
-	text = guienv->addStaticText(L"3",core::rect<s32>(-5,69,5,79),false,false,selectPane[3],-1,false);
+	text = guienv->addStaticText(L"3",core::rect<s32>(10,49,25,79),false,false,selectPane[3],-1,false);
 	text->setNotClipped(true);
-	//text->setOverrideFont(font);
+	text->setOverrideFont(numberfont);
 	text->setOverrideColor(video::SColor(255,0,255,0));
 
-	text = guienv->addStaticText(L"4",core::rect<s32>(-5,69,5,79),false,false,selectPane[4],-1,false);
+	text = guienv->addStaticText(L"4",core::rect<s32>(10,49,25,79),false,false,selectPane[4],-1,false);
 	text->setNotClipped(true);
-	//text->setOverrideFont(font);
+	text->setOverrideFont(numberfont);
 	text->setOverrideColor(video::SColor(255,0,255,0));
 
-	text = guienv->addStaticText(L"5",core::rect<s32>(-5,69,5,79),false,false,selectPane[5],-1,false);
+	text = guienv->addStaticText(L"5",core::rect<s32>(10,49,25,79),false,false,selectPane[5],-1,false);
 	text->setNotClipped(true);
-	//text->setOverrideFont(font);
+	text->setOverrideFont(numberfont);
 	text->setOverrideColor(video::SColor(255,0,255,0));
 
 
@@ -244,9 +293,17 @@ void CStateIngame::Init()
 	menuIngame->setVisible(false);
 
 	menuIngame_WIN = guienv->addImage(vp);
+	//menuIngame_WIN->setImage(driver->getTexture("./resource/win.jpg"));
+	//menuIngame_WIN->setScaleImage(true);
+	text = guienv->addStaticText(L"YOU WIN", core::rect<s32>(core::vector2di(0,(vp.getHeight()-206)/2-10-110),core::dimension2di(vp.getWidth(),100)),false,true,menuIngame_WIN,-1,false);
+	text->setNotClipped(true);
+	text->setOverrideColor(video::SColor(255,0,255,0));
+	text->setOverrideFont(font);
+	text->setTextAlignment(gui::EGUIA_CENTER,gui::EGUIA_CENTER);
+
 	menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-206)/2-10),core::dimension2di(153+20,206+20)),menuIngame_WIN);
 	gui::IGUIButton* bwNext =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_NEXT);
-	bwNext->setImage(driver->getTexture("./resource/button/next.png"));
+	bwNext->setImage(driver->getTexture("./resource/button/continue.png"));
 	if (currentMapIndex>=3) bwNext->setEnabled(false);
 
 	gui::IGUIButton* bwRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_RESTART);
@@ -258,6 +315,14 @@ void CStateIngame::Init()
 	menuIngame_WIN->setVisible(false);
 
 	menuIngame_LOSE = guienv->addImage(vp);
+	//menuIngame_LOSE->setImage(driver->getTexture("./resource/lose.jpg"));
+	//menuIngame_LOSE->setScaleImage(true);
+	text = guienv->addStaticText(L"YOU LOSE", core::rect<s32>(core::vector2di(0,(vp.getHeight()-152)/2-10-110),core::dimension2di(vp.getWidth(),100)),false,true,menuIngame_LOSE,-1,false);
+	text->setNotClipped(true);
+	text->setOverrideColor(video::SColor(255,0,255,0));
+	text->setOverrideFont(font);
+	text->setTextAlignment(gui::EGUIA_CENTER,gui::EGUIA_CENTER);
+
 	menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-152)/2-10),core::dimension2di(153+20,152+20)),menuIngame_LOSE);
 	gui::IGUIButton* blRestart =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_RESTART);
 	blRestart->setImage(driver->getTexture("./resource/button/restart.png"));
@@ -302,6 +367,18 @@ void CStateIngame::updateSelectPane(STowerData** list)
 
 void CStateIngame::Update()
 {
+	core::vector2df origin((float)(ObjectManager.Map->data->Width)/2,(float)(ObjectManager.Map->data->Height)/2);
+	core::vector3df new3dpos(camera->getPosition());
+	core::vector2df cam2dpos(new3dpos.X,new3dpos.Z);
+	if (cam2dpos.getDistanceFrom(origin)>origin.getLength()*2)
+	{
+		core::vector2df new2dpos = (cam2dpos-origin).normalize()*(origin.getLength()*2)+origin;
+		new3dpos.X = new2dpos.X;
+		new3dpos.Z = new2dpos.Y;
+		camera->setPosition(new3dpos);
+	}
+	//printf("Camera position %f %f %f\n", camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z);
+
 	if (time_status==ES_WAIT_END) return;
 
 	if (ObjectManager.Map->status==2 ||ObjectManager.Map->status==3) 
@@ -321,7 +398,7 @@ void CStateIngame::Update()
 	}
 
 
-	if (CControllerKeyManager::GetInstance()->WasKeyRelease(EKEY_CODE::KEY_ESCAPE))
+	if (CControllerKeyManager::GetInstance()->WasKeyRelease((int)EKEY_CODE::KEY_ESCAPE))
 	{
 		switch (time_status)
 		{
@@ -384,31 +461,7 @@ void CStateIngame::Update()
 		2, // This ensures that only nodes that we have
 				// set up to be pickable are considered
 		0); // Check the entire scene (this is actually the implicit default)
-	/*if (selectedSceneNode) 
-	{
-		cursor->setPosition(intersection);
-		cursor->setVisible(true);
-	}
-	else
-		cursor->setVisible(false);*/
-	/*if (selectedSceneNode)
-	{
-		driver->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
-		irr::video::SMaterial material;
-		material.setTexture(0, 0);
-		material.Lighting = false;
-		material.NormalizeNormals = false;
-		material.Wireframe = true;
-		driver->setMaterial(material);
-		driver->draw3DTriangle(hitTriangle, irr::video::SColor(0,255,0,0));
 
-		highlightedSceneNode = selectedSceneNode;
-		highlightedSceneNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-	}*/
-	
-		
-
-	
 	//driver->draw3DTriangle(hitTriangle, irr::video::SColor(255,0,125,0));
 
 	CTowerObject* currentSelectTower = ObjectManager.GetTowerAtPosition((int)intersection.X,(int)intersection.Z);
@@ -662,15 +715,25 @@ void CStateIngame::Render()
 	ObjectManager.Render();
 	if (select_x!=-1 && select_y!=-1)
 	{
-		irr::video::SMaterial material;
-		material.setTexture(0, 0);
-		material.Lighting = false;
-		material.NormalizeNormals = false;
-		material.Wireframe = false;
-		material.MaterialType = video::EMT_TRANSPARENT_ADD_COLOR;
+		video::SMaterial gridmaterial1;
+		gridmaterial1.setTexture(0,driver->getTexture("./resource/grid_cell_white.png"));
+		gridmaterial1.Lighting = false;
+		gridmaterial1.ZWriteEnable = false;
+		gridmaterial1.NormalizeNormals = false;
+		gridmaterial1.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL;
+
+		video::S3DVertex Vertices[4] = {
+			video::S3DVertex(select_x,0.1,select_y, 0,1,0,video::SColor(255,255,255,255), 0, 0),
+			video::S3DVertex(select_x,0.1,select_y+2, 0,1,0,video::SColor(255,255,255,255), 0, 1),
+			video::S3DVertex(select_x+2,0.1,select_y+2, 0,1,0,video::SColor(255,255,255,255), 1, 1),
+			video::S3DVertex(select_x+2,0.1,select_y, 0,1,0,video::SColor(255,255,255,255), 1, 0)
+		};
+		u16 indices[] = {	0,1,2, 0,2,3, };
+
 		driver->setTransform(irr::video::ETS_WORLD, irr::core::matrix4());
-		driver->setMaterial(material);
-		driver->draw3DBox(core::aabbox3df(select_x,0.1,select_y,select_x+2,0.2,select_y+2),video::SColor(255,0,125,0));		
+		driver->setMaterial(gridmaterial1);
+		//driver->draw3DBox(core::aabbox3df(,0.1,select_y,select_x+2,0.2,select_y+2),video::SColor(255,0,125,0));	
+		driver->drawVertexPrimitiveList(Vertices, 4, indices, 2);
 	}
 }
 
@@ -693,5 +756,6 @@ void CStateIngame::Exit()
 	ObjectManager.ClearObstacle();
 	delete ObjectManager.Map;
 	//ObjectManager.SetMapObject(0);
+	camera->remove();
 	
 }

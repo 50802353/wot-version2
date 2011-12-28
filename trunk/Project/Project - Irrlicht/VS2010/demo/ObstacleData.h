@@ -7,15 +7,15 @@ struct SObstacleData
 	char ObstacleName[50];
 
 	//graphic attributes
-	int ModelID;
+	SModelData ModelData;
 	
 	//sound attributes
 	int SoundID;
 
-	SObstacleData(char* ObstacleName, int ModelID, int SoundID)
+	SObstacleData(char* ObstacleName, SModelData ModelData, int SoundID)
 	{
 		strcpy(this->ObstacleName, ObstacleName);
-		this->ModelID = ModelID;
+		this->ModelData = ModelData;
 		this->SoundID = SoundID;
 	}
 };

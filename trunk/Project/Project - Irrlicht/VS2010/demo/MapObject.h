@@ -33,6 +33,7 @@ public:
 
 	irr::scene::ITerrainSceneNode* sceneNode;
 	irr::scene::ISceneNode* skydome;
+	scene::ISceneNode* bounder;
 
 	int RemainingLife;	//So' mang. con` lai.
 	int Money;	//tien` de xay nha

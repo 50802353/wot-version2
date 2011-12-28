@@ -16,6 +16,7 @@ enum EGameObject
 	E_OBJ_BULLET,
 	E_OBJ_OBSTACLE,
 	E_OBJ_MAP,
+	E_OBJ_PORTAL,
 };
 
 struct Position
@@ -86,6 +87,14 @@ static SModelData ModelData6("./resource/model/_Dragoon/dragoon.md2", "./resourc
 static SModelData ModelData7("./resource/model/_DragoonJr/dragoonjr.md2", "./resource/model/_DragoonJr/dragoonjr.pcx", "./resource/model/_DragoonJr/dragoonjr2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
 static SModelData ModelData8("./resource/model/_Hydralisk/hydralisk.MD2", "./resource/model/_Hydralisk/hydralisk.pcx", "./resource/model/_Hydralisk/hydralisk2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
 
+static SModelData ModelData9("./resource/model/Avenger/Avenger.MD2", "./resource/model/Avenger/Avenger.bmp", "", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData10("./resource/model/boba-fett/model.md2", "./resource/model/boba-fett/material.jpg", "", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData11("./resource/model/DrFreak/DrFreak.MD2", "./resource/model/DrFreak/DrFreak.bmp", "", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData12("./resource/model/SideSwipe2/SideSwipe2.MD2", "./resource/model/SideSwipe2/SideSwipe2.bmp", "./resource/model/_Hydralisk/hydralisk2.png", core::vector3df(0.04,0.04,0.04), core::vector3df(0,0,0),20.0f);
+
+static SModelData ModelData13("./resource/obstacle_model/canopy/canopy.obj", "./resource/obstacle_model/canopy/canopy.png", "", core::vector3df(0.005,0.005,0.005), core::vector3df(0,0,0),20.0f);
+static SModelData ModelData14("./resource/obstacle_model/varen/varen.obj", "./resource/obstacle_model/varen/varen.png", "", core::vector3df(0.005,0.005,0.005), core::vector3df(0,0,0),20.0f);
+
 static STowerData* UpgradeTowerList4[5]={0,0,0,0,0};
 static STowerData TowerData4("TOWER_NAME_4", 10, 4, 1000, 30, ETowerType::E_TOWER_ATTACK, UpgradeTowerList4, ModelData4, 1);
 static STowerData* UpgradeTowerList3[5]={0,0,0,0,0};
@@ -94,12 +103,13 @@ static STowerData* UpgradeTowerList2[5]={&TowerData3,0,0,0,0};
 static STowerData TowerData2("TOWER_NAME_2", 10, 4, 900, 20, ETowerType::E_TOWER_ATTACK, UpgradeTowerList2, ModelData1, 1);
 static STowerData* UpgradeTowerList1[5]={&TowerData2,&TowerData4,0,0,0};
 static STowerData TowerData1("TOWER_NAME_1", 10, 4, 800, 10, ETowerType::E_TOWER_ATTACK, UpgradeTowerList1, ModelData3, 1);
-static SEnemyData EnemyData1("ENEMY_NAME_1", 50, 30, 20, ModelData5, 2);
-static SEnemyData EnemyData2("ENEMY_NAME_2", 20, 60, 30, ModelData6, 2);
-static SEnemyData EnemyData3("ENEMY_NAME_3", 100, 15, 25, ModelData7, 2);
-static SEnemyData EnemyData4("ENEMY_NAME_4", 100, 30, 20, ModelData8, 2);
+static SEnemyData EnemyData1("ENEMY_NAME_1", 50, 30, 20, ModelData9, 2);
+static SEnemyData EnemyData2("ENEMY_NAME_2", 20, 60, 30, ModelData10, 2);
+static SEnemyData EnemyData3("ENEMY_NAME_3", 100, 15, 25, ModelData11, 2);
+static SEnemyData EnemyData4("ENEMY_NAME_4", 100, 30, 20, ModelData12, 2);
 
-static SObstacleData ObstacleData1("OBSTACLE_NAME_1", 3, 3);
+static SObstacleData ObstacleData1("OBSTACLE_NAME_1", ModelData13, 3);
+static SObstacleData ObstacleData2("OBSTACLE_NAME_2", ModelData14, 3);
 static SBulletData BulletData1("BULLET_NAME_1", 100, 10, 4, 4);
 
 static int			SpawnTime1[5]	=	{1000,			500,			500,			1000,			600};
@@ -112,8 +122,12 @@ static SWaveData WaveData2(5, SpawnTime2, Enemy2);
 
 static SWaveData*	 Wave[2]		=	{&WaveData1,	&WaveData2};
 static STowerData* BasicTowerList[5]={&TowerData1,0,0,0,0};
-static SObstacleData* ObstacleList[MAX_OBSTACLE_PER_MAP] = {&ObstacleData1,&ObstacleData1,&ObstacleData1,0,0,0,0,0,0,0,
+static SObstacleData* ObstacleList1[MAX_OBSTACLE_PER_MAP] = {&ObstacleData1,&ObstacleData2,&ObstacleData2,0,0,0,0,0,0,0,
 															0,0,0,0,0,0,0,0,0,0};
+
+static SObstacleData* ObstacleList2[MAX_OBSTACLE_PER_MAP] = {0,0,0,0,0,0,0,0,0,0,
+															0,0,0,0,0,0,0,0,0,0};
+
 static LogicPosition ObstaclePositionList[MAX_OBSTACLE_PER_MAP] = { LogicPosition(5,5),LogicPosition(3,0),LogicPosition(6,8),LogicPosition(),LogicPosition(),
 																	LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),
 																	LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),LogicPosition(),
@@ -121,9 +135,9 @@ static LogicPosition ObstaclePositionList[MAX_OBSTACLE_PER_MAP] = { LogicPositio
 static int ObstacleSizeList[MAX_OBSTACLE_PER_MAP] = {2,2,1};
 
 
-static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, ObstacleList,ObstaclePositionList,ObstacleSizeList);
-//static SMapData MapData2("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, ObstacleList,ObstaclePositionList,ObstacleSizeList);
-static SMapData*  MapData[4] = {&MapData1,&MapData1,&MapData1,&MapData1};
+static SMapData MapData1("MAP_NAME_1", 10, 10, LogicPosition(0,0), LogicPosition(9,9), 5, 100, 2, Wave, BasicTowerList, ObstacleList1,ObstaclePositionList,ObstacleSizeList);
+static SMapData MapData2("MAP_NAME_2", 30, 20, LogicPosition(10,10), LogicPosition(20,10), 5, 1000, 2, Wave, BasicTowerList, ObstacleList2,ObstaclePositionList,ObstacleSizeList);
+static SMapData*  MapData[4] = {&MapData1,&MapData2,&MapData1,&MapData1};
 
 
 #define SELL_PERCENT 0.3

@@ -41,7 +41,7 @@
 
 
 
-CMapObject::CMapObject(SMapData *data)
+CMapObject::CMapObject(SMapData *data):sceneNode(0),skydome(0),PSsrc(0),PSdst(0)
 {
 	this->ObjectType = EGameObject::E_OBJ_MAP;
 	this->data = data;
@@ -51,7 +51,7 @@ CMapObject::CMapObject(SMapData *data)
 
 	//CImageManager::GetInstance()->AddImage<CFileWin32Driver>("..\\..\\resource\\grid_cell.tga",true);
 	//MapGridTexture = CImageManager::GetInstance()->Get("..\\..\\resource\\grid_cell.tga");
-	Init();
+	//Init();
 }
 
 CMapObject::~CMapObject(void)
@@ -63,6 +63,32 @@ CMapObject::~CMapObject(void)
 
 void CMapObject::Init()
 {
+	memset(ObjectMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	memset(DirectionMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	ObjectMap[data->SourcePosition.y*this->data->Width+data->SourcePosition.x] = E_OBJ_PORTAL;
+	ObjectMap[data->DestinationPosition.y*this->data->Width+data->DestinationPosition.x] = E_OBJ_PORTAL;
+
+
+	RemainingLife = data->GivenLife;
+	Money = data->GivenMoney;
+	isSpawnTime = false;
+	NumberOfEnemyInMap = 0;
+
+	CalculateEnemyPath(ObjectMap, DirectionMap);
+	status = ESTATUS_PLAY;
+
+	CurrentWave = 0;
+	NextSpawnTime = 0;
+	EnemyIndexInWave = 0;
+	for (int i=0;i<MAX_OBSTACLE_PER_MAP;i++)
+	{
+		if (data->ObstacleList[i])
+		{
+			AddObstacle(data->ObstacleList[i],ObstaclePositionList[i],ObstacleSizeList[i]);
+		}
+		else break;
+	
+	}
 
 	sceneNode = smgr->addTerrainSceneNode(
                 "./resource/terrain-heightmap.bmp",
@@ -86,11 +112,45 @@ void CMapObject::Init()
         
     sceneNode->setMaterialType(irr::video::EMT_DETAIL_MAP);
 
-    sceneNode->scaleTexture(1.0f, 20.0f);
+    //sceneNode->scaleTexture(1.0f, 20.0f);
 
 	irr::scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(sceneNode, 0);
 	sceneNode->setTriangleSelector(selector);
 	selector->drop();
+
+	/*video::SMaterial mat;
+	mat.Lighting = false;
+	mat.NormalizeNormals = false;
+	mat.setTexture(0,0);*/
+
+
+	//bounder = smgr->addSceneNode("BOUNDER");
+	/*scene::ISceneNode* tbounder = smgr->addCubeSceneNode(1,sceneNode);
+	tbounder->setMaterialTexture(0,driver->getTexture("./resource/bounder.bmp"));
+	tbounder->setScale(core::vector3df(data->Width,0.2,0.1));
+	tbounder->setPosition(core::vector3df((float)(data->Width)/2,0,-0.05));
+
+	tbounder = smgr->addCubeSceneNode(1,sceneNode);
+	tbounder->setMaterialTexture(0,driver->getTexture("./resource/bounder.bmp"));
+	tbounder->setScale(core::vector3df(data->Width,0.2,0.1));
+	tbounder->setPosition(core::vector3df((float)(data->Width)/2,0,data->Height-0.05));
+
+	tbounder = smgr->addCubeSceneNode(1,sceneNode);
+	tbounder->setMaterialTexture(0,driver->getTexture("./resource/bounder.bmp"));
+	tbounder->setScale(core::vector3df(0.1,0.2,data->Height));
+	tbounder->setPosition(core::vector3df(-0.05,0,(float)(data->Height)/2));
+	
+	tbounder = smgr->addCubeSceneNode(1,sceneNode);
+	tbounder->setMaterialTexture(0,driver->getTexture("./resource/bounder.bmp"));
+	tbounder->setScale(core::vector3df(0.1,0.2,data->Height));
+	tbounder->setPosition(core::vector3df(data->Width-0.05,0,(float)(data->Height)/2));*/
+
+	
+	
+	//->setMaterialTexture(0,0);
+	smgr->addCubeSceneNode(1,sceneNode,-1,core::vector3df(-1,0,data->Height+1),core::vector3df(0,0,0),core::vector3df(data->Width,1,1));
+	smgr->addCubeSceneNode(1,sceneNode,-1,core::vector3df(-1,0,-1),core::vector3df(0,0,0),core::vector3df(1,data->Height,1));
+	smgr->addCubeSceneNode(1,sceneNode,-1,core::vector3df(data->Width+1,0,-1),core::vector3df(0,0,0),core::vector3df(1,data->Height,1));
 
 	skydome =smgr->addSkyDomeSceneNode(driver->getTexture("./resource/skydome.jpg"),16,8,0.95f,2.0f);
 	//irr::scene::IMesh* m = sceneNode->getMesh();
@@ -211,31 +271,75 @@ void CMapObject::Update(int delta_time)
 void CMapObject::Render()
 {
 	if (!drawGrid) return;
-	video::SMaterial material;
-	material.setTexture(0,0);
-	material.Wireframe = true;
-	material.Lighting = false;
-	material.ZBuffer = false;
-	material.ZWriteEnable = false;
-	material.NormalizeNormals = false;
-	material.MaterialType = video::EMT_TRANSPARENT_ADD_COLOR;
 
+	
 
-	driver->setMaterial(material);
-	driver->setTransform (video::ETS_WORLD, core::IdentityMatrix);
-	for (int i=0;i<=data->Width;i++)
-		driver->draw3DLine(core::vector3df(i,sceneNode->getHeight(i,0),0),core::vector3df(i,sceneNode->getHeight(i,data->Height),data->Height),video::SColor(0,125,55,0));
-	for (int i=0;i<=data->Height;i++)
-		driver->draw3DLine(core::vector3df(0,sceneNode->getHeight(0,i),i),core::vector3df(data->Width,sceneNode->getHeight(data->Width,i),i),video::SColor(0,125,55,0));
+	video::SMaterial gridmaterial2;
+	gridmaterial2.setTexture(0,driver->getTexture("./resource/grid_cell_green.png"));
+	gridmaterial2.Lighting = false;
+	gridmaterial2.ZWriteEnable = false;
+	gridmaterial2.NormalizeNormals = false;
+	gridmaterial2.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL;
+
+	video::SMaterial gridmaterial3;
+	gridmaterial3.setTexture(0,driver->getTexture("./resource/grid_cell_red.png"));
+	gridmaterial3.Lighting = false;
+	gridmaterial3.ZWriteEnable = false;
+	gridmaterial3.NormalizeNormals = false;
+	gridmaterial3.MaterialType = video::EMT_TRANSPARENT_ALPHA_CHANNEL;
+
+	
+	video::S3DVertex Vertices[4] = {
+		video::S3DVertex(0,0,0, 0,1,0,video::SColor(255,255,255,255), 0, 0),
+		video::S3DVertex(0,0,1, 0,1,0,video::SColor(255,255,255,255), 0, 1),
+		video::S3DVertex(1,0,1, 0,1,0,video::SColor(255,255,255,255), 1, 1),
+		video::S3DVertex(1,0,0, 0,1,0,video::SColor(255,255,255,255), 1, 0)
+	};
+
+	u16 indices[] = {	0,1,2, 0,2,3, };
+
+	for (int i=0;i<data->Width;i++)
+		for (int j=0;j<data->Height;j++)
+		{
+
+			if (this->ObjectMap[j*data->Width+i] == E_OBJ_NONE)
+				driver->setMaterial(gridmaterial2);
+			else
+				driver->setMaterial(gridmaterial3);
+			driver->setTransform(video::ETS_WORLD, core::IdentityMatrix);
+			core::matrix4 m;
+			m.setTranslation(core::vector3df(i,0.05,j));
+			driver->setTransform(video::ETS_WORLD, m);
+			driver->drawVertexPrimitiveList(Vertices, 4, indices, 2);
+		}
 	
 }
 
 void CMapObject::Destroy()
 {
-	sceneNode->remove();
-	skydome->remove();
-	PSsrc->remove();
-	PSdst->remove();
+	if (sceneNode) 
+	{
+		sceneNode->remove();
+		sceneNode = 0;
+	}
+
+	if (skydome)
+	{
+		skydome->remove();
+		skydome = 0;
+	}
+
+	if (PSsrc)
+	{
+		PSsrc->remove();
+		PSsrc = 0;
+	}
+
+	if (PSdst)
+	{
+		PSdst->remove();
+		PSdst = 0;
+	};
 
 	CObjectManager::CurrentObjectManager->SetMapObject(NULL);
 	//delete this;
@@ -391,6 +495,9 @@ boolean CMapObject::iSBuildable(int x, int y)
 	if (x>=data->Width-1) return false;
 	if (y<0) return false;
 	if (y>=data->Height-1) return false;
+	if (data->SourcePosition.x>=x && data->SourcePosition.x<=x+1 && data->SourcePosition.y>=y && data->SourcePosition.y<=y+1) return false;
+	if (data->DestinationPosition.x>=x && data->DestinationPosition.x<=x+1 && data->DestinationPosition.y>=y && data->DestinationPosition.y<=y+1) return false;
+
 	int* OMap = CObjectManager::CurrentObjectManager->GetMapObjectIncludingEnemy();
 	if (OMap[y*data->Width+x]==E_OBJ_NONE && OMap[(y+1)*data->Width+x]==E_OBJ_NONE &&
 		OMap[y*data->Width+x+1]==E_OBJ_NONE && OMap[(y+1)*data->Width+x+1]==E_OBJ_NONE) return true;
@@ -452,7 +559,7 @@ void CMapObject::Lose()
 
 void CMapObject::Reset()
 {
-	memset(ObjectMap, 0, sizeof(int) * this->data->Height * this->data->Width);
+	/*memset(ObjectMap, 0, sizeof(int) * this->data->Height * this->data->Width);
 	memset(DirectionMap, 0, sizeof(int) * this->data->Height * this->data->Width);
 	RemainingLife = data->GivenLife;
 	Money = data->GivenMoney;
@@ -473,5 +580,8 @@ void CMapObject::Reset()
 		}
 		else break;
 	
-	}
+	}*/
+
+	Destroy();
+	Init();
 }

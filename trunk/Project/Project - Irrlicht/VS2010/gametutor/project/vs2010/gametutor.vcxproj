@@ -72,6 +72,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\irrlicht-1.7.2\include;$(ProjectDir)\..\..\header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -79,6 +80,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\libs\oal;$(ProjectDir)\..\..\libs\ogl;$(ProjectDir)\..\..\libs\vld;$(ProjectDir)\..\..\libs\vorbis;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\CALAudioDriver.cpp" />

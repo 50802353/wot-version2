@@ -8,7 +8,7 @@ int main()
 	SGameConfig cnf = {
 		800,
 		600,
-		false,
+		true,
 		"Hello",
 		NULL,
 		CALAudioDriver::GetInstance(),
