@@ -17,7 +17,7 @@ namespace GameTutor
 	//---------------------------------------------------------------------------
 
 	CIrrlichtView::CIrrlichtView(int w, int h, irr::IrrlichtDevice* &Irrlichtdevice, bool fullscreen, const char*name):m_iWidth(w), 
-		m_iHeight(h), m_isFullScreen(false),
+		m_iHeight(h), m_isFullScreen(fullscreen),
 		m_hGLRC(0), m_hwndWindow(0), m_hGameWndDC(0)
 	{
 		SetInstance(this);

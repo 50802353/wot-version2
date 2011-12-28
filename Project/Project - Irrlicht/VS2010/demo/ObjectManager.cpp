@@ -220,5 +220,7 @@ void CObjectManager::Reset()
 	ClearEnemy();
 	ClearBullet();
 	ClearObstacle();
-	Map->Reset();
+	CMapObject* m = Map;
+	m->Reset();
+	SetMapObject(m);
 }

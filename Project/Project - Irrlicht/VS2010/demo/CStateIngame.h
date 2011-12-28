@@ -80,7 +80,7 @@ public:
 	gui::IGUIButton* blQuit;
 
 	IngameEventReceiver* receiver;
-
+	irr::scene::ICameraSceneNode* camera;
 
 	SMapData** MapDataList;
 	int currentMapIndex;
