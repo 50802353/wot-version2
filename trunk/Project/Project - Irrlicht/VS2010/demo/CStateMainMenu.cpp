@@ -2,7 +2,7 @@
 #include "CStateChoseMap.h"
 
 #define MAINMENU_BACKGROUND_IMAGE "./resource/backgroundMainMenu.jpg"
-#define MAINMENU_BACKGROUND_MUSIC "./resource/backgroundMainMenu.wav"
+#define MAINMENU_BACKGROUND_MUSIC "./resource/AMainMenu.ogg"
 
 
 class MainMenuEventReceiver:public MyEventReceiver
@@ -51,17 +51,23 @@ void CStateMainMenu::Init()
 	screen = guienv->addImage(vp, 0, -1, L"");
 	screen->setImage(driver->getTexture(MAINMENU_BACKGROUND_IMAGE));
 	screen->setScaleImage(true);
+	//screen->setUseAlphaChannel(true);
 
 
 	bStartGame = guienv->addButton(core::recti(vp.LowerRightCorner-core::dimension2di(153+20,(44+10)*2+10),core::dimension2di(153,44)),screen, E_GBMM_START);
 	bStartGame->setImage(driver->getTexture("./resource/button/newgame.png"));
+	bStartGame->setUseAlphaChannel(true);
+	bStartGame->setDrawBorder(false);
 
 	bQuit = guienv->addButton(core::recti(vp.LowerRightCorner-core::dimension2di(153+20,(44+10)*1+10),core::dimension2di(153,44)),screen, E_GBMM_QUIT);
 	bQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+	bQuit->setUseAlphaChannel(true);
+	bQuit->setDrawBorder(false);
 
 	Log("State Logo: Init");
 	CAudioPlayer::GetInstance()->Load<CFileWin32Driver>(MAINMENU_BACKGROUND_MUSIC);
 	CAudioPlayer::GetInstance()->Play(MAINMENU_BACKGROUND_MUSIC,true);
+	//CAudioPlayer::GetInstance()->SetVolume(100);
 
 	receiver = new MainMenuEventReceiver(this);
 	CIrrlichtView::GetInstance()->device->setEventReceiver(receiver);

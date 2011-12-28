@@ -24,11 +24,11 @@ void CStateLogo::Update()
 {	
 	if (!CAudioPlayer::GetInstance()->IsPlaying(LOGO_WAV))
 		CStateManagement::GetInstance()->SwitchState(new CStateMainMenu());
-	if (CControllerKeyManager::GetInstance()->WasAnyKeyRelease())
+	/*if (CControllerKeyManager::GetInstance()->WasAnyKeyRelease())
 		CStateManagement::GetInstance()->SwitchState(new CStateMainMenu());
-	core::rect<s32> vp = driver->getViewPort();
-	if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,vp.getWidth(),vp.getHeight()))
-		CStateManagement::GetInstance()->SwitchState(new CStateMainMenu());
+	core::rect<s32> vp = driver->getViewPort();*/
+	/*if (CControllerPointerManager::GetInstance()->WasReleaseInside(0,0,vp.getWidth(),vp.getHeight()))
+		CStateManagement::GetInstance()->SwitchState(new CStateMainMenu());*/
 }
 
 void CStateLogo::Render()
