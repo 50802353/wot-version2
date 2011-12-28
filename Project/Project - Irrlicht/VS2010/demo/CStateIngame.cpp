@@ -284,12 +284,20 @@ void CStateIngame::Init()
 	guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_WINDOW,color);
 	gui::IGUIButton* bContinue =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_CONTINUE);
 	bContinue->setImage(driver->getTexture("./resource/button/continue.png"));
+	bContinue->setUseAlphaChannel(true);
+	bContinue->setDrawBorder(false);
 	gui::IGUIButton* bRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_RESTART);
 	bRestart->setImage(driver->getTexture("./resource/button/restart.png"));
+	bRestart->setUseAlphaChannel(true);
+	bRestart->setDrawBorder(false);
 	gui::IGUIButton* bMainMenu = guienv->addButton(core::rect<s32>(10,118,162,162),menu,E_GBIG_MAINMENU);
 	bMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
+	bMainMenu->setUseAlphaChannel(true);
+	bMainMenu->setDrawBorder(false);
 	gui::IGUIButton* bQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu,E_GBIG_QUIT);
 	bQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+	bQuit->setUseAlphaChannel(true);
+	bQuit->setDrawBorder(false);
 	menuIngame->setVisible(false);
 
 	menuIngame_WIN = guienv->addImage(vp);
@@ -304,14 +312,22 @@ void CStateIngame::Init()
 	menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-206)/2-10),core::dimension2di(153+20,206+20)),menuIngame_WIN);
 	gui::IGUIButton* bwNext =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_NEXT);
 	bwNext->setImage(driver->getTexture("./resource/button/continue.png"));
+	bwNext->setUseAlphaChannel(true);
+	bwNext->setDrawBorder(false);
 	if (currentMapIndex>=3) bwNext->setEnabled(false);
 
 	gui::IGUIButton* bwRestart = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_RESTART);
 	bwRestart->setImage(driver->getTexture("./resource/button/restart.png"));
+	bwRestart->setUseAlphaChannel(true);
+	bwRestart->setDrawBorder(false);
 	gui::IGUIButton* bwMainMenu = guienv->addButton(core::rect<s32>(10,118,162,162),menu,E_GBIG_MAINMENU);
 	bwMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
+	bwMainMenu->setUseAlphaChannel(true);
+	bwMainMenu->setDrawBorder(false);
 	gui::IGUIButton* bwQuit = guienv->addButton(core::rect<s32>(10,172,162,216),menu,E_GBIG_QUIT);
 	bwQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+	bwQuit->setUseAlphaChannel(true);
+	bwQuit->setDrawBorder(false);
 	menuIngame_WIN->setVisible(false);
 
 	menuIngame_LOSE = guienv->addImage(vp);
@@ -326,10 +342,17 @@ void CStateIngame::Init()
 	menu = guienv->addImage(core::rect<s32>(core::vector2di((vp.getWidth()-153)/2-10,(vp.getHeight()-152)/2-10),core::dimension2di(153+20,152+20)),menuIngame_LOSE);
 	gui::IGUIButton* blRestart =  guienv->addButton(core::rect<s32>(10,10,162,54),menu,E_GBIG_RESTART);
 	blRestart->setImage(driver->getTexture("./resource/button/restart.png"));
+	blRestart->setUseAlphaChannel(true);
+	blRestart->setDrawBorder(false);
 	gui::IGUIButton* blMainMenu = guienv->addButton(core::rect<s32>(10,64,162,108),menu,E_GBIG_MAINMENU);
 	blMainMenu->setImage(driver->getTexture("./resource/button/mainmenu.png"));
+	blMainMenu->setUseAlphaChannel(true);
+	blMainMenu->setDrawBorder(false);
 	gui::IGUIButton* blQuit = guienv->addButton(core::rect<s32>(10,118,162,162),menu,E_GBIG_QUIT);
 	blQuit->setImage(driver->getTexture("./resource/button/quit.png"));
+	blQuit->setUseAlphaChannel(true);
+	blQuit->setDrawBorder(false);
+	//blQuit->
 	menuIngame_LOSE->setVisible(false);
 
 	receiver = new IngameEventReceiver(this);
